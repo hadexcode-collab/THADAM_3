@@ -4,7 +4,6 @@ class TADAMApp {
         this.currentUser = null;
         this.currentTab = 'kala-kitchen';
         this.savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-        this.currentTheme = localStorage.getItem('preferred-theme') || 'veg';
         this.init();
     }
 
@@ -12,11 +11,6 @@ class TADAMApp {
         this.bindEvents();
         this.checkAuthentication();
         this.initializeSampleRecipes();
-        this.initializeThemeToggle();
-        this.applyTheme(this.currentTheme);
-        this.initializeScrollAnimations();
-        this.initializeDietModeToggle();
-        this.initializeRecipeMasonry();
     }
 
     bindEvents() {
@@ -52,108 +46,9 @@ class TADAMApp {
         if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
         if (shareBtn) shareBtn.addEventListener('click', () => this.shareRecipe());
         if (printBtn) printBtn.addEventListener('click', () => this.printRecipe());
-        
-        // Initialize theme toggle for both login and dashboard
-        this.initializeThemeToggle();
-    }
-    
-    initializeThemeToggle() {
-        const themeToggles = document.querySelectorAll('.theme-toggle');
-        
-        themeToggles.forEach(themeToggle => {
-            const toggleOptions = themeToggle.querySelectorAll('.toggle-option');
-            const toggleSlider = themeToggle.querySelector('.toggle-slider');
-            
-            toggleOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    const theme = option.getAttribute('data-theme');
-                    this.switchTheme(theme);
-                });
-            });
-        });
-        
-        // Apply saved theme on load
-        this.applyTheme(this.currentTheme);
-    }
-    
-    switchTheme(theme) {
-        this.currentTheme = theme;
-        this.applyTheme(theme);
-        localStorage.setItem('preferred-theme', theme);
-    }
-    
-    applyTheme(theme) {
-        // Apply theme to document
-        document.documentElement.setAttribute('data-theme', theme);
-        
-        // Update all theme toggles
-        const themeToggles = document.querySelectorAll('.theme-toggle');
-        themeToggles.forEach(themeToggle => {
-            const toggleOptions = themeToggle.querySelectorAll('.toggle-option');
-            const toggleSlider = themeToggle.querySelector('.toggle-slider');
-            
-            // Update active state
-            toggleOptions.forEach(opt => opt.classList.remove('active'));
-            const activeOption = themeToggle.querySelector(`[data-theme="${theme}"]`);
-            if (activeOption) {
-                activeOption.classList.add('active');
-            }
-            
-            // Animate slider
-            if (toggleSlider) {
-                const isNonVeg = theme === 'nonveg';
-                toggleSlider.style.transform = isNonVeg ? 'translateX(100%)' : 'translateX(0)';
-            }
-        });
-        
-        // Update theme-specific elements
-        this.updateThemeElements(theme);
-        
-        // Add theme switching animation
-        document.body.classList.add('theme-switching');
-        setTimeout(() => {
-            document.body.classList.remove('theme-switching');
-        }, 600);
-    }
-    
-    updateThemeElements(theme) {
-        // Update recipe card backgrounds based on theme
-        const recipeCards = document.querySelectorAll('.recipe-card');
-        recipeCards.forEach(card => {
-            if (theme === 'veg') {
-                card.classList.add('veg-theme');
-                card.classList.remove('nonveg-theme');
-            } else {
-                card.classList.add('nonveg-theme');
-                card.classList.remove('veg-theme');
-            }
-        });
-        
-        // Update recipe card gradients based on theme
-        const recipeImages = document.querySelectorAll('.recipe-card-image');
-        recipeImages.forEach((image, index) => {
-            if (theme === 'veg') {
-                const vegGradients = [
-                    'linear-gradient(135deg, #22c55e, #16a34a)', // Palak Paneer
-                    'linear-gradient(135deg, #facc15, #eab308)', // Dal
-                    'linear-gradient(135deg, #ffffff, #f8fafc)', // White Rice
-                    'linear-gradient(135deg, #f1f5f9, #ffffff)', // Coconut Chutney
-                    'linear-gradient(135deg, #dcfce7, #22c55e)', // Mint Chutney
-                    'linear-gradient(135deg, #84cc16, #22c55e)'  // Green Vegetables
-                ];
-                image.style.background = vegGradients[index % vegGradients.length];
-            } else {
-                const nonVegGradients = [
-                    'linear-gradient(135deg, #ef4444, #f59e0b)', // Chicken Curry
-                    'linear-gradient(135deg, #ea580c, #dc2626)', // Fish Curry
-                    'linear-gradient(135deg, #f59e0b, #ef4444)', // Mutton Biryani
-                    'linear-gradient(135deg, #dc2626, #991b1b)', // Tandoori
-                    'linear-gradient(135deg, #b91c1c, #ef4444)', // Spicy Gravy
-                    'linear-gradient(135deg, #ef4444, #ea580c)'  // Mixed Non-Veg
-                ];
-                image.style.background = nonVegGradients[index % nonVegGradients.length];
-            }
-        });
+
+        // Learner-specific functionality
+        this.initializeLearnerFeatures();
     }
 
     checkAuthentication() {
@@ -213,9 +108,13 @@ class TADAMApp {
 
     handleLogout() {
         localStorage.removeItem('currentUser');
+        localStorage.clear(); // Clear all localStorage data
         this.currentUser = null;
         document.getElementById('main-platform').classList.remove('active');
         document.getElementById('login-screen').classList.add('active');
+        
+        // Show logout confirmation
+        this.showToast('Logged out successfully', 'success');
     }
 
     showMainPlatform() {
@@ -269,10 +168,11 @@ class TADAMApp {
         // Update content visibility for current tab
         if (tabId === 'kala-kitchen') {
             this.updateContentVisibility();
-            // Reinitialize scroll animations for the active tab
-            setTimeout(() => {
-                this.initializeScrollAnimations();
-            }, 100);
+            
+            // Initialize learner features if user is learner
+            if (this.currentUser && this.currentUser.type === 'learner') {
+                this.initializeLearnerFeatures();
+            }
         }
     }
 
@@ -311,254 +211,10 @@ class TADAMApp {
         window.print();
     }
 
-    initializeScrollAnimations() {
-        // Bombon.rs-style scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    
-                    // Stagger animation for multiple elements
-                    const delay = Array.from(entry.target.parentNode.children).indexOf(entry.target) * 100;
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, delay);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all scroll-animated elements
-        const animatedElements = document.querySelectorAll('[data-scroll]');
-        animatedElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(50px)';
-            el.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            observer.observe(el);
-        });
-        
-        // Parallax effect for hero background elements
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.temple-silhouette, .brass-vessel-pattern, .kolam-overlay');
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = 0.5 + (index * 0.2);
-                element.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-    }
-
-    initializeDietModeToggle() {
-        const toggleOptions = document.querySelectorAll('.diet-mode-toggle .toggle-option');
-        const toggleSlider = document.querySelector('.diet-mode-toggle .toggle-slider');
-        
-        toggleOptions.forEach((option, index) => {
-            option.addEventListener('click', () => {
-                // Remove active class from all options
-                toggleOptions.forEach(opt => opt.classList.remove('active'));
-                
-                // Add active class to clicked option
-                option.classList.add('active');
-                
-                // Move slider
-                const translateX = index * 100;
-                if (toggleSlider) {
-                    toggleSlider.style.transform = `translateX(${translateX}%)`;
-                }
-                
-                // Update recipes based on selected mode
-                this.updateRecipesByMode(option.dataset.mode);
-            });
-        });
-    }
-
-    updateRecipesByMode(mode) {
-        // Update recipe grid based on selected diet mode
-        const recipeCards = document.querySelectorAll('.recipe-card');
-        
-        recipeCards.forEach(card => {
-            card.style.opacity = '0.5';
-            card.style.transform = 'scale(0.95)';
-        });
-        
-        // Simulate filtering animation
-        setTimeout(() => {
-            recipeCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'scale(1)';
-                }, index * 100);
-            });
-        }, 300);
-        
-        console.log(`Filtering recipes for ${mode} mode`);
-    }
-
-    initializeRecipeMasonry() {
-        const masonryGrid = document.getElementById('recipeMasonryGrid');
-        if (!masonryGrid) return;
-
-        // Enhanced recipe data with more variety
-        const heritageRecipes = [
-            {
-                name: 'Paatti\'s Chettinad Sambar',
-                chef: 'Chef Meenakshi Raghavan',
-                expertise: 'Chettinad cuisine master',
-                rating: '4.9',
-                reviews: '234',
-                time: '45 mins',
-                servings: '6',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #8B4513 0%, #CD853F 100%)',
-                description: 'Traditional family recipe passed down through 5 generations'
-            },
-            {
-                name: 'Kerala Fish Curry',
-                chef: 'Chef Lakshmi Menon',
-                expertise: 'Kerala traditional cook',
-                rating: '4.8',
-                reviews: '189',
-                time: '35 mins',
-                servings: '4',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #FF6347 0%, #FF4500 100%)',
-                description: 'Coconut-rich curry with authentic Kerala spices'
-            },
-            {
-                name: 'Simple Tomato Rasam',
-                calories: '120',
-                protein: '8g',
-                fiber: '15g',
-                time: '25 mins',
-                servings: '4',
-                type: 'free',
-                gradient: 'linear-gradient(135deg, #FF6347 0%, #FF4500 100%)',
-                description: 'Traditional comfort food for daily meals'
-            },
-            {
-                name: 'Andhra Chicken Curry',
-                chef: 'Chef Radhika Devi',
-                expertise: 'Andhra cuisine specialist',
-                rating: '4.7',
-                reviews: '156',
-                time: '50 mins',
-                servings: '5',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #DC143C 0%, #B22222 100%)',
-                description: 'Spicy and flavorful Andhra-style preparation'
-            },
-            {
-                name: 'Coconut Rice',
-                calories: '180',
-                protein: '4g',
-                fiber: '3g',
-                time: '20 mins',
-                servings: '3',
-                type: 'free',
-                gradient: 'linear-gradient(135deg, #F5F5DC 0%, #DEB887 100%)',
-                description: 'Fragrant coconut rice with traditional tempering'
-            },
-            {
-                name: 'Traditional Payasam',
-                chef: 'Chef Sushila Nair',
-                expertise: 'Traditional sweets expert',
-                rating: '4.9',
-                reviews: '298',
-                time: '40 mins',
-                servings: '8',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #DDA0DD 0%, #DA70D6 100%)',
-                description: 'Creamy rice pudding with jaggery and cardamom'
-            },
-            {
-                name: 'Millet Dosa',
-                calories: '95',
-                protein: '6g',
-                fiber: '12g',
-                time: '30 mins',
-                servings: '2',
-                type: 'free',
-                gradient: 'linear-gradient(135deg, #DAA520 0%, #B8860B 100%)',
-                description: 'Healthy ancient grain breakfast option'
-            },
-            {
-                name: 'Royal Mutton Biryani',
-                chef: 'Chef Arjun Kumar',
-                expertise: 'Royal cuisine specialist',
-                rating: '4.8',
-                reviews: '167',
-                time: '90 mins',
-                servings: '8',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #8B0000 0%, #DC143C 100%)',
-                description: 'Aromatic biryani with traditional dum cooking'
-            }
-        ];
-
-        masonryGrid.innerHTML = heritageRecipes.map(recipe => `
-            <div class="recipe-card ${recipe.type}" data-scroll>
-                <div class="recipe-card-image" style="background: ${recipe.gradient};">
-                    <div class="${recipe.type}-badge">${recipe.type.toUpperCase()}</div>
-                    <div class="recipe-overlay">
-                        <h3>${recipe.name}</h3>
-                        <p>${recipe.description}</p>
-                    </div>
-                </div>
-                <div class="recipe-details">
-                    ${recipe.type === 'premium' ? `
-                        <div class="chef-info">
-                            <div class="chef-avatar"></div>
-                            <div>
-                                <h4>${recipe.chef}</h4>
-                                <p>${recipe.expertise}</p>
-                            </div>
-                        </div>
-                        <div class="recipe-stats">
-                            <span>⭐ ${recipe.rating} (${recipe.reviews} reviews)</span>
-                            <span>⏱ ${recipe.time}</span>
-                            <span>🍽 ${recipe.servings} servings</span>
-                        </div>
-                    ` : `
-                        <div class="nutrition-preview">
-                            <span>${recipe.calories} cal</span>
-                            <span>${recipe.protein} protein</span>
-                            <span>${recipe.fiber} fiber</span>
-                        </div>
-                        <div class="recipe-stats">
-                            <span>⏱ ${recipe.time}</span>
-                            <span>🍽 ${recipe.servings} servings</span>
-                        </div>
-                    `}
-                </div>
-            </div>
-        `).join('');
-
-        // Apply current theme to new recipe cards
-        this.updateThemeElements(this.currentTheme);
-
-        // Reinitialize scroll animations for new elements
-        setTimeout(() => {
-            this.initializeScrollAnimations();
-        }, 100);
-    }
-
     initializeSampleRecipes() {
         const recipesGrid = document.getElementById('recipesGrid');
-        const premiumRecipesGrid = document.getElementById('premiumRecipesGrid');
         if (!recipesGrid) return;
 
-        // Initialize premium recipes for learner interface
-        if (premiumRecipesGrid) {
-            this.initializePremiumRecipes();
-        }
-
-        // Keep original recipes for creator interface
         const sampleRecipes = [
             {
                 name: 'Paatti\'s Sambar',
@@ -675,118 +331,6 @@ class TADAMApp {
         `).join('');
     }
 
-    initializePremiumRecipes() {
-        const premiumRecipesGrid = document.getElementById('premiumRecipesGrid');
-        if (!premiumRecipesGrid) return;
-
-        const premiumRecipes = [
-            {
-                name: 'Authentic Chettinad Sambar',
-                chef: 'Chef Meenakshi',
-                expertise: 'Chettinad cuisine expert',
-                rating: '4.9',
-                reviews: '234',
-                time: '45 mins',
-                servings: '6',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #8B4513, #CD853F)',
-                description: 'Traditional family recipe passed down through generations'
-            },
-            {
-                name: 'Kerala Fish Curry',
-                chef: 'Chef Lakshmi',
-                expertise: 'Kerala traditional cook',
-                rating: '4.8',
-                reviews: '189',
-                time: '35 mins',
-                servings: '4',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #FF6347, #FF4500)',
-                description: 'Coconut-rich curry with authentic Kerala spices'
-            },
-            {
-                name: 'Simple Tomato Rasam',
-                calories: '120',
-                protein: '8g',
-                fiber: '15g',
-                time: '25 mins',
-                servings: '4',
-                type: 'free',
-                gradient: 'linear-gradient(135deg, #FF6347, #FF4500)',
-                description: 'Traditional comfort food for daily meals'
-            },
-            {
-                name: 'Andhra Chicken Curry',
-                chef: 'Chef Radhika',
-                expertise: 'Andhra cuisine specialist',
-                rating: '4.7',
-                reviews: '156',
-                time: '50 mins',
-                servings: '5',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #DC143C, #B22222)',
-                description: 'Spicy and flavorful Andhra-style chicken preparation'
-            },
-            {
-                name: 'Coconut Rice',
-                calories: '180',
-                protein: '4g',
-                fiber: '3g',
-                time: '20 mins',
-                servings: '3',
-                type: 'free',
-                gradient: 'linear-gradient(135deg, #F5F5DC, #DEB887)',
-                description: 'Fragrant coconut rice with traditional tempering'
-            },
-            {
-                name: 'Traditional Payasam',
-                chef: 'Chef Sushila',
-                expertise: 'Traditional sweets expert',
-                rating: '4.9',
-                reviews: '298',
-                time: '40 mins',
-                servings: '8',
-                type: 'premium',
-                gradient: 'linear-gradient(135deg, #DDA0DD, #DA70D6)',
-                description: 'Creamy rice pudding with jaggery and cardamom'
-            }
-        ];
-
-        premiumRecipesGrid.innerHTML = premiumRecipes.map(recipe => `
-            <div class="recipe-card ${recipe.type}">
-                <div class="recipe-card-image" style="background: ${recipe.gradient};">
-                    <div class="${recipe.type}-badge">${recipe.type.toUpperCase()}</div>
-                    <div class="recipe-overlay">
-                        <h3>${recipe.name}</h3>
-                        <p>${recipe.description}</p>
-                    </div>
-                </div>
-                <div class="recipe-details">
-                    ${recipe.type === 'premium' ? `
-                        <div class="chef-info">
-                            <div class="chef-avatar"></div>
-                            <div>
-                                <h4>${recipe.chef}</h4>
-                                <p>${recipe.expertise}</p>
-                            </div>
-                        </div>
-                        <div class="recipe-stats">
-                            <span>★ ${recipe.rating} (${recipe.reviews} reviews)</span>
-                            <span>⏱ ${recipe.time}</span>
-                            <span>🍽 ${recipe.servings} servings</span>
-                        </div>
-                    ` : `
-                        <div class="nutrition-preview">
-                            <span>${recipe.calories} cal</span>
-                            <span>${recipe.protein} protein</span>
-                            <span>${recipe.fiber} fiber</span>
-                        </div>
-                    `}
-                </div>
-            </div>
-        `).join('');
-    }
-
     showToast(message, type = 'success') {
         const toast = document.getElementById('successToast');
         const messageSpan = toast.querySelector('.toast-message');
@@ -805,9 +349,251 @@ class TADAMApp {
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    // Learner-specific features
+    initializeLearnerFeatures() {
+        if (this.currentUser && this.currentUser.type === 'learner') {
+            this.bindLearnerLogout();
+            this.initializeDietPreferences();
+            this.enhanceLearnerRecipeCards();
+            this.bindMealPlanningEvents();
+            this.initializeNutritionChart();
+        }
+    }
+
+    bindLearnerLogout() {
+        const learnerLogoutBtn = document.getElementById('learnerLogoutBtn');
+        if (learnerLogoutBtn) {
+            learnerLogoutBtn.addEventListener('click', () => this.logoutUser());
+        }
+    }
+
+    logoutUser() {
+        localStorage.clear();
+        window.location.href = '/login.html';
+    }
+
+    initializeDietPreferences() {
+        const dietOptions = document.querySelectorAll('.diet-option');
+        
+        dietOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected state from all options
+                dietOptions.forEach(opt => {
+                    opt.classList.remove('border-green-500', 'bg-gray-600');
+                    opt.classList.add('bg-gray-700');
+                });
+                
+                // Add selected state to clicked option
+                this.classList.remove('bg-gray-700');
+                this.classList.add('border-green-500', 'bg-gray-600');
+                
+                // Store preference
+                const dietType = this.getAttribute('data-diet');
+                localStorage.setItem('selectedDiet', dietType);
+                
+                console.log('Selected diet:', dietType);
+                
+                // Show feedback
+                const dietName = this.querySelector('h4').textContent;
+                window.app.showToast(`Selected: ${dietName}`, 'success');
+            });
+        });
+    }
+
+    enhanceLearnerRecipeCards() {
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        
+        recipeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const recipeName = card.querySelector('.recipe-card-title')?.textContent || 'Recipe';
+                const recipeData = this.getRecipeData(recipeName);
+                this.openRecipeModal(recipeData);
+            });
+        });
+    }
+
+    getRecipeData(recipeName) {
+        // Sample recipe data - in a real app this would come from an API
+        return {
+            name: recipeName,
+            prepTime: '20 MIN',
+            totalTime: '40 MIN',
+            price: '₹150 (₹25 pp)',
+            image: 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg',
+            badges: ['HIGH PROTEIN', '8 PLANTS', 'LOW SAT FAT'],
+            ingredients: [
+                { quantity: '100g', name: 'black rice' },
+                { quantity: '2', name: 'carrot' },
+                { quantity: '1', name: 'cucumber' },
+                { quantity: '110g', name: 'seasonal tomatoes' },
+                { quantity: '1 handful', name: 'fresh coriander' },
+                { quantity: '4 tsp', name: 'ginger & garlic paste', note: '(Ginger puree IQF, Garlic puree IQF, Citric Acid, Water)' },
+                { quantity: '1 tbsp', name: 'tamari', note: '(Soya)' },
+                { quantity: '1 tbsp', name: 'rice vinegar' }
+            ],
+            nutrition: {
+                calories: 245,
+                carbs: { grams: 32, percent: 52 },
+                protein: { grams: 12, percent: 20 },
+                fat: { grams: 8, percent: 28 }
+            }
+        };
+    }
+
+    openRecipeModal(recipeData) {
+        const modal = document.getElementById('recipeDetailModal');
+        
+        // Create modal content
+        modal.innerHTML = `
+            <div class="bg-gray-800 rounded-lg max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+                <div class="relative">
+                    <button onclick="window.app.closeRecipeModal()" class="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white hover:bg-opacity-75 rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold transition-all duration-200">
+                        ×
+                    </button>
+                    
+                    <div class="grid md:grid-cols-2 min-h-[500px]">
+                        <!-- Left Panel: Image and Nutrition -->
+                        <div class="bg-gradient-to-br from-orange-500 to-red-600 p-8 flex flex-col justify-between text-white">
+                            <div>
+                                <div class="bg-white bg-opacity-20 rounded-lg h-48 mb-6 flex items-center justify-center text-6xl">
+                                    🍛
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    ${recipeData.badges.map(badge => `
+                                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-xs font-bold">${badge}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white bg-opacity-15 rounded-lg p-4 text-center">
+                                <p class="font-semibold">This recipe contains 8 different plants</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Panel: Details -->
+                        <div class="p-8 text-white">
+                            <h2 class="text-2xl font-bold mb-4">${recipeData.name}</h2>
+                            
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center">
+                                    <div class="text-xs text-gray-400 mb-1">Prep Time</div>
+                                    <div class="font-bold">${recipeData.prepTime}</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-gray-400 mb-1">Total Time</div>
+                                    <div class="font-bold">${recipeData.totalTime}</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-gray-400 mb-1">Price</div>
+                                    <div class="font-bold">${recipeData.price}</div>
+                                </div>
+                            </div>
+                            
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold mb-6 transition-all duration-200 transform hover:scale-105">
+                                <i data-lucide="plus" class="inline w-4 h-4 mr-2"></i>
+                                ADD TO MEAL PLAN
+                            </button>
+                            
+                            <div class="border-t border-gray-600 pt-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-semibold text-lg">INGREDIENTS</h3>
+                                    <button class="text-gray-400 hover:text-white">−</button>
+                                </div>
+                                
+                                <div class="space-y-3 max-h-64 overflow-y-auto">
+                                    ${recipeData.ingredients.map(ingredient => `
+                                        <div class="flex items-start gap-3 py-2 border-b border-gray-700">
+                                            <span class="font-bold text-green-400 min-w-[60px]">${ingredient.quantity}</span>
+                                            <div class="flex-1">
+                                                <span class="text-white">${ingredient.name}</span>
+                                                ${ingredient.note ? `<div class="text-xs text-gray-400 mt-1">${ingredient.note}</div>` : ''}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        
+        // Re-initialize Lucide icons for the modal
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+
+    closeRecipeModal() {
+        const modal = document.getElementById('recipeDetailModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+    }
+
+    bindMealPlanningEvents() {
+        const generatePlanBtn = document.getElementById('generatePlanBtn');
+        if (generatePlanBtn) {
+            generatePlanBtn.addEventListener('click', () => {
+                const calories = document.getElementById('calorieTarget')?.value || 1800;
+                const meals = document.getElementById('mealsPerDay')?.value || 3;
+                
+                this.showToast(`Generating meal plan for ${calories} calories in ${meals} meals!`);
+                console.log('Generating meal plan:', { calories, meals });
+            });
+        }
+    }
+
+    initializeNutritionChart() {
+        const canvas = document.getElementById('macroChart');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 50;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Data for the chart (Carbs: 52%, Protein: 20%, Fat: 28%)
+        const data = [
+            { label: 'Carbs', value: 52, color: '#3b82f6' },
+            { label: 'Protein', value: 20, color: '#22c55e' },
+            { label: 'Fat', value: 28, color: '#eab308' }
+        ];
+        
+        let currentAngle = -Math.PI / 2; // Start from top
+        
+        data.forEach(segment => {
+            const sliceAngle = (segment.value / 100) * 2 * Math.PI;
+            
+            // Draw slice
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+            ctx.closePath();
+            ctx.fillStyle = segment.color;
+            ctx.fill();
+            
+            currentAngle += sliceAngle;
+        });
+        
+        // Draw inner circle to create donut effect
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 25, 0, 2 * Math.PI);
+        ctx.fillStyle = '#1f2937'; // Match background
+        ctx.fill();
+    }
 }
 
 // Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new TADAMApp();
+    window.app = new TADAMApp();
 });
