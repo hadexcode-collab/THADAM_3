@@ -312,7 +312,7 @@ class UploadHandler {
         errorToast.className = 'toast error-toast';
         errorToast.innerHTML = `
             <div class="toast-content">
-                <span class="toast-icon">⚠️</span>
+                <div class="toast-icon"><i data-lucide="alert-triangle"></i></div>
                 <span class="toast-message">${message}</span>
             </div>
         `;
@@ -320,6 +320,11 @@ class UploadHandler {
 
         document.body.appendChild(errorToast);
         errorToast.classList.add('show');
+        
+        // Initialize Lucide icons for the error toast
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
 
         setTimeout(() => {
             errorToast.classList.remove('show');
