@@ -337,6 +337,49 @@ class TADAMApp {
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    initializePremiumLearnerContent() {
+        // Initialize diet preference cards
+        const dietCards = document.querySelectorAll('.diet-card');
+        dietCards.forEach(card => {
+            card.addEventListener('click', () => {
+                dietCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                this.showToast(`Selected ${card.querySelector('h3').textContent} diet preference`);
+            });
+        });
+
+        // Initialize dosha cards
+        const doshaCards = document.querySelectorAll('.dosha-card');
+        doshaCards.forEach(card => {
+            card.addEventListener('click', () => {
+                doshaCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                this.showToast(`Selected ${card.querySelector('h3').textContent} constitution`);
+            });
+        });
+
+        // Initialize premium buttons
+        const premiumBtns = document.querySelectorAll('.premium-btn');
+        premiumBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.showToast('Premium subscription coming soon! 🌟', 'info');
+            });
+        });
+
+        // Initialize recipe cards
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        recipeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const isPremium = card.classList.contains('premium');
+                if (isPremium) {
+                    this.showToast('Premium recipe - Subscribe to unlock! ✨', 'info');
+                } else {
+                    this.showToast('Opening free recipe...', 'success');
+                }
+            });
+        });
+    }
 }
 
 // Initialize the app when DOM is loaded
