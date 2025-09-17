@@ -311,21 +311,24 @@ function App() {
                           { id: 'coconut', icon: Coconut, title: 'Coconut-Based', desc: 'Kerala and coastal cuisine specialties' },
                           { id: 'millet', icon: Wheat, title: 'Millet & Grain', desc: 'Traditional grains for modern health' },
                           { id: 'spicy', icon: Flame, title: 'Spice-Rich', desc: 'Chettinad and Andhra style dishes' }
-                        ].map((diet) => (
-                          <div
-                            key={diet.id}
-                            className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 ${
-                              selectedDiet === diet.id
-                                ? 'border-orange-400 bg-orange-400/20 transform -translate-y-1'
-                                : 'border-orange-300/30 bg-white/5 hover:border-orange-400/50'
-                            }`}
-                            onClick={() => setSelectedDiet(diet.id)}
-                          >
-                            <diet.icon className="w-8 h-8 text-orange-400 mx-auto mb-2" />
-                            <h3 className="text-white font-semibold text-sm mb-1">{diet.title}</h3>
-                            <p className="text-white/70 text-xs">{diet.desc}</p>
-                          </div>
-                        ))}
+                        ].map((diet) => {
+                          const IconComponent = diet.icon;
+                          return (
+                            <div
+                              key={diet.id}
+                              className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 ${
+                                selectedDiet === diet.id
+                                  ? 'border-orange-400 bg-orange-400/20 transform -translate-y-1'
+                                  : 'border-orange-300/30 bg-white/5 hover:border-orange-400/50'
+                              }`}
+                              onClick={() => setSelectedDiet(diet.id)}
+                            >
+                              <IconComponent className="w-8 h-8 text-orange-400 mx-auto mb-2" />
+                              <h3 className="text-white font-semibold text-sm mb-1">{diet.title}</h3>
+                              <p className="text-white/70 text-xs">{diet.desc}</p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
