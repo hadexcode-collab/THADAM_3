@@ -855,9 +855,6 @@ input#nonveg-theme:checked + .nonveg-label .toggle-text {
     transition: var(--transition-smooth);
     font-weight: 500;
     font-family: var(--font-secondary);
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
 }
 
 .logout-btn:hover {
@@ -867,10 +864,6 @@ input#nonveg-theme:checked + .nonveg-label .toggle-text {
     box-shadow: var(--shadow-sm);
 }
 
-.logout-btn i {
-    width: 16px;
-    height: 16px;
-}
 /* Platform Navigation */
 .platform-nav {
     background: var(--background-secondary);
