@@ -729,41 +729,7 @@ class RecipeExtractorAI {
     }
 
     updateProcessingUI(step, result) {
-        const stepElement = document.querySelector(`[data-step="${step.id}"]`);
-        if (!stepElement) return;
-
-        // Mark step as processing
-        stepElement.classList.add('processing');
-        
-        // Animate progress bar
-        const progressBar = stepElement.querySelector('.progress');
-        if (progressBar) {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 15 + 5;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    
-                    // Mark as completed
-                    setTimeout(() => {
-                        stepElement.classList.remove('processing');
-                        stepElement.classList.add('completed');
-                        
-                        // Update step icon to checkmark
-                        const stepIcon = stepElement.querySelector('.step-icon i');
-                        if (stepIcon) {
-                            stepIcon.setAttribute('data-lucide', 'check');
-                            if (typeof lucide !== 'undefined') {
-                                lucide.createIcons();
-                            }
-                        }
-                    }, 500);
-                }
-                progressBar.style.width = `${progress}%`;
-            }, 100);
-        }
-        
+        // This would update the UI in a real implementation
         console.log(`Step ${step.name} completed:`, result);
     }
 
