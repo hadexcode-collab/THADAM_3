@@ -152,24 +152,168 @@
                     <div class="creator-content" id="creatorContent">
                         <div class="upload-section">
                             <div class="upload-area" id="uploadArea">
-                                <div class="upload-placeholder" id="uploadPlaceholder">
-                                    <div class="upload-icon">
-                                        <i data-lucide="video"></i>
+                                <h2>🎬 Video Recipe Extractor</h2>
+                                <p>Upload your cooking video and let our AI extract the traditional recipe</p>
+                                
+                                <div class="upload-container">
+                                    <div class="upload-area" id="uploadArea">
+                                        <div class="upload-content">
+                                            <i data-lucide="upload-cloud" class="upload-icon"></i>
+                                            <h3>Drop your cooking video here</h3>
+                                            <p>or click to browse files</p>
+                                            <small>Supports MP4, MOV, AVI up to 100MB</small>
+                                        </div>
+                                        <input type="file" id="videoInput" accept="video/*" style="display: none;">
                                     </div>
-                                    <h3>Upload Cooking Video</h3>
-                                    <p>Drag and drop your video here or click to browse</p>
-                                    <p class="file-info">Supported formats: MP4, MOV, AVI (Max 100MB)</p>
-                                    <input type="file" id="videoInput" accept="video/*" hidden>
-                                </div>
-                                <div class="video-preview hidden" id="videoPreview">
-                                    <video controls id="previewVideo"></video>
-                                    <div class="video-info" id="videoInfo"></div>
-                                    <button class="process-btn" id="processBtn">
-                                        <i data-lucide="search"></i>
-                                        <span>Extract Recipe with AI</span>
-                                    </button>
+                                    
+                                    <div id="videoPreview" class="video-preview" style="display: none;">
+                                        <video id="previewVideo" controls></video>
+                                        <div class="video-info">
+                                            <h4 id="videoFileName">Video uploaded</h4>
+                                            <p id="videoDetails">Ready for processing</p>
+                                        </div>
+                                        <button id="processBtn" class="process-btn">
+                                            <span class="btn-text">🔍 Extract Recipe with AI</span>
+                                            <div class="btn-loader hidden">
+                                                <div class="spinner"></div>
+                                            </div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            
+                            <div id="processingSection" class="processing-section" style="display: none;">
+                                <h3>🤖 AI Processing Pipeline</h3>
+                                <div class="processing-steps">
+                                    <div class="step" data-step="frames">
+                                        <div class="step-icon">
+                                            <i data-lucide="video"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Frame Analysis</h4>
+                                            <p>Extracting frames and identifying ingredients</p>
+                                            <div class="progress-bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step" data-step="audio">
+                                        <div class="step-icon">
+                                            <i data-lucide="mic"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Audio Transcription</h4>
+                                            <p>Processing Tamil/Telugu/Malayalam instructions</p>
+                                            <div class="progress-bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step" data-step="ingredients">
+                                        <div class="step-icon">
+                                            <i data-lucide="leaf"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Ingredient Detection</h4>
+                                            <p>Identifying traditional spices and vegetables</p>
+                                            <div class="progress-bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step" data-step="techniques">
+                                        <div class="step-icon">
+                                            <i data-lucide="chef-hat"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Technique Recognition</h4>
+                                            <p>Analyzing traditional cooking methods</p>
+                                            <div class="progress-bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step" data-step="recipe">
+                                        <div class="step-icon">
+                                            <i data-lucide="book-open"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Recipe Generation</h4>
+                                            <p>Creating authentic regional recipe</p>
+                                            <div class="progress-bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="recipeResults" class="recipe-results" style="display: none;">
+                                <div class="recipe-header">
+                                    <h2 id="recipeName">Generated Recipe</h2>
+                                    <div class="recipe-actions">
+                                        <button id="saveRecipe" class="action-btn">
+                                            <i data-lucide="bookmark"></i> Save
+                                        </button>
+                                        <button id="shareRecipe" class="action-btn">
+                                            <i data-lucide="share-2"></i> Share
+                                        </button>
+                                        <button id="printRecipe" class="action-btn">
+                                            <i data-lucide="printer"></i> Print
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="recipe-content">
+                                    <div class="recipe-meta">
+                                        <div class="meta-item">
+                                            <span class="label">Cuisine:</span>
+                                            <span id="cuisineType">Traditional Tamil</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="label">Difficulty:</span>
+                                            <span id="difficulty">Medium</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="label">Time:</span>
+                                            <span id="cookingTime">45 minutes</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="label">Serves:</span>
+                                            <span id="servingSize">4 people</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="recipe-sections">
+                                        <div class="ingredients-section">
+                                            <h3>🥄 Ingredients</h3>
+                                            <div id="ingredientsList" class="ingredients-list">
+                                                <!-- Populated by JS -->
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="instructions-section">
+                                            <h3>👩‍🍳 Instructions</h3>
+                                            <div id="instructionsList" class="instructions-list">
+                                                <!-- Populated by JS -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="confidence-section">
+                                        <h3>🎯 AI Confidence</h3>
+                                        <div id="confidenceMetrics" class="confidence-grid">
+                                            <!-- Populated by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                             <!-- Processing Status -->
                             <div class="processing-panel hidden" id="processingPanel">
@@ -229,6 +373,139 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- Processing Status -->
+                            <div class="processing-panel hidden" id="processingPanel">
+                                <div class="processing-header">
+                                    <i data-lucide="cpu"></i>
+                                    <h3>AI Processing Pipeline</h3>
+                                </div>
+                                <div class="processing-steps">
+                                    <div class="process-step" data-step="frames">
+                                        <div class="step-icon">
+                                            <i data-lucide="search"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Extracting Video Frames</h4>
+                                            <p>Analyzing visual content using YOLO-v8</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="audio">
+                                        <div class="step-icon">
+                                            <i data-lucide="mic"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Transcribing Audio</h4>
+                                            <p>Converting speech to text using Whisper</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="ingredients">
+                                        <div class="step-icon">
+                                            <i data-lucide="apple"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Identifying Ingredients</h4>
+                                            <p>Detecting ingredients with quantity estimation</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="techniques">
+                                        <div class="step-icon">
+                                            <i data-lucide="utensils"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Recognizing Techniques</h4>
+                                            <p>Analyzing cooking methods using ResNet-50</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="recipe">
+                                        <div class="step-icon">
+                                            <i data-lucide="file-text"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Generating Recipe</h4>
+                                            <p>Creating structured recipe using BERT</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recipe Display -->
+                    <div class="recipe-display hidden" id="recipeDisplay">
+                        <div class="recipe-header">
+                            <h2 id="recipeName">Generated Recipe</h2>
+                            <div class="recipe-actions">
+                                <button class="action-btn save-btn" id="saveRecipe">
+                                    <i data-lucide="bookmark"></i>
+                                    <span>Save Recipe</span>
+                                </button>
+                                <button class="action-btn share-btn" id="shareRecipe">
+                                    <i data-lucide="share-2"></i>
+                                    <span>Share</span>
+                                </button>
+                                <button class="action-btn print-btn" id="printRecipe">
+                                    <i data-lucide="printer"></i>
+                                    <span>Print</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="recipe-content">
+                            <div class="recipe-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Cuisine Type:</span>
+                                    <span id="cuisineType">Traditional Indian</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Difficulty:</span>
+                                    <span id="difficulty">Medium</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Cooking Time:</span>
+                                    <span id="cookingTime">45 minutes</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Serves:</span>
+                                    <span id="servingSize">4 people</span>
+                                </div>
+                            </div>
+
+                            <div class="recipe-sections">
+                                <div class="ingredients-section">
+                                    <div class="section-header">
+                                        <i data-lucide="list"></i>
+                                        <h3>Ingredients</h3>
+                                    </div>
+                                    <div class="ingredients-list" id="ingredientsList">
+                                        <!-- Ingredients will be populated by JS -->
+                                    </div>
+                                </div>
+
+                                <div class="instructions-section">
+                                    <div class="section-header">
+                                        <i data-lucide="utensils"></i>
+                                        <h3>Cooking Instructions</h3>
+                                    </div>
+                                    <div class="instructions-list" id="instructionsList">
+                                        <!-- Instructions will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="processing-confidence">
+                            <div class="confidence-header">
+                                <i data-lucide="target"></i>
+                                <h4>AI Confidence Scores</h4>
+                            </div>
+                            <div class="confidence-metrics" id="confidenceMetrics">
+                                <!-- Confidence scores will be populated by JS -->
                             </div>
                         </div>
                     </div>
