@@ -108,9 +108,13 @@ class TADAMApp {
 
     handleLogout() {
         localStorage.removeItem('currentUser');
+        localStorage.clear(); // Clear all localStorage data
         this.currentUser = null;
         document.getElementById('main-platform').classList.remove('active');
         document.getElementById('login-screen').classList.add('active');
+        
+        // Show logout confirmation
+        this.showToast('Logged out successfully', 'success');
     }
 
     showMainPlatform() {
@@ -591,5 +595,5 @@ class TADAMApp {
 
 // Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new TADAMApp();
+    window.app = new TADAMApp();
 });
