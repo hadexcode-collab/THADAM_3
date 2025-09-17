@@ -1405,6 +1405,689 @@ body::before {
     }
 }
 
+/* Premium Learner Content Styles */
+.premium-learner-content {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    gap: var(--space-lg);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    min-height: calc(100vh - 200px);
+}
+
+/* Left Sidebar - Categories & Filters */
+.learner-sidebar {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 119, 34, 0.2);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    height: fit-content;
+    position: sticky;
+    top: var(--space-lg);
+}
+
+.sidebar-section {
+    margin-bottom: var(--space-xl);
+}
+
+.sidebar-section h3 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--deep-saffron);
+}
+
+.diet-preferences-section {
+    margin-bottom: var(--space-xl);
+}
+
+.diet-preferences-section h2 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.diet-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.diet-card {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 119, 34, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.diet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 119, 34, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.diet-card:hover::before {
+    left: 100%;
+}
+
+.diet-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--deep-saffron);
+    box-shadow: 0 8px 24px rgba(255, 119, 34, 0.2);
+}
+
+.diet-card.active {
+    background: rgba(255, 119, 34, 0.2);
+    border-color: var(--deep-saffron);
+    transform: translateY(-2px);
+}
+
+.diet-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+    color: var(--royal-gold);
+}
+
+.diet-card h3 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+
+.diet-card p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Ayurveda Section */
+.ayurveda-section {
+    margin-bottom: var(--space-xl);
+}
+
+.ayurveda-section h2 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.dosha-selector {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.dosha-card {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 119, 34, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.dosha-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(255, 119, 34, 0.15);
+}
+
+.dosha-card.vata {
+    border-left: 4px solid #8B4513;
+}
+
+.dosha-card.pitta {
+    border-left: 4px solid #FF7722;
+}
+
+.dosha-card.kapha {
+    border-left: 4px solid #0D5F1F;
+}
+
+.dosha-card h3 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+
+.dosha-card p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-sm);
+}
+
+.recipe-count {
+    font-family: var(--font-secondary);
+    color: var(--royal-gold);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Main Content Area */
+.learner-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.content-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.content-header h1 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.content-header p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+/* Premium Recipe Grid */
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.recipe-card {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 119, 34, 0.2);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    position: relative;
+}
+
+.recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(255, 119, 34, 0.2);
+    border-color: rgba(255, 119, 34, 0.4);
+}
+
+.recipe-image {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-badge, .free-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-secondary);
+    z-index: 2;
+}
+
+.premium-badge {
+    background: var(--premium-gradient);
+    color: white;
+    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+}
+
+.free-badge {
+    background: rgba(13, 95, 31, 0.9);
+    color: white;
+    box-shadow: 0 2px 8px rgba(13, 95, 31, 0.3);
+}
+
+.recipe-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+    color: white;
+}
+
+.recipe-overlay h3 {
+    font-family: var(--font-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+
+.recipe-overlay p {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.recipe-details {
+    padding: var(--space-md);
+}
+
+.chef-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.chef-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--warm-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.chef-info h4 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.chef-info p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.7);
+    font-size: 0.8rem;
+}
+
+.recipe-stats {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 0.85rem;
+}
+
+.nutrition-preview {
+    display: flex;
+    justify-content: space-around;
+    font-family: var(--font-secondary);
+    color: var(--royal-gold);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Right Sidebar - Premium Promotions */
+.learner-premium-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.nutrition-card {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 119, 34, 0.2);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    position: sticky;
+    top: var(--space-lg);
+}
+
+.nutrition-card h3 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.macro-display {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.macro {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    position: relative;
+}
+
+.macro .value {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    min-width: 50px;
+}
+
+.macro .unit {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.7);
+    font-size: 0.9rem;
+    min-width: 60px;
+}
+
+.macro .bar {
+    flex: 1;
+    height: 6px;
+    background: var(--primary-gradient);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.macro .bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { width: 0%; }
+    50% { width: 100%; }
+    100% { width: 0%; }
+}
+
+.ayurvedic-benefits, .local-benefits {
+    margin-bottom: var(--space-md);
+}
+
+.ayurvedic-benefits h4, .local-benefits h4 {
+    font-family: var(--font-primary);
+    color: var(--royal-gold);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
+.ayurvedic-benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ayurvedic-benefits li {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-xs);
+    padding-left: var(--space-md);
+    position: relative;
+}
+
+.ayurvedic-benefits li::before {
+    content: '•';
+    color: var(--royal-gold);
+    position: absolute;
+    left: 0;
+}
+
+.local-benefits p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* Premium Promotion Sections */
+.premium-promotion-section {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(218, 165, 32, 0.3);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-promotion-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+}
+
+.premium-hero {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    position: relative;
+    z-index: 1;
+}
+
+.premium-hero h2 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    background: var(--premium-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.premium-hero p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.premium-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.benefit-card {
+    background: rgba(255, 248, 231, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: var(--transition-smooth);
+}
+
+.benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(218, 165, 32, 0.15);
+}
+
+.benefit-card h3 {
+    font-family: var(--font-primary);
+    color: var(--cream-white);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
+.benefit-card p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.8);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: var(--space-md);
+}
+
+.chef-testimonial {
+    background: rgba(255, 248, 231, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    border-left: 4px solid var(--royal-gold);
+}
+
+.chef-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--warm-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.chef-testimonial blockquote {
+    font-family: var(--font-accent);
+    color: var(--cream-white);
+    font-size: 1rem;
+    font-style: italic;
+    margin-bottom: var(--space-sm);
+    line-height: 1.5;
+}
+
+.chef-testimonial cite {
+    font-family: var(--font-secondary);
+    color: rgba(255, 248, 231, 0.7);
+    font-size: 0.85rem;
+    font-style: normal;
+}
+
+.technique-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.technique-preview span {
+    font-family: var(--font-secondary);
+    color: var(--forest-green);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Premium CTA Banners */
+.premium-cta-banners {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.cta-banner {
+    background: var(--primary-gradient);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: slide 3s infinite;
+}
+
+@keyframes slide {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.cta-banner h3 {
+    font-family: var(--font-primary);
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.cta-banner p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-md);
+    position: relative;
+    z-index: 1;
+}
+
+.premium-btn {
+    background: white;
+    color: var(--deep-saffron);
+    border: none;
+    padding: 12px var(--space-lg);
+    border-radius: var(--radius-md);
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+}
+
+.premium-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     :root {
@@ -1493,6 +2176,29 @@ body::before {
         grid-template-columns: 1fr;
     }
     
+    .premium-learner-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        padding: var(--space-md);
+    }
+    
+    .learner-sidebar,
+    .learner-premium-sidebar {
+        position: static;
+    }
+    
+    .diet-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .recipe-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .premium-benefits {
+        grid-template-columns: 1fr;
+    }
+    
     .confidence-metrics {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1547,6 +2253,18 @@ body::before {
     
     .confidence-metrics {
         grid-template-columns: 1fr;
+    }
+    
+    .premium-learner-content {
+        padding: var(--space-sm);
+    }
+    
+    .content-header h1 {
+        font-size: 2rem;
+    }
+    
+    .premium-hero h2 {
+        font-size: 1.8rem;
     }
 }
 
