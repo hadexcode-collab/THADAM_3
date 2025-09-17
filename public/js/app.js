@@ -4,6 +4,7 @@ class TADAMApp {
         this.currentUser = null;
         this.currentTab = 'kala-kitchen';
         this.savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
+        this.selectedDiet = localStorage.getItem('selectedDiet') || null;
         this.init();
     }
 
@@ -46,9 +47,6 @@ class TADAMApp {
         if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
         if (shareBtn) shareBtn.addEventListener('click', () => this.shareRecipe());
         if (printBtn) printBtn.addEventListener('click', () => this.printRecipe());
-
-        // Learner-specific functionality
-        this.initializeLearnerFeatures();
     }
 
     checkAuthentication() {
@@ -108,13 +106,9 @@ class TADAMApp {
 
     handleLogout() {
         localStorage.removeItem('currentUser');
-        localStorage.clear(); // Clear all localStorage data
         this.currentUser = null;
         document.getElementById('main-platform').classList.remove('active');
         document.getElementById('login-screen').classList.add('active');
-        
-        // Show logout confirmation
-        this.showToast('Logged out successfully', 'success');
     }
 
     showMainPlatform() {
@@ -135,6 +129,11 @@ class TADAMApp {
         // Show appropriate content
         this.updateContentVisibility();
         this.switchTab('kala-kitchen');
+        
+        // Initialize learner-specific features if user is learner
+        if (this.currentUser.type === 'learner') {
+            this.initializeLearnerFeatures();
+        }
     }
 
     updateContentVisibility() {
@@ -168,11 +167,11 @@ class TADAMApp {
         // Update content visibility for current tab
         if (tabId === 'kala-kitchen') {
             this.updateContentVisibility();
-            
-            // Initialize learner features if user is learner
-            if (this.currentUser && this.currentUser.type === 'learner') {
-                this.initializeLearnerFeatures();
-            }
+        }
+        
+        // Initialize learner features when switching to kala-kitchen
+        if (tabId === 'kala-kitchen' && this.currentUser && this.currentUser.type === 'learner') {
+            setTimeout(() => this.initializeLearnerFeatures(), 100);
         }
     }
 
@@ -188,6 +187,141 @@ class TADAMApp {
         this.savedRecipes.push(recipe);
         localStorage.setItem('savedRecipes', JSON.stringify(this.savedRecipes));
         this.showToast('Recipe saved successfully!');
+    }
+
+    initializeLearnerFeatures() {
+        this.enhanceLearnerRecipeCards();
+        this.initializeDietPreferences();
+        this.loadSelectedDiet();
+    }
+
+    enhanceLearnerRecipeCards() {
+        const recipeCards = document.querySelectorAll('#learnerContent .recipe-card');
+        
+        recipeCards.forEach(card => {
+            // Remove existing click handlers to avoid duplicates
+            card.replaceWith(card.cloneNode(true));
+        });
+        
+        // Re-select cards after cloning
+        const newRecipeCards = document.querySelectorAll('#learnerContent .recipe-card');
+        
+        newRecipeCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const recipeName = card.querySelector('.recipe-card-title').textContent;
+                const recipeTime = card.querySelector('.recipe-card-meta span').textContent;
+                const recipeDescription = card.querySelector('.recipe-card-description').textContent;
+                
+                const recipeData = {
+                    name: recipeName,
+                    prepTime: '20 MIN',
+                    totalTime: recipeTime,
+                    price: '₹150 (₹25 pp)',
+                    description: recipeDescription,
+                    ingredients: [
+                        { quantity: '1 cup', name: 'Basmati rice' },
+                        { quantity: '2 tbsp', name: 'Coconut oil' },
+                        { quantity: '1 tsp', name: 'Mustard seeds' },
+                        { quantity: '8-10', name: 'Curry leaves' },
+                        { quantity: '2', name: 'Green chilies' },
+                        { quantity: '1/2 cup', name: 'Fresh coconut' },
+                        { quantity: '1 tsp', name: 'Turmeric powder' },
+                        { quantity: '2 tbsp', name: 'Ginger-garlic paste' }
+                    ],
+                    instructions: [
+                        'Heat coconut oil in a heavy-bottomed pan',
+                        'Add mustard seeds and let them splutter',
+                        'Add curry leaves and ginger-garlic paste',
+                        'Add rice and mix gently with spices',
+                        'Add water and bring to boil',
+                        'Simmer until rice is cooked perfectly'
+                    ]
+                };
+                this.openRecipeModal(recipeData);
+            });
+        });
+    }
+
+    openRecipeModal(recipeData) {
+        const modal = document.getElementById('recipeDetailModal');
+        
+        // Populate modal with recipe data
+        document.getElementById('modalRecipeTitle').textContent = recipeData.name;
+        document.getElementById('modalPrepTime').textContent = recipeData.prepTime;
+        document.getElementById('modalTotalTime').textContent = recipeData.totalTime;
+        document.getElementById('modalPrice').textContent = recipeData.price;
+        
+        // Populate ingredients
+        const ingredientsList = document.getElementById('modalIngredientsList');
+        ingredientsList.innerHTML = '';
+        recipeData.ingredients.forEach(ingredient => {
+            const item = document.createElement('div');
+            item.className = 'ingredient-item';
+            item.innerHTML = `
+                <span class="quantity">${ingredient.quantity}</span>
+                <span class="name">${ingredient.name}</span>
+            `;
+            ingredientsList.appendChild(item);
+        });
+        
+        // Populate instructions
+        const instructionsList = document.getElementById('modalInstructionsList');
+        if (instructionsList && recipeData.instructions) {
+            instructionsList.innerHTML = '';
+            recipeData.instructions.forEach((instruction, index) => {
+                const item = document.createElement('div');
+                item.className = 'instruction-step';
+                item.innerHTML = `
+                    <span class="step-number">${index + 1}</span>
+                    <span class="step-text">${instruction}</span>
+                `;
+                instructionsList.appendChild(item);
+            });
+        }
+        
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    initializeDietPreferences() {
+        const dietOptions = document.querySelectorAll('.diet-option');
+        
+        dietOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active state from all options
+                dietOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add active state to clicked option
+                option.classList.add('selected');
+                
+                // Store preference
+                const dietType = option.getAttribute('data-diet');
+                this.selectedDiet = dietType;
+                localStorage.setItem('selectedDiet', dietType);
+                
+                // Show feedback
+                this.showToast(`Selected ${option.querySelector('h3').textContent} diet preference`);
+                
+                // Filter recipes based on diet type (optional enhancement)
+                this.filterRecipesByDiet(dietType);
+            });
+        });
+    }
+
+    loadSelectedDiet() {
+        if (this.selectedDiet) {
+            const selectedOption = document.querySelector(`[data-diet="${this.selectedDiet}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+        }
+    }
+
+    filterRecipesByDiet(dietType) {
+        // This could filter the recipe display based on diet preference
+        // For now, just show a message
+        console.log(`Filtering recipes for diet type: ${dietType}`);
     }
 
     shareRecipe() {
@@ -349,251 +483,40 @@ class TADAMApp {
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-
-    // Learner-specific features
-    initializeLearnerFeatures() {
-        if (this.currentUser && this.currentUser.type === 'learner') {
-            this.bindLearnerLogout();
-            this.initializeDietPreferences();
-            this.enhanceLearnerRecipeCards();
-            this.bindMealPlanningEvents();
-            this.initializeNutritionChart();
-        }
-    }
-
-    bindLearnerLogout() {
-        const learnerLogoutBtn = document.getElementById('learnerLogoutBtn');
-        if (learnerLogoutBtn) {
-            learnerLogoutBtn.addEventListener('click', () => this.logoutUser());
-        }
-    }
-
-    logoutUser() {
-        localStorage.clear();
-        window.location.href = '/login.html';
-    }
-
-    initializeDietPreferences() {
-        const dietOptions = document.querySelectorAll('.diet-option');
-        
-        dietOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove selected state from all options
-                dietOptions.forEach(opt => {
-                    opt.classList.remove('border-green-500', 'bg-gray-600');
-                    opt.classList.add('bg-gray-700');
-                });
-                
-                // Add selected state to clicked option
-                this.classList.remove('bg-gray-700');
-                this.classList.add('border-green-500', 'bg-gray-600');
-                
-                // Store preference
-                const dietType = this.getAttribute('data-diet');
-                localStorage.setItem('selectedDiet', dietType);
-                
-                console.log('Selected diet:', dietType);
-                
-                // Show feedback
-                const dietName = this.querySelector('h4').textContent;
-                window.app.showToast(`Selected: ${dietName}`, 'success');
-            });
-        });
-    }
-
-    enhanceLearnerRecipeCards() {
-        const recipeCards = document.querySelectorAll('.recipe-card');
-        
-        recipeCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const recipeName = card.querySelector('.recipe-card-title')?.textContent || 'Recipe';
-                const recipeData = this.getRecipeData(recipeName);
-                this.openRecipeModal(recipeData);
-            });
-        });
-    }
-
-    getRecipeData(recipeName) {
-        // Sample recipe data - in a real app this would come from an API
-        return {
-            name: recipeName,
-            prepTime: '20 MIN',
-            totalTime: '40 MIN',
-            price: '₹150 (₹25 pp)',
-            image: 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg',
-            badges: ['HIGH PROTEIN', '8 PLANTS', 'LOW SAT FAT'],
-            ingredients: [
-                { quantity: '100g', name: 'black rice' },
-                { quantity: '2', name: 'carrot' },
-                { quantity: '1', name: 'cucumber' },
-                { quantity: '110g', name: 'seasonal tomatoes' },
-                { quantity: '1 handful', name: 'fresh coriander' },
-                { quantity: '4 tsp', name: 'ginger & garlic paste', note: '(Ginger puree IQF, Garlic puree IQF, Citric Acid, Water)' },
-                { quantity: '1 tbsp', name: 'tamari', note: '(Soya)' },
-                { quantity: '1 tbsp', name: 'rice vinegar' }
-            ],
-            nutrition: {
-                calories: 245,
-                carbs: { grams: 32, percent: 52 },
-                protein: { grams: 12, percent: 20 },
-                fat: { grams: 8, percent: 28 }
-            }
-        };
-    }
-
-    openRecipeModal(recipeData) {
-        const modal = document.getElementById('recipeDetailModal');
-        
-        // Create modal content
-        modal.innerHTML = `
-            <div class="bg-gray-800 rounded-lg max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
-                <div class="relative">
-                    <button onclick="window.app.closeRecipeModal()" class="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white hover:bg-opacity-75 rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold transition-all duration-200">
-                        ×
-                    </button>
-                    
-                    <div class="grid md:grid-cols-2 min-h-[500px]">
-                        <!-- Left Panel: Image and Nutrition -->
-                        <div class="bg-gradient-to-br from-orange-500 to-red-600 p-8 flex flex-col justify-between text-white">
-                            <div>
-                                <div class="bg-white bg-opacity-20 rounded-lg h-48 mb-6 flex items-center justify-center text-6xl">
-                                    🍛
-                                </div>
-                                
-                                <div class="flex flex-wrap gap-2 mb-6">
-                                    ${recipeData.badges.map(badge => `
-                                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-xs font-bold">${badge}</span>
-                                    `).join('')}
-                                </div>
-                            </div>
-                            
-                            <div class="bg-white bg-opacity-15 rounded-lg p-4 text-center">
-                                <p class="font-semibold">This recipe contains 8 different plants</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Right Panel: Details -->
-                        <div class="p-8 text-white">
-                            <h2 class="text-2xl font-bold mb-4">${recipeData.name}</h2>
-                            
-                            <div class="grid grid-cols-3 gap-4 mb-6">
-                                <div class="text-center">
-                                    <div class="text-xs text-gray-400 mb-1">Prep Time</div>
-                                    <div class="font-bold">${recipeData.prepTime}</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-xs text-gray-400 mb-1">Total Time</div>
-                                    <div class="font-bold">${recipeData.totalTime}</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-xs text-gray-400 mb-1">Price</div>
-                                    <div class="font-bold">${recipeData.price}</div>
-                                </div>
-                            </div>
-                            
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold mb-6 transition-all duration-200 transform hover:scale-105">
-                                <i data-lucide="plus" class="inline w-4 h-4 mr-2"></i>
-                                ADD TO MEAL PLAN
-                            </button>
-                            
-                            <div class="border-t border-gray-600 pt-6">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h3 class="font-semibold text-lg">INGREDIENTS</h3>
-                                    <button class="text-gray-400 hover:text-white">−</button>
-                                </div>
-                                
-                                <div class="space-y-3 max-h-64 overflow-y-auto">
-                                    ${recipeData.ingredients.map(ingredient => `
-                                        <div class="flex items-start gap-3 py-2 border-b border-gray-700">
-                                            <span class="font-bold text-green-400 min-w-[60px]">${ingredient.quantity}</span>
-                                            <div class="flex-1">
-                                                <span class="text-white">${ingredient.name}</span>
-                                                ${ingredient.note ? `<div class="text-xs text-gray-400 mt-1">${ingredient.note}</div>` : ''}
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-        
-        // Re-initialize Lucide icons for the modal
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-    }
-
-    closeRecipeModal() {
-        const modal = document.getElementById('recipeDetailModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        document.body.style.overflow = 'auto';
-    }
-
-    bindMealPlanningEvents() {
-        const generatePlanBtn = document.getElementById('generatePlanBtn');
-        if (generatePlanBtn) {
-            generatePlanBtn.addEventListener('click', () => {
-                const calories = document.getElementById('calorieTarget')?.value || 1800;
-                const meals = document.getElementById('mealsPerDay')?.value || 3;
-                
-                this.showToast(`Generating meal plan for ${calories} calories in ${meals} meals!`);
-                console.log('Generating meal plan:', { calories, meals });
-            });
-        }
-    }
-
-    initializeNutritionChart() {
-        const canvas = document.getElementById('macroChart');
-        if (!canvas) return;
-        
-        const ctx = canvas.getContext('2d');
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-        const radius = 50;
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Data for the chart (Carbs: 52%, Protein: 20%, Fat: 28%)
-        const data = [
-            { label: 'Carbs', value: 52, color: '#3b82f6' },
-            { label: 'Protein', value: 20, color: '#22c55e' },
-            { label: 'Fat', value: 28, color: '#eab308' }
-        ];
-        
-        let currentAngle = -Math.PI / 2; // Start from top
-        
-        data.forEach(segment => {
-            const sliceAngle = (segment.value / 100) * 2 * Math.PI;
-            
-            // Draw slice
-            ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
-            ctx.closePath();
-            ctx.fillStyle = segment.color;
-            ctx.fill();
-            
-            currentAngle += sliceAngle;
-        });
-        
-        // Draw inner circle to create donut effect
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, 25, 0, 2 * Math.PI);
-        ctx.fillStyle = '#1f2937'; // Match background
-        ctx.fill();
-    }
 }
 
+// Global functions for modal control
+function closeRecipeModal() {
+    const modal = document.getElementById('recipeDetailModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function generateMealPlan() {
+    const calories = document.getElementById('calorieTarget').value;
+    const meals = document.getElementById('mealsPerDay').value;
+    
+    // Show loading state
+    const button = document.querySelector('.generate-plan-btn');
+    const originalText = button.textContent;
+    button.textContent = 'Generating Plan...';
+    button.disabled = true;
+    
+    // Simulate meal plan generation
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+        
+        // Show success message
+        if (window.tadamApp) {
+            window.tadamApp.showToast(`Generated meal plan for ${calories} calories in ${meals} meals!`);
+        }
+        
+        // Here you could show the actual meal plan results
+        console.log(`Generated meal plan: ${calories} calories, ${meals} meals`);
+    }, 2000);
+}
 // Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.app = new TADAMApp();
+    window.tadamApp = new TADAMApp();
 });

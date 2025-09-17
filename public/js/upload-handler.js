@@ -345,6 +345,12 @@ class UploadHandler {
             toast.classList.add('hidden');
         }, 3000);
     }
+
+    updateTheme(theme) {
+        // Handle theme updates for upload handler if needed
+        console.log('Upload handler theme updated to:', theme);
+        // Add any theme-specific logic here in the future
+    }
 }
 
 // Initialize upload handler when DOM is loaded
