@@ -408,3 +408,5 @@
 }
 
 .diet-card[data-diet="chettinad"] .card-image {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
