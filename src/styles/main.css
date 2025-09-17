@@ -853,9 +853,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
     position: relative;
     overflow: hidden;
+}
+
+.recipe-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.recipe-card:hover .recipe-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.recipe-icon {
+    font-size: 3rem;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .recipe-card-content {
@@ -871,7 +892,9 @@ body {
 
 .recipe-card-meta {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
     margin-bottom: 12px;
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.7);

@@ -200,53 +200,110 @@ class TADAMApp {
 
         const sampleRecipes = [
             {
-                name: 'Traditional Dal Tadka',
-                time: '30 mins',
-                difficulty: 'Easy',
-                cuisine: 'Indian',
-                description: 'A classic lentil dish with aromatic spices and traditional tempering technique.',
-                tags: ['Vegetarian', 'Protein-rich', 'Comfort food'],
-                icon: '🍛'
-            },
-            {
-                name: 'Grandma\'s Pickle Recipe',
-                time: '2 hours',
+                name: 'Paatti\'s Sambar',
+                time: '35 mins',
                 difficulty: 'Medium',
-                cuisine: 'Traditional',
-                description: 'Ancient preservation technique passed down through generations.',
-                tags: ['Fermented', 'Preserves', 'Spicy'],
-                icon: '🥒'
+                cuisine: 'Tamil Nadu',
+                description: 'Traditional Tamil sambar with drumsticks and small onions, made with authentic sambar powder.',
+                tags: ['Vegetarian', 'Traditional', 'Protein-rich'],
+                icon: '🍛',
+                image: 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg'
             },
             {
-                name: 'Heritage Biryani',
+                name: 'Traditional Rasam',
+                time: '25 mins',
+                difficulty: 'Easy',
+                cuisine: 'Tamil Nadu',
+                description: 'Tangy and aromatic rasam with tomatoes, tamarind, and traditional rasam powder.',
+                tags: ['Vegetarian', 'Comfort food', 'Digestive'],
+                icon: '🍲',
+                image: 'https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg'
+            },
+            {
+                name: 'Chettinad Chicken Curry',
+                time: '45 mins',
+                difficulty: 'Hard',
+                cuisine: 'Chettinad',
+                description: 'Spicy and flavorful chicken curry from Chettinad region with freshly ground spices.',
+                tags: ['Non-vegetarian', 'Spicy', 'Traditional'],
+                icon: '🍗',
+                image: 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg'
+            },
+            {
+                name: 'Coconut Rice (Thengai Sadam)',
+                time: '20 mins',
+                difficulty: 'Easy',
+                cuisine: 'Tamil Nadu',
+                description: 'Fragrant coconut rice with curry leaves, mustard seeds, and fresh grated coconut.',
+                tags: ['Vegetarian', 'Quick', 'Festive'],
+                icon: '🥥',
+                image: 'https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg'
+            },
+            {
+                name: 'Beans Poriyal',
+                time: '15 mins',
+                difficulty: 'Easy',
+                cuisine: 'Tamil Nadu',
+                description: 'Simple and healthy green beans stir-fry with coconut and traditional tempering.',
+                tags: ['Vegetarian', 'Healthy', 'Quick'],
+                icon: '🥬',
+                image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg'
+            },
+            {
+                name: 'Meen Kuzhambu (Fish Curry)',
+                time: '40 mins',
+                difficulty: 'Medium',
+                cuisine: 'Tamil Nadu',
+                description: 'Traditional Tamil fish curry with tamarind, tomatoes, and aromatic spices.',
+                tags: ['Non-vegetarian', 'Traditional', 'Tangy'],
+                icon: '🐟',
+                image: 'https://images.pexels.com/photos/725991/pexels-photo-725991.jpeg'
+            },
+            {
+                name: 'Idli with Sambar',
+                time: '30 mins',
+                difficulty: 'Medium',
+                cuisine: 'South Indian',
+                description: 'Soft steamed idlis served with traditional sambar and coconut chutney.',
+                tags: ['Vegetarian', 'Breakfast', 'Fermented'],
+                icon: '🥟',
+                image: 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg'
+            },
+            {
+                name: 'Mutton Biryani',
                 time: '90 mins',
                 difficulty: 'Hard',
-                cuisine: 'Mughlai',
-                description: 'Royal biryani recipe with authentic dum cooking method.',
-                tags: ['Rice dish', 'Festive', 'Aromatic'],
-                icon: '🍚'
+                cuisine: 'Tamil Nadu',
+                description: 'Aromatic mutton biryani cooked with basmati rice, saffron, and traditional spices.',
+                tags: ['Non-vegetarian', 'Festive', 'Aromatic'],
+                icon: '🍚',
+                image: 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg'
             },
             {
-                name: 'Ancient Kheer',
-                time: '45 mins',
+                name: 'Payasam (Sweet Rice Pudding)',
+                time: '40 mins',
                 difficulty: 'Medium',
-                cuisine: 'Traditional',
-                description: 'Traditional milk pudding with cardamom and saffron.',
-                tags: ['Dessert', 'Creamy', 'Sweet'],
-                icon: '🍮'
+                cuisine: 'South Indian',
+                description: 'Creamy rice pudding made with jaggery, coconut milk, and cardamom.',
+                tags: ['Vegetarian', 'Dessert', 'Festival'],
+                icon: '🍮',
+                image: 'https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg'
             }
         ];
 
         recipesGrid.innerHTML = sampleRecipes.map(recipe => `
             <div class="recipe-card">
-                <div class="recipe-card-image">
-                    <span>${recipe.icon}</span>
+                <div class="recipe-card-image" style="background-image: url('${recipe.image}'); background-size: cover; background-position: center;">
+                    <div class="recipe-overlay">
+                        <span class="recipe-icon">${recipe.icon}</span>
+                    </div>
                 </div>
                 <div class="recipe-card-content">
                     <h3 class="recipe-card-title">${recipe.name}</h3>
                     <div class="recipe-card-meta">
                         <span>⏱️ ${recipe.time}</span>
                         <span>📊 ${recipe.difficulty}</span>
+                        <span>🏛️ ${recipe.cuisine}</span>
                     </div>
                     <p class="recipe-card-description">${recipe.description}</p>
                     <div class="recipe-card-tags">
