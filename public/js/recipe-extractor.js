@@ -100,7 +100,7 @@ class RecipeExtractorAI {
             { name: 'Rasam Making', confidence: [92, 96], tamil: 'ரசம் செய்முறை', telugu: 'రసం తయారీ', malayalam: 'രസം ഉണ്ടാക്കൽ', description: 'Traditional South Indian soup preparation' },
             { name: 'Sambar Cooking', confidence: [94, 98], tamil: 'சாம்பார் சமையல்', telugu: 'సాంబార్ వంట', malayalam: 'സാമ്പാർ പാചകം', description: 'Lentil-based vegetable stew cooking' },
             { name: 'Aviyal Method', confidence: [85, 89], tamil: 'அவியல் முறை', telugu: 'అవియల్ పద్ధతి', malayalam: 'അവിയൽ രീതി', description: 'Mixed vegetable curry with coconut' },
-            { name: 'Thoran Preparation', confidence: [88, 92], tamil: 'தோரன் தயாரிப்பு', telugu: 'తోరన్ తయారీ', malayalam: 'തോരൻ തയ്യാറാക്കൽ', description: 'Kerala-style vegetable stir-fry with coconut' }
+            { name: 'Thoran Preparation', confidence: [88, 92], tamil: 'തോരന் തയാരിപ്പു', telugu: 'తోరన్ తయారీ', malayalam: 'തോരൻ തയ്യാറാക്കൽ', description: 'Kerala-style vegetable stir-fry with coconut' }
         ];
 
         this.recipeTemplates = {
@@ -256,43 +256,86 @@ class RecipeExtractorAI {
     }
 
     async analyzeAudio(videoFile) {
-        // Simulate audio transcription
-        const sampleTranscripts = [
-            "முதலில் கடாயில் எண்ணெய் விட்டு கடுகு போடுங்கள்... First heat oil in kadai and add mustard seeds...",
-            "கடுகு தாளித்ததும் கறிவேப்பிலை சேர்க்கவும்... After mustard seeds splutter, add curry leaves...",
-            "சின்ன வெங்காயம் சேர்த்து வதக்கவும்... Add small onions and sauté well...",
-            "இஞ்சி பூண்டு விழுது சேர்த்து நன்றாக வதக்கவும்... Add ginger-garlic paste and sauté well...",
-            "மஞ்சள் தூள், மிளகாய் தூள் சேர்க்கவும்... Add turmeric powder and red chili powder...",
-            "தக்காளி சேர்த்து நன்றாக மசித்து விடுங்கள்... Add tomatoes and mash them well...",
-            "புளி கரைத்த நீர் சேர்த்து கொதிக்க விடுங்கள்... Add tamarind water and let it boil...",
-            "சாம்பார் பொடி சேர்த்து நன்றாக கலக்கவும்... Add sambar powder and mix well...",
-            "துவரம் பருப்பு வேக வைத்து சேர்க்கவும்... Add cooked toor dal...",
-            "உப்பு சேர்த்து ருசி பார்த்து கொள்ளுங்கள்... Add salt and taste..."
-        ];
+        // Enhanced multilingual audio transcription simulation
+        const multilingualTranscripts = {
+            tamil: [
+                "முதலில் கடாயில் நல்லெண்ணெய் விட்டு சூடாக்கவும்... First heat sesame oil in the kadai...",
+                "கடுகு போட்டு தாளித்ததும் சீரகம் சேர்க்கவும்... Add mustard seeds, when they splutter add cumin seeds...",
+                "கறிவேப்பிலை சேர்த்து நறுமணம் வரும் வரை வதக்கவும்... Add curry leaves and sauté until fragrant...",
+                "சின்ன வெங்காயம் சேர்த்து பொன்னிறமாக வதக்கவும்... Add small onions and sauté until golden brown...",
+                "இஞ்சி பூண்டு விழுது சேர்த்து கச்சா வாசனை போகும் வரை வதக்கவும்... Add ginger-garlic paste and sauté until raw smell disappears...",
+                "தக்காளி சேர்த்து நன்றாக மசித்து எண்ணெய் பிரியும் வரை வதக்கவும்... Add tomatoes, mash well and cook until oil separates...",
+                "மஞ்சள் தூள், மிளகாய் தூள், சாம்பார் பொடி சேர்க்கவும்... Add turmeric powder, red chili powder, and sambar powder...",
+                "புளி கரைத்த நீர் சேர்த்து கொதிக்க விடுங்கள்... Add tamarind water and bring to boil...",
+                "வேக வைத்த துவரம் பருப்பு சேர்த்து கலக்கவும்... Add cooked toor dal and mix well...",
+                "உப்பு சேர்த்து ருசி பார்த்து 10 நிமிடம் கொதிக்க விடுங்கள்... Add salt to taste and simmer for 10 minutes..."
+            ],
+            telugu: [
+                "మొదట కడాయిలో నూనె వేసి వేడిచేయండి... First heat oil in the kadai...",
+                "ఆవాలు వేసి తాళించిన తర్వాత జీలకర్ర చేర్చండి... Add mustard seeds, after tempering add cumin seeds...",
+                "కరివేపాకు చేర్చి వాసన వచ్చే వరకు వేయించండి... Add curry leaves and fry until fragrant...",
+                "చిన్న ఉల్లిపాయలు చేర్చి బంగారు రంగు వచ్చే వరకు వేయించండి... Add small onions and fry until golden...",
+                "అల్లం వెల్లుల్లి పేస్ట్ చేర్చి పచ్చి వాసన పోయే వరకు వేయించండి... Add ginger-garlic paste and fry until raw smell goes...",
+                "టమాటోలు చేర్చి బాగా మెత్తగా చేసి నూనె వేరు అయ్యే వరకు వండండి... Add tomatoes, mash well and cook until oil separates...",
+                "పసుపు పొడి, మిరపకాయ పొడి, సాంబార్ పొడి చేర్చండి... Add turmeric powder, red chili powder, and sambar powder...",
+                "చింతపండు రసం చేర్చి మరిగించండి... Add tamarind extract and bring to boil...",
+                "వేడిన కందిపప్పు చేర్చి కలపండి... Add cooked toor dal and mix...",
+                "ఉప్పు చేర్చి రుచి చూసి 10 నిమిషాలు ఉడికించండి... Add salt to taste and simmer for 10 minutes..."
+            ],
+            malayalam: [
+                "ആദ്യം കടായിൽ എണ്ണ ചേർത്ത് ചൂടാക്കുക... First heat oil in the kadai...",
+                "കടുക് ചേർത്ത് പൊട്ടിച്ച ശേഷം ജീരകം ചേർക്കുക... Add mustard seeds, after spluttering add cumin...",
+                "കറിവേപ്പില ചേർത്ത് മണം വരുന്നത് വരെ വറുക്കുക... Add curry leaves and fry until fragrant...",
+                "ചെറിയ ഉള്ളി ചേർത്ത് സ്വർണ്ണ നിറം വരുന്നത് വരെ വറുക്കുക... Add small onions and fry until golden...",
+                "ഇഞ്ചി വെളുത്തുള്ളി പേസ്റ്റ് ചേർത്ത് അസംസ്കൃത മണം പോകുന്നത് വരെ വറുക്കുക... Add ginger-garlic paste and fry until raw smell goes...",
+                "തക്കാളി ചേർത്ത് നന്നായി ചതച്ച് എണ്ണ വേർപെടുന്നത് വരെ വേവിക്കുക... Add tomatoes, mash well and cook until oil separates...",
+                "മഞ്ഞൾ പൊടി, മുളക് പൊടി, സാമ്പാർ പൊടി ചേർക്കുക... Add turmeric powder, chili powder, and sambar powder...",
+                "പുളി വെള്ളം ചേർത്ത് തിളപ്പിക്കുക... Add tamarind water and bring to boil...",
+                "വേവിച്ച തുവര പരിപ്പ് ചേർത്ത് കലക്കുക... Add cooked toor dal and mix...",
+                "ഉപ്പ് ചേർത്ത് രുചി നോക്കി 10 മിനിറ്റ് തിളപ്പിക്കുക... Add salt to taste and simmer for 10 minutes..."
+            ]
+        };
         
-        const transcript = sampleTranscripts.slice(0, Math.floor(Math.random() * 4) + 3).join(' ');
+        // Randomly select language and generate realistic transcript
+        const languages = ['tamil', 'telugu', 'malayalam'];
+        const selectedLanguage = languages[Math.floor(Math.random() * languages.length)];
+        const transcripts = multilingualTranscripts[selectedLanguage];
+        const selectedTranscripts = transcripts.slice(0, Math.floor(Math.random() * 4) + 4);
+        const transcript = selectedTranscripts.join(' ');
         
         return {
             success: true,
             data: {
                 transcript: transcript,
                 duration: videoFile.duration || 180,
-                language: 'Tamil/Telugu/Malayalam/English',
-                detectedLanguage: ['Tamil', 'Telugu', 'Malayalam'][Math.floor(Math.random() * 3)],
-                model: this.models.whisper
+                language: 'Multilingual (Tamil/Telugu/Malayalam/English)',
+                detectedLanguage: selectedLanguage.charAt(0).toUpperCase() + selectedLanguage.slice(1),
+                model: this.models.whisper,
+                confidence: Math.floor(Math.random() * 8) + 92 // 92-99% confidence
             }
         };
     }
 
     async detectIngredients(videoFile) {
-        // Select random ingredients from database
+        // Enhanced South Indian ingredient detection
         const selectedIngredients = [];
         const categories = Object.keys(this.ingredientDatabase);
         
-        // Ensure we have a good mix of ingredients
+        // Ensure we have authentic South Indian ingredient combinations
         categories.forEach(category => {
             const items = this.ingredientDatabase[category];
-            const count = Math.floor(Math.random() * 3) + 1;
+            let count;
+            
+            // Prioritize essential South Indian ingredients
+            if (category === 'spices') {
+                count = Math.floor(Math.random() * 4) + 3; // 3-6 spices
+            } else if (category === 'vegetables') {
+                count = Math.floor(Math.random() * 3) + 2; // 2-4 vegetables
+            } else if (category === 'proteins') {
+                count = Math.floor(Math.random() * 2) + 1; // 1-2 proteins
+            } else {
+                count = Math.floor(Math.random() * 2) + 1; // 1-2 others
+            }
             
             for (let i = 0; i < count && i < items.length; i++) {
                 const item = items[Math.floor(Math.random() * items.length)];
@@ -304,20 +347,45 @@ class RecipeExtractorAI {
                     selectedIngredients.push({
                         name: item.name,
                         category: category,
-                        quantity: this.generateQuantity(item.name),
+                        quantity: item.quantity || this.generateQuantity(item.name),
                         confidence: confidence,
-                        detected: true
+                        detected: true,
+                        tamil: item.tamil || '',
+                        telugu: item.telugu || '',
+                        malayalam: item.malayalam || ''
                     });
                 }
             }
         });
 
+        // Ensure we have essential South Indian base ingredients
+        const essentialIngredients = [
+            { name: 'Mustard Seeds', category: 'spices', quantity: '1 tsp', confidence: 95 },
+            { name: 'Curry Leaves', category: 'spices', quantity: '8-10 leaves', confidence: 96 },
+            { name: 'Turmeric Powder', category: 'spices', quantity: '1/2 tsp', confidence: 94 }
+        ];
+
+        essentialIngredients.forEach(essential => {
+            if (!selectedIngredients.find(ing => ing.name === essential.name)) {
+                selectedIngredients.push({
+                    ...essential,
+                    detected: true,
+                    tamil: this.getTranslation(essential.name, 'tamil'),
+                    telugu: this.getTranslation(essential.name, 'telugu'),
+                    malayalam: this.getTranslation(essential.name, 'malayalam')
+                });
+            }
+        });
+
+        const finalIngredients = selectedIngredients.slice(0, 14); // Limit to 14 ingredients
+
         return {
             success: true,
             data: {
-                ingredients: selectedIngredients.slice(0, 12), // Limit to 12 ingredients
-                totalDetected: selectedIngredients.length,
-                model: this.models.yolo
+                ingredients: finalIngredients,
+                totalDetected: finalIngredients.length,
+                model: this.models.yolo,
+                processingTime: Math.floor(Math.random() * 3) + 2 // 2-4 seconds
             }
         };
     }
@@ -478,6 +546,114 @@ class RecipeExtractorAI {
             });
         }
 
-        // Add tamarind step for
+        // Add tamarind step for South Indian dishes
+        if (ingredients.some(ing => ing.name.includes('Tamarind'))) {
+            baseSteps.push({
+                step: baseSteps.length + 1,
+                instruction: "Add tamarind extract and bring to a boil. Simmer for 5 minutes.",
+                time: "5 minutes",
+                technique: "Tamarind Cooking",
+                temperature: "Medium heat"
+            });
+        }
+
+        // Add final seasoning step
+        baseSteps.push({
+            step: baseSteps.length + 1,
+            instruction: "Add salt to taste and garnish with fresh coriander leaves. Serve hot.",
+            time: "1 minute",
+            technique: "Final Seasoning",
+            temperature: "Low heat"
+        });
+
+        return baseSteps;
+    }
+
+    categorizeRecipe(ingredients) {
+        if (ingredients.some(ing => ing.name.includes('Dal') || ing.name.includes('Lentils'))) {
+            return 'Curry/Gravy';
+        } else if (ingredients.some(ing => ing.name.includes('Rice'))) {
+            return 'Rice Dish';
+        } else if (ingredients.some(ing => ing.category === 'vegetables')) {
+            return 'Vegetable Dish';
+        }
+        return 'Traditional Dish';
+    }
+
+    generateNutritionInfo(ingredients) {
+        return {
+            calories: Math.floor(Math.random() * 200) + 150,
+            protein: Math.floor(Math.random() * 15) + 8,
+            carbs: Math.floor(Math.random() * 30) + 20,
+            fat: Math.floor(Math.random() * 10) + 5,
+            fiber: Math.floor(Math.random() * 8) + 3
+        };
+    }
+
+    generateCookingTips(techniques) {
+        const tips = [
+            "Always heat oil properly before adding mustard seeds for better tempering.",
+            "Use fresh curry leaves for authentic South Indian flavor.",
+            "Adjust tamarind quantity based on your taste preference.",
+            "Cook on medium heat to prevent burning of spices.",
+            "Let the dish rest for 5 minutes before serving for better flavor."
+        ];
+        
+        return tips.slice(0, Math.floor(Math.random() * 3) + 2);
+    }
+
+    getTranslation(ingredientName, language) {
+        // Find ingredient in database and return translation
+        for (const category of Object.values(this.ingredientDatabase)) {
+            const ingredient = category.find(item => item.name === ingredientName);
+            if (ingredient && ingredient[language]) {
+                return ingredient[language];
+            }
+        }
+        return '';
+    }
+
+    generateQuantity(ingredientName) {
+        const quantities = ['1 cup', '1/2 cup', '1 tsp', '1 tbsp', '2-3 pieces', '200g', 'to taste'];
+        return quantities[Math.floor(Math.random() * quantities.length)];
+    }
+
+    calculateConfidenceScores(results) {
+        const ingredients = results.processingSteps.find(step => step.data.ingredients)?.data.ingredients || [];
+        const techniques = results.processingSteps.find(step => step.data.techniques)?.data.techniques || [];
+        
+        const avgIngredientConfidence = ingredients.length > 0 
+            ? ingredients.reduce((sum, ing) => sum + ing.confidence, 0) / ingredients.length 
+            : 0;
+        
+        const avgTechniqueConfidence = techniques.length > 0 
+            ? techniques.reduce((sum, tech) => sum + tech.confidence, 0) / techniques.length 
+            : 0;
+        
+        return {
+            overall: Math.floor((avgIngredientConfidence + avgTechniqueConfidence) / 2),
+            ingredients: Math.floor(avgIngredientConfidence),
+            techniques: Math.floor(avgTechniqueConfidence),
+            recipe: Math.floor(Math.random() * 10) + 85
+        };
+    }
+
+    getVideoInfo(videoFile) {
+        return {
+            name: videoFile.name || 'Traditional South Indian Cooking Video',
+            size: videoFile.size || Math.floor(Math.random() * 50000000) + 10000000,
+            duration: videoFile.duration || Math.floor(Math.random() * 300) + 120,
+            format: 'MP4',
+            resolution: '1080p'
+        };
+    }
+
+    updateProcessingUI(step, result) {
+        // This would update the UI in a real implementation
+        console.log(`Step ${step.name} completed:`, result);
+    }
+
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 }
