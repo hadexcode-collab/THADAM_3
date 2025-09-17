@@ -8,132 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
-<body class="veg-theme">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle-wrapper">
-        <div class="theme-toggle-container">
-            <div class="toggle-switch" id="themeToggle">
-                <input type="radio" id="veg-theme" name="theme" value="veg" checked>
-                <label for="veg-theme" class="toggle-label veg-label">
-                    <div class="toggle-icon">
-                        <div class="veg-dot"></div>
-                    </div>
-                    <span class="toggle-text">VEG</span>
-                </label>
-                
-                <input type="radio" id="nonveg-theme" name="theme" value="nonveg">
-                <label for="nonveg-theme" class="toggle-label nonveg-label">
-                    <div class="toggle-icon">
-                        <div class="nonveg-square"></div>
-                    </div>
-                    <span class="toggle-text">NON-VEG</span>
-                </label>
-                
-                <div class="toggle-slider"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Background Elements -->
-    <div class="floating-elements">
-        <div class="floating-spice cardamom" style="--delay: 0s;"></div>
-        <div class="floating-spice cinnamon" style="--delay: 2s;"></div>
-        <div class="floating-spice star-anise" style="--delay: 4s;"></div>
-        <div class="floating-spice cloves" style="--delay: 6s;"></div>
-        <div class="floating-leaf curry-leaf" style="--delay: 1s;"></div>
-        <div class="floating-leaf coconut-palm" style="--delay: 3s;"></div>
-        <div class="floating-vessel brass-pot" style="--delay: 5s;"></div>
-        <div class="floating-vessel clay-pot" style="--delay: 7s;"></div>
-    </div>
-
-    <!-- Background Cultural Motifs -->
-    <div class="background-motifs">
-        <div class="kolam-pattern kolam-1"></div>
-        <div class="kolam-pattern kolam-2"></div>
-        <div class="mandala-pattern mandala-1"></div>
-        <div class="paisley-pattern paisley-1"></div>
-    </div>
-
-    <!-- Theme Toggle -->
-    <div class="theme-toggle-wrapper">
-        <div class="theme-toggle-container">
-            <div class="toggle-switch" id="themeToggle">
-                <input type="radio" id="veg-theme" name="theme" value="veg" checked>
-                <label for="veg-theme" class="toggle-label veg-label">
-                    <div class="toggle-icon">
-                        <div class="veg-dot"></div>
-                    </div>
-                    <span class="toggle-text">VEG</span>
-                </label>
-                
-                <input type="radio" id="nonveg-theme" name="theme" value="nonveg">
-                <label for="nonveg-theme" class="toggle-label nonveg-label">
-                    <div class="toggle-icon">
-                        <div class="nonveg-square"></div>
-                    </div>
-                    <span class="toggle-text">NON-VEG</span>
-                </label>
-                
-                <div class="toggle-slider"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Background Elements -->
-    <div class="floating-elements">
-        <div class="floating-spice cardamom" style="--delay: 0s;"></div>
-        <div class="floating-spice cinnamon" style="--delay: 2s;"></div>
-        <div class="floating-spice star-anise" style="--delay: 4s;"></div>
-        <div class="floating-spice cloves" style="--delay: 6s;"></div>
-        <div class="floating-leaf curry-leaf" style="--delay: 1s;"></div>
-        <div class="floating-leaf coconut-palm" style="--delay: 3s;"></div>
-        <div class="floating-vessel brass-pot" style="--delay: 5s;"></div>
-        <div class="floating-vessel clay-pot" style="--delay: 7s;"></div>
-    </div>
-
-    <!-- Background Cultural Motifs -->
-    <div class="background-motifs">
-        <div class="kolam-pattern kolam-1"></div>
-        <div class="kolam-pattern kolam-2"></div>
-        <div class="mandala-pattern mandala-1"></div>
-        <div class="paisley-pattern paisley-1"></div>
-    </div>
-
+<body>
     <div id="app">
         <!-- Login Screen -->
         <div id="login-screen" class="screen active">
-            <!-- Cultural Hero Section -->
-            <div class="cultural-hero-section">
-                <div class="hero-background">
-                    <div class="temple-silhouette"></div>
-                    <div class="coconut-palms"></div>
-                    <div class="spice-particles"></div>
-                </div>
-                
-                <div class="hero-content">
-                    <h1 class="hero-title">TADAM Royal</h1>
-                    <p class="hero-subtitle">Traditional South Indian Cuisine</p>
-                    <p class="hero-description">In the land of TADAM, heritage holds the crown.</p>
-                    <p class="hero-tagline">Experience the elegance of South India in its most authentic form.</p>
-                </div>
-            </div>
-            
-            <!-- Cultural Hero Section -->
-            <div class="cultural-hero-section">
-                <div class="hero-background">
-                    <div class="temple-silhouette"></div>
-                    <div class="coconut-palms"></div>
-                    <div class="spice-particles"></div>
-                </div>
-                
-                <div class="hero-content">
-                    <h1 class="hero-title">TADAM Royal</h1>
-                    <p class="hero-subtitle">Traditional South Indian Cuisine</p>
-                    <p class="hero-description">In the land of TADAM, heritage holds the crown.</p>
-                    <p class="hero-tagline">Experience the elegance of South India in its most authentic form.</p>
-                </div>
-            </div>
-            
             <div class="login-container">
                 <div class="login-card">
                     <div class="login-header">
@@ -401,24 +279,6 @@
                             <div class="recipes-grid" id="recipesGrid">
                                 <!-- Sample recipes will be populated by JS -->
                             </div>
-                            
-                            <!-- Premium CTA Section -->
-                            <div class="premium-cta">
-                                <div class="cta-content">
-                                    <h3>Unlock Premium Heritage Recipes</h3>
-                                    <p>Access exclusive family recipes passed down through generations</p>
-                                    <button class="premium-btn">Explore Premium</button>
-                                </div>
-                            </div>
-                            
-                            <!-- Premium CTA Section -->
-                            <div class="premium-cta">
-                                <div class="cta-content">
-                                    <h3>Unlock Premium Heritage Recipes</h3>
-                                    <p>Access exclusive family recipes passed down through generations</p>
-                                    <button class="premium-btn">Explore Premium</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -474,10 +334,6 @@
     <script src="/js/auth.js"></script>
     <script src="/js/recipe-extractor.js"></script>
     <script src="/js/upload-handler.js"></script>
-    <script src="/js/theme-manager.js"></script>
-    <script src="/js/scroll-animations.js"></script>
-    <script src="/js/theme-manager.js"></script>
-    <script src="/js/scroll-animations.js"></script>
     <script>
         // Initialize Lucide icons after DOM load
         document.addEventListener('DOMContentLoaded', function() {
