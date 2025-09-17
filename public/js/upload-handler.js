@@ -15,7 +15,7 @@ class UploadHandler {
 
         if (uploadArea) {
             // Click to upload
-            uploadArea.addEventListener('click', (e) => {
+            uploadArea.addEventListener('click', () => {
                 videoInput.click();
             });
 
