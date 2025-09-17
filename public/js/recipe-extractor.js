@@ -536,47 +536,104 @@ class RecipeExtractorAI {
         return recipeNames[Math.floor(Math.random() * recipeNames.length)];
     }
 
-    generateCookingSteps(ingredients, techniques) {
+    generateDetailedCookingSteps(ingredients, techniques, detectedLanguage) {
         const baseSteps = [
             {
                 step: 1,
-                instruction: "Heat sesame oil (nallennai) or coconut oil in a heavy-bottomed kadai over medium heat.",
+                instruction: "Heat sesame oil (nallennai) or coconut oil in a heavy-bottomed kadai over medium heat. The oil should be hot but not smoking.",
                 time: "2-3 minutes",
                 technique: "Oil Heating",
-                temperature: "Medium heat"
+                temperature: "Medium heat",
+                tips: "Use traditional sesame oil for authentic flavor"
             },
             {
                 step: 2,
-                instruction: "Add mustard seeds and let them splutter. Then add cumin seeds and curry leaves.",
-                time: "1 minute",
+                instruction: "Add mustard seeds and let them splutter completely. Then add cumin seeds, fenugreek seeds, and fresh curry leaves. Listen for the sizzling sound.",
+                time: "1-2 minutes",
                 technique: "Thalippu (Tempering)",
-                temperature: "Medium heat"
+                temperature: "Medium heat",
+                tips: "Curry leaves should be fresh for best aroma"
             },
             {
                 step: 3,
-                instruction: "Add small onions (sambar onions) and sauté until they turn golden brown.",
+                instruction: "Add small onions (sambar onions) and sauté until they turn golden brown and slightly caramelized. This adds sweetness to the dish.",
                 time: "5-7 minutes",
                 technique: "Sautéing",
-                temperature: "Medium heat"
+                temperature: "Medium heat",
+                tips: "Small onions are preferred over big onions in South Indian cooking"
             },
             {
                 step: 4,
-                instruction: "Add ginger-garlic paste and green chilies. Sauté until the raw smell disappears.",
-                time: "2 minutes",
+                instruction: "Add freshly ground ginger-garlic paste and slit green chilies. Sauté until the raw smell disappears and the mixture becomes aromatic.",
+                time: "2-3 minutes",
                 technique: "Sautéing",
-                temperature: "Medium heat"
+                temperature: "Medium heat",
+                tips: "Fresh ginger-garlic paste gives better flavor than store-bought"
             }
         ];
 
-        // Add ingredient-specific steps
+        // Add ingredient-specific steps based on detected ingredients
         if (ingredients.some(ing => ing.name.includes('Tomato'))) {
             baseSteps.push({
                 step: baseSteps.length + 1,
-                instruction: "Add chopped tomatoes and cook until they become mushy and oil separates.",
+                instruction: "Add chopped tomatoes and cook until they become completely mushy and oil separates from the mixture. This is crucial for the base flavor.",
                 time: "8-10 minutes",
                 technique: "Tomato Cooking",
-                temperature: "Medium-low heat"
+                temperature: "Medium-low heat",
+                tips: "Fully ripe tomatoes work best for this step"
             });
         }
+
+        if (ingredients.some(ing => ing.name.includes('Dal'))) {
+            baseSteps.push({
+                step: baseSteps.length + 1,
+                instruction: "Add the pressure-cooked dal (lentils) along with the cooking water. Mix gently to combine without mashing the dal completely.",
+                time: "2-3 minutes",
+                technique: "Dal Integration",
+                temperature: "Medium heat",
+                tips: "Save the dal cooking water as it contains nutrients and flavor"
+            });
+        }
+
+        if (ingredients.some(ing => ing.name.includes('Tamarind'))) {
+            baseSteps.push({
+                step: baseSteps.length + 1,
+                instruction: "Add tamarind extract (soaked and strained) gradually while stirring. Bring the mixture to a rolling boil.",
+                time: "5-7 minutes",
+                technique: "Tamarind Addition",
+                temperature: "Medium-high heat",
+                tips: "Soak tamarind in warm water for 15 minutes before extracting"
+            });
+        }
+
+        if (ingredients.some(ing => ing.name.includes('Coconut'))) {
+            baseSteps.push({
+                step: baseSteps.length + 1,
+                instruction: "Add freshly grated coconut and mix well. Cook for 2-3 minutes until the coconut is well incorporated.",
+                time: "2-3 minutes",
+                technique: "Coconut Integration",
+                temperature: "Low heat",
+                tips: "Fresh coconut gives the best texture and flavor"
+            });
+        }
+
+        // Add final seasoning and garnish steps
+        baseSteps.push({
+            step: baseSteps.length + 1,
+            instruction: "Add salt to taste and simmer the dish for 10-15 minutes until all flavors meld together. Adjust consistency with water if needed.",
+            time: "10-15 minutes",
+            technique: "Final Simmering",
+            temperature: "Low heat",
+            tips: "Taste and adjust salt, tanginess, and spice levels"
+        });
+
+        baseSteps.push({
+            step: baseSteps.length + 1,
+            instruction: "Garnish with fresh coriander leaves and serve hot with steamed rice or traditional South Indian bread.",
+            time: "1 minute",
+            technique: "Garnishing",
+            temperature: "Off heat",
+            tips: "Serve immediately for best taste and aroma"
+        });
 
         // Add tamarind step for
