@@ -1,23 +1,22 @@
 /* Premium South Indian Cultural Design System */
 :root {
     /* Traditional South Indian Color Palette */
-    --deep-saffron: #FF7722;
-    --forest-green: #0D5F1F;
-    --royal-gold: #DAA520;
-    --warm-terracotta: #C65D07;
-    --cream-white: #FFF8E7;
-    --deep-maroon: #722F37;
-    --coconut-white: #FFFFFF;
-    --temple-gold: #B8860B;
-    --spice-brown: #8B4513;
-    --curry-green: #228B22;
+    --saffron: #FF9933;
+    --india-green: #138808;
+    --royal-blue: #000080;
+    --warm-gold: #DAA520;
+    --terracotta: #E2725B;
+    --cream-white: #FFF8DC;
+    --deep-maroon: #800020;
+    --temple-bronze: #CD7F32;
+    --sandalwood: #F4A460;
+    --turmeric: #E4D00A;
     
     /* Gradient Combinations */
-    --primary-gradient: linear-gradient(135deg, var(--deep-saffron), var(--royal-gold));
-    --secondary-gradient: linear-gradient(135deg, var(--forest-green), var(--curry-green));
-    --warm-gradient: linear-gradient(135deg, var(--warm-terracotta), var(--temple-gold));
-    --cultural-gradient: linear-gradient(135deg, var(--deep-maroon), var(--spice-brown));
-    --premium-gradient: linear-gradient(135deg, var(--royal-gold), var(--temple-gold));
+    --primary-gradient: linear-gradient(135deg, var(--saffron), var(--warm-gold));
+    --secondary-gradient: linear-gradient(135deg, var(--india-green), var(--royal-blue));
+    --warm-gradient: linear-gradient(135deg, var(--terracotta), var(--sandalwood));
+    --cultural-gradient: linear-gradient(135deg, var(--deep-maroon), var(--temple-bronze));
     
     /* Typography Scale */
     --font-primary: 'Playfair Display', serif;
@@ -1187,38 +1186,6 @@ body::before {
     font-weight: 600;
     text-align: center;
 }
-
-.category-filters {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-}
-
-.filter-item {
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(255, 248, 231, 0.05);
-    border: 1px solid rgba(255, 119, 34, 0.2);
-    border-radius: var(--radius-md);
-    color: rgba(255, 248, 231, 0.8);
-    font-family: var(--font-secondary);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.filter-item:hover {
-    background: rgba(255, 119, 34, 0.1);
-    color: var(--cream-white);
-}
-
-.filter-item.active {
-    background: rgba(255, 119, 34, 0.2);
-    border-color: var(--deep-saffron);
-    color: var(--cream-white);
-    font-weight: 500;
-}
-
-/* Premium Recipe Grid */
 
 .recipes-grid {
     display: grid;
