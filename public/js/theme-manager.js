@@ -172,6 +172,27 @@ class ThemeManager {
 
 // Initialize theme manager when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize uploadHandler if it doesn't exist to prevent errors
+    if (!window.uploadHandler) {
+        window.uploadHandler = {};
+    }
+    
+    // Add updateTheme function to uploadHandler
+    window.uploadHandler.updateTheme = function(theme) {
+        console.log("Theme updated to:", theme);
+        document.documentElement.setAttribute("data-theme", theme);
+        
+        // Update any upload-specific theme elements if needed
+        const uploadArea = document.getElementById('uploadArea');
+        if (uploadArea) {
+            if (theme === 'nonveg') {
+                uploadArea.style.borderColor = '#fde68a';
+            } else {
+                uploadArea.style.borderColor = '#e5e7eb';
+            }
+        }
+    };
+    
     window.themeManager = new ThemeManager();
     
     // Listen for theme changes
