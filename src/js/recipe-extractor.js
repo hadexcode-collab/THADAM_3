@@ -348,11 +348,16 @@ class RecipeExtractorAI {
         
         let recipeTemplate;
         if (ingredients.some(ing => ing.name.includes('Dal') || ing.name.includes('Lentils'))) {
-            recipeTemplate = this.recipeTemplates.dal;
+            recipeTemplate = this.recipeTemplates.sambar;
         } else if (ingredients.some(ing => ing.name.includes('Rice'))) {
-            recipeTemplate = this.recipeTemplates.rice;
+            recipeTemplate = this.recipeTemplates.biryani;
         } else {
-            recipeTemplate = this.recipeTemplates.curry;
+            recipeTemplate = this.recipeTemplates.kozhambhu;
+        }
+        
+        // Fallback to ensure recipeTemplate is never undefined
+        if (!recipeTemplate) {
+            recipeTemplate = this.recipeTemplates.sambar;
         }
 
         // Generate recipe name
