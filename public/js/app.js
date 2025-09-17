@@ -323,6 +323,7 @@ class TADAMApp {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('in-view');
                 }
             });
         }, observerOptions);
@@ -338,8 +339,8 @@ class TADAMApp {
     }
 
     initializeDietModeToggle() {
-        const toggleOptions = document.querySelectorAll('.toggle-option');
-        const toggleSlider = document.querySelector('.toggle-slider');
+        const toggleOptions = document.querySelectorAll('.diet-mode-toggle .toggle-option');
+        const toggleSlider = document.querySelector('.diet-mode-toggle .toggle-slider');
         
         toggleOptions.forEach((option, index) => {
             option.addEventListener('click', () => {
@@ -521,6 +522,9 @@ class TADAMApp {
                 </div>
             </div>
         `).join('');
+
+        // Apply current theme to new recipe cards
+        this.updateThemeElements(this.currentTheme);
 
         // Reinitialize scroll animations for new elements
         setTimeout(() => {
