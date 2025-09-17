@@ -33,15 +33,6 @@ class UploadHandler {
         if (processBtn) {
             processBtn.addEventListener('click', () => this.processVideo());
         }
-
-        // Recipe action buttons
-        const saveBtn = document.getElementById('saveRecipe');
-        const shareBtn = document.getElementById('shareRecipe');
-        const printBtn = document.getElementById('printRecipe');
-
-        if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
-        if (shareBtn) shareBtn.addEventListener('click', () => this.shareRecipe());
-        if (printBtn) printBtn.addEventListener('click', () => this.printRecipe());
     }
 
     handleDragOver(e) {
@@ -391,40 +382,6 @@ class UploadHandler {
         }, 3000);
     }
 }
-
-    saveRecipe() {
-        const recipeName = document.getElementById('recipeName')?.textContent || 'Generated Recipe';
-        const recipe = {
-            id: Date.now(),
-            name: recipeName,
-            savedAt: new Date().toISOString(),
-        };
-
-        let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-        savedRecipes.push(recipe);
-        localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
-        this.showSuccess('Recipe saved successfully!');
-    }
-
-    shareRecipe() {
-        const recipeName = document.getElementById('recipeName')?.textContent || 'Generated Recipe';
-        if (navigator.share) {
-            navigator.share({
-                title: `${recipeName} - TADAM Recipe`,
-                text: 'Check out this traditional recipe I found on TADAM!',
-                url: window.location.href
-            });
-        } else {
-            const shareText = `Check out this traditional recipe: ${recipeName} - TADAM Platform`;
-            navigator.clipboard.writeText(shareText).then(() => {
-                this.showSuccess('Recipe link copied to clipboard!');
-            });
-        }
-    }
-
-    printRecipe() {
-        window.print();
-    }
 
 // Initialize upload handler when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
