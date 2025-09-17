@@ -312,23 +312,18 @@ class TADAMApp {
     }
 
     initializeScrollAnimations() {
-        // Bombon.rs-style scroll-triggered animations
+        // Simple scroll-triggered animations without external libraries
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                     entry.target.classList.add('in-view');
-                    
-                    // Stagger animation for multiple elements
-                    const delay = Array.from(entry.target.parentNode.children).indexOf(entry.target) * 100;
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, delay);
                 }
             });
         }, observerOptions);
@@ -337,20 +332,9 @@ class TADAMApp {
         const animatedElements = document.querySelectorAll('[data-scroll]');
         animatedElements.forEach(el => {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(50px)';
-            el.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
-        });
-        
-        // Parallax effect for hero background elements
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.temple-silhouette, .brass-vessel-pattern, .kolam-overlay');
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = 0.5 + (index * 0.2);
-                element.style.transform = `translateY(${scrolled * speed}px)`;
-            });
         });
     }
 
