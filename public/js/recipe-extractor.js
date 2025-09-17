@@ -511,31 +511,26 @@ class RecipeExtractorAI {
     }
 
     generateRecipeName(ingredients, techniques) {
-        const primaryVegetable = ingredients.find(ing => 
-            ing.confidence > 85 && ing.category === 'vegetables'
-        );
-        const primaryProtein = ingredients.find(ing => 
-            ing.confidence > 85 && ing.category === 'proteins'
+        const primaryIngredient = ingredients.find(ing => 
+            ing.confidence > 85 && (ing.category === 'proteins' || ing.category === 'grains')
         );
         
-        const hasSpecialTechnique = techniques.find(tech => 
-            tech.name.includes('Sambar') || tech.name.includes('Rasam') || 
-            tech.name.includes('Aviyal') || tech.name.includes('Thoran')
+        const hasTraditionalTechnique = techniques.some(tech => 
+            tech.name.includes('Thalippu') || tech.name.includes('Sambar') || tech.name.includes('Rasam')
         );
 
-        let regionPrefix = 'Traditional South Indian';
+        const baseName = primaryIngredient ? primaryIngredient.name.split('(')[0].trim() : 'Traditional';
+        const prefix = hasTraditionalTechnique ? 'Paatti\'s' : 'Traditional Tamil';
         
-        // Generate culturally appropriate names
         const recipeNames = [
-            `${regionPrefix} Sambar with ${primaryVegetable?.name || 'Mixed Vegetables'}`,
-            `Paatti's Special ${primaryVegetable?.name || 'Vegetable'} Curry`,
-            `${regionPrefix} ${primaryProtein?.name || 'Dal'} Rasam`,
-            `Heritage ${primaryVegetable?.name || 'Vegetable'} Poriyal`,
-            `Authentic Chettinad ${primaryVegetable?.name || 'Vegetable'} Kootu`,
-            `Traditional ${primaryVegetable?.name || 'Mixed Vegetable'} Aviyal`,
-            `${regionPrefix} ${primaryVegetable?.name || 'Vegetable'} Thoran`,
-            `Classic ${primaryProtein?.name || 'Dal'} Curry`,
-            `${regionPrefix} Style ${primaryVegetable?.name || 'Vegetable'} Preparation`
+            `${prefix} ${baseName} Sambar`,
+            `Traditional Tamil ${baseName} Kozhambhu`,
+            `Heritage ${baseName} Poriyal`,
+            `Authentic Chettinad ${baseName}`,
+            `Classic Tamil ${baseName} Curry`,
+            `Paatti's Special ${baseName} Recipe`,
+            `Traditional ${baseName} Rasam`,
+            `South Indian ${baseName} Preparation`
         ];
 
         return recipeNames[Math.floor(Math.random() * recipeNames.length)];
@@ -595,11 +590,11 @@ class RecipeExtractorAI {
             });
         }
 
-        // Add dal cooking step
+        // Add dal cooking step if dal is present
         if (ingredients.some(ing => ing.name.includes('Dal'))) {
             baseSteps.push({
                 step: baseSteps.length + 1,
-                instruction: "Add cooked dal and mix well. Adjust consistency with water if needed.",
+                instruction: "Add the cooked dal and mix well. Adjust consistency with water if needed.",
                 time: "3-5 minutes",
                 technique: "Dal Integration",
                 temperature: "Medium heat"
@@ -609,7 +604,7 @@ class RecipeExtractorAI {
         // Final seasoning step
         baseSteps.push({
             step: baseSteps.length + 1,
-            instruction: "Add salt to taste and simmer for 10-15 minutes. Garnish with fresh coriander leaves.",
+            instruction: "Add salt to taste and simmer for 10-15 minutes until flavors blend well. Garnish with fresh coriander leaves.",
             time: "10-15 minutes",
             technique: "Final Seasoning",
             temperature: "Low heat"
@@ -619,58 +614,84 @@ class RecipeExtractorAI {
     }
 
     categorizeRecipe(ingredients) {
-        if (ingredients.some(ing => ing.name.includes('Dal') || ing.name.includes('Lentil'))) {
-            return 'Dal/Lentil Curry';
+        if (ingredients.some(ing => ing.name.includes('Dal') || ing.name.includes('Lentils'))) {
+            return 'Curry/Gravy';
         } else if (ingredients.some(ing => ing.name.includes('Rice'))) {
             return 'Rice Dish';
         } else if (ingredients.some(ing => ing.category === 'vegetables')) {
-            return 'Vegetable Curry';
+            return 'Vegetable Dish';
         } else {
-            return 'South Indian Curry';
+            return 'Traditional South Indian';
         }
     }
 
     generateNutritionInfo(ingredients) {
-        // Simulate nutrition calculation based on ingredients
+        // Simplified nutrition calculation based on ingredients
+        let calories = 0;
+        let protein = 0;
+        let carbs = 0;
+        let fat = 0;
+        let fiber = 0;
+
+        ingredients.forEach(ingredient => {
+            // Basic nutrition values per 100g (simplified)
+            if (ingredient.category === 'proteins') {
+                calories += 350;
+                protein += 25;
+                carbs += 60;
+                fiber += 15;
+            } else if (ingredient.category === 'grains') {
+                calories += 350;
+                protein += 8;
+                carbs += 75;
+                fiber += 3;
+            } else if (ingredient.category === 'vegetables') {
+                calories += 25;
+                protein += 2;
+                carbs += 5;
+                fiber += 3;
+            } else if (ingredient.category === 'oils_and_fats') {
+                calories += 900;
+                fat += 100;
+            }
+        });
+
+        // Adjust for serving size (divide by estimated servings)
+        const servings = 4;
         return {
-            calories: Math.floor(Math.random() * 200) + 150,
-            protein: Math.floor(Math.random() * 15) + 8,
-            carbs: Math.floor(Math.random() * 30) + 20,
-            fat: Math.floor(Math.random() * 10) + 5,
-            fiber: Math.floor(Math.random() * 8) + 4,
-            sodium: Math.floor(Math.random() * 500) + 300
+            calories: Math.round(calories / servings),
+            protein: Math.round(protein / servings),
+            carbohydrates: Math.round(carbs / servings),
+            fat: Math.round(fat / servings),
+            fiber: Math.round(fiber / servings),
+            sodium: Math.round(Math.random() * 500 + 200), // mg
+            servingSize: "1 cup (approximately 250ml)"
         };
     }
 
     generateCookingTips(techniques) {
         const tips = [
-            "Use a heavy-bottomed kadai for even heat distribution",
+            "Use a heavy-bottomed kadai or pan for even heat distribution",
             "Always heat oil before adding mustard seeds for proper tempering",
             "Fresh curry leaves make a significant difference in flavor",
             "Adjust spice levels according to your preference",
-            "Let the dish rest for 5 minutes before serving for better flavor integration",
-            "Use traditional sesame oil (nallennai) for authentic taste",
-            "Soak tamarind in warm water for easier extraction",
-            "Cook on medium heat to prevent burning of spices"
+            "Let the dish rest for 5 minutes before serving for better flavor integration"
         ];
-        
-        return tips.slice(0, Math.floor(Math.random() * 3) + 3);
-    }
 
-    getTranslation(ingredientName, language) {
-        // Find ingredient in database and return translation
-        for (const category of Object.values(this.ingredientDatabase)) {
-            const ingredient = category.find(item => item.name === ingredientName);
-            if (ingredient && ingredient[language]) {
-                return ingredient[language];
-            }
+        // Add technique-specific tips
+        if (techniques.some(tech => tech.name.includes('Pressure Cooking'))) {
+            tips.push("When pressure cooking dal, use 3:1 water to dal ratio for perfect consistency");
         }
-        return '';
-    }
 
-    generateQuantity(ingredientName) {
-        const quantities = ['1 cup', '1/2 cup', '1 tsp', '1 tbsp', '2-3 pieces', '200g', '1 medium'];
-        return quantities[Math.floor(Math.random() * quantities.length)];
+        if (techniques.some(tech => tech.name.includes('Thalippu'))) {
+            tips.push("For perfect thalippu, ensure oil is hot but not smoking before adding spices");
+        }
+
+        if (techniques.some(tech => tech.name.includes('Grinding'))) {
+            tips.push("Add a little water while grinding to get smooth paste consistency");
+        }
+
+        return tips.slice(0, 5); // Return top 5 tips
     }
 
     calculateConfidenceScores(results) {
@@ -685,32 +706,53 @@ class RecipeExtractorAI {
         const avgIngredientConfidence = ingredientConfidences.length > 0 
             ? ingredientConfidences.reduce((a, b) => a + b, 0) / ingredientConfidences.length 
             : 0;
-        
+
         const avgTechniqueConfidence = techniqueConfidences.length > 0 
             ? techniqueConfidences.reduce((a, b) => a + b, 0) / techniqueConfidences.length 
             : 0;
 
         return {
-            overall: Math.floor((avgIngredientConfidence + avgTechniqueConfidence) / 2),
-            ingredients: Math.floor(avgIngredientConfidence),
-            techniques: Math.floor(avgTechniqueConfidence),
+            overall: Math.round((avgIngredientConfidence + avgTechniqueConfidence) / 2),
+            ingredients: Math.round(avgIngredientConfidence),
+            techniques: Math.round(avgTechniqueConfidence),
             recipe: Math.floor(Math.random() * 10) + 85 // 85-94%
         };
     }
 
+    getTranslation(ingredientName, language) {
+        // Find ingredient in database and return translation
+        for (const category of Object.values(this.ingredientDatabase)) {
+            const ingredient = category.find(item => item.name === ingredientName);
+            if (ingredient && ingredient[language]) {
+                return ingredient[language];
+            }
+        }
+        return '';
+    }
+
+    generateQuantity(ingredientName) {
+        // Generate realistic quantities based on ingredient type
+        const quantities = [
+            '1 cup', '1/2 cup', '1/4 cup', '2 tbsp', '1 tbsp', '1 tsp', '1/2 tsp',
+            '200g', '150g', '100g', '2-3 pieces', '4-5 pieces', 'to taste', 'pinch'
+        ];
+        return quantities[Math.floor(Math.random() * quantities.length)];
+    }
+
     getVideoInfo(videoFile) {
         return {
-            name: videoFile.name || 'South Indian Cooking Video',
-            size: videoFile.size || Math.floor(Math.random() * 50) + 10 + ' MB',
-            duration: videoFile.duration || Math.floor(Math.random() * 300) + 120 + ' seconds',
+            name: videoFile.name || 'Traditional South Indian Cooking Video',
+            size: videoFile.size || Math.floor(Math.random() * 50000000) + 10000000, // 10-60MB
+            duration: videoFile.duration || Math.floor(Math.random() * 300) + 120, // 2-7 minutes
             format: 'MP4',
-            resolution: '1080p'
+            resolution: '1920x1080',
+            fps: 30
         };
     }
 
     updateProcessingUI(step, result) {
         // This would update the UI in a real implementation
-        console.log(`Step ${step.name} completed:`, result.success ? 'Success' : 'Failed');
+        console.log(`Step ${step.id} completed:`, result.success ? 'Success' : 'Failed');
     }
 
     delay(ms) {
