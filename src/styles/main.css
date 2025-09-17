@@ -1,6 +1,16 @@
-/* Premium South Indian Cultural Design System */
+/* Premium South Indian Cultural Design System with Bombon.rs-style Scroll Interactivity */
 :root {
-    /* Default VEG Theme Variables */
+    /* South Indian Heritage Color Palette */
+    --temple-saffron: #FF7722;
+    --forest-green: #0D5F1F;
+    --deep-maroon: #722F37;
+    --charcoal: #2B1B18;
+    --rice-white: #FFF8E7;
+    --coconut-white: #FFFFFF;
+    --royal-gold: #DAA520;
+    --warm-terracotta: #C65D07;
+    
+    /* VEG Theme Variables (Default) */
     --primary-color: #22c55e;
     --primary-dark: #16a34a;
     --primary-light: #dcfce7;
@@ -18,30 +28,17 @@
     --theme-bg-pattern: radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.1) 0%, transparent 50%);
     
-    /* Traditional South Indian Color Palette */
-    --saffron: #FF9933;
-    --india-green: #138808;
-    --royal-blue: #000080;
-    --warm-gold: #DAA520;
-    --terracotta: #E2725B;
-    --cream-white: #FFF8DC;
-    --deep-maroon: #800020;
-    --temple-bronze: #CD7F32;
-    --sandalwood: #F4A460;
-    --turmeric: #E4D00A;
+    /* Heritage Gradients */
+    --heritage-gradient: linear-gradient(135deg, var(--temple-saffron) 0%, var(--royal-gold) 100%);
+    --temple-gradient: linear-gradient(135deg, var(--deep-maroon) 0%, var(--warm-terracotta) 100%);
+    --nature-gradient: linear-gradient(135deg, var(--forest-green) 0%, #16a34a 100%);
     
-    /* Gradient Combinations */
-    --primary-gradient: linear-gradient(135deg, var(--saffron), var(--warm-gold));
-    --secondary-gradient: linear-gradient(135deg, var(--india-green), var(--royal-blue));
-    --warm-gradient: linear-gradient(135deg, var(--terracotta), var(--sandalwood));
-    --cultural-gradient: linear-gradient(135deg, var(--deep-maroon), var(--temple-bronze));
-    
-    /* Typography Scale */
+    /* Typography */
     --font-primary: 'Playfair Display', serif;
     --font-secondary: 'Inter', sans-serif;
     --font-accent: 'Crimson Text', serif;
     
-    /* Spacing System (24px baseline) */
+    /* Spacing & Layout */
     --space-xs: 6px;
     --space-sm: 12px;
     --space-md: 24px;
@@ -58,33 +55,13 @@
     --shadow-sm: 0 2px 8px rgba(128, 0, 32, 0.1);
     --shadow-md: 0 8px 24px rgba(128, 0, 32, 0.15);
     --shadow-lg: 0 16px 48px rgba(128, 0, 32, 0.2);
+    --heritage-shadow: 0 8px 32px rgba(255, 119, 34, 0.15);
+    --temple-shadow: 0 4px 20px rgba(114, 47, 55, 0.2);
+    --gold-glow: 0 0 20px rgba(218, 165, 32, 0.3);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* Heritage Color Palette */
-:root {
-    /* Primary Heritage Colors */
-    --temple-saffron: #FF7722;
-    --forest-green: #0D5F1F;
-    --deep-maroon: #722F37;
-    --royal-gold: #DAA520;
-    --warm-terracotta: #C65D07;
-    --rice-white: #FFF8E7;
-    --coconut-white: #FFFFFF;
-    --charcoal: #2B1B18;
-    
-    /* Gradients */
-    --heritage-gradient: linear-gradient(135deg, var(--temple-saffron) 0%, var(--royal-gold) 100%);
-    --temple-gradient: linear-gradient(135deg, var(--deep-maroon) 0%, var(--warm-terracotta) 100%);
-    --nature-gradient: linear-gradient(135deg, var(--forest-green) 0%, #16a34a 100%);
-    
-    /* Shadows */
-    --heritage-shadow: 0 8px 32px rgba(255, 119, 34, 0.15);
-    --temple-shadow: 0 4px 20px rgba(114, 47, 55, 0.2);
-    --gold-glow: 0 0 20px rgba(218, 165, 32, 0.3);
 }
 
 /* NON-VEG Theme Variables */
@@ -106,9 +83,6 @@
     --theme-bg-pattern: radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
 }
-
-/* Typography - Heritage Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Global Styles */
 * {
@@ -159,16 +133,32 @@ body {
     justify-content: center;
     background: var(--hero-gradient);
     padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23FF7722' stroke-width='0.5' opacity='0.1'%3E%3Cpath d='M30 10 L40 20 L30 30 L20 20 Z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+    opacity: 0.3;
 }
 
 .login-card {
     background: var(--background-main);
     border-radius: var(--radius-xl);
     padding: 3rem;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
     max-width: 500px;
     width: 100%;
     border: 1px solid var(--border-color);
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(20px);
 }
 
 .login-header {
@@ -180,8 +170,9 @@ body {
     font-family: var(--font-primary);
     font-size: 3rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--temple-saffron);
     margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .platform-subtitle {
@@ -271,12 +262,30 @@ body {
     cursor: pointer;
     transition: var(--transition-smooth);
     background: var(--background-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.user-type::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--heritage-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.user-type:hover::before {
+    opacity: 0.1;
 }
 
 .user-type:hover {
     border-color: var(--primary-color);
     transform: translateY(-2px);
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
 }
 
 .user-type.active {
@@ -294,6 +303,8 @@ body {
     background: var(--primary-color);
     border-radius: 50%;
     color: white;
+    position: relative;
+    z-index: 2;
 }
 
 .user-type h3 {
@@ -301,11 +312,15 @@ body {
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
+    position: relative;
+    z-index: 2;
 }
 
 .user-type p {
     font-size: 0.9rem;
     color: var(--text-secondary);
+    position: relative;
+    z-index: 2;
 }
 
 /* Login Form */
@@ -344,7 +359,7 @@ body {
 
 .login-btn {
     padding: 1rem;
-    background: var(--accent-gradient);
+    background: var(--heritage-gradient);
     color: white;
     border: none;
     border-radius: var(--radius-md);
@@ -358,7 +373,7 @@ body {
 
 .login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
 }
 
 .login-btn:disabled {
@@ -388,7 +403,8 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-sm);
 }
 
 .header-content {
@@ -410,7 +426,8 @@ body {
     font-family: var(--font-primary);
     font-size: 2rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--temple-saffron);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .user-badge {
@@ -474,12 +491,14 @@ body {
 .nav-tab:hover {
     background: var(--primary-light);
     border-color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 .nav-tab.active {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+    box-shadow: var(--heritage-shadow);
 }
 
 .nav-tab.coming-soon {
@@ -535,17 +554,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--primary-color);
+    background: var(--heritage-gradient);
     border-radius: 50%;
     color: white;
+    box-shadow: var(--heritage-shadow);
 }
 
 .tab-header h2 {
     font-family: var(--font-primary);
     font-size: 2.5rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--deep-maroon);
     margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .tab-header p {
@@ -553,7 +574,7 @@ body {
     color: var(--text-secondary);
 }
 
-/* Heritage Learner Dashboard */
+/* Heritage Learner Dashboard - Bombon.rs Style */
 .heritage-learner-dashboard {
     background: var(--rice-white);
     min-height: 100vh;
@@ -841,6 +862,7 @@ body {
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     height: 320px;
+    background: var(--heritage-gradient);
 }
 
 .diet-card:hover {
@@ -852,25 +874,24 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    background: var(--heritage-gradient);
     display: flex;
     align-items: flex-end;
     padding: 2rem;
 }
 
-.diet-card[data-diet="traditional-veg"] .card-image {
+.diet-card[data-diet="traditional-veg"] {
     background: var(--nature-gradient);
 }
 
-.diet-card[data-diet="coastal"] .card-image {
+.diet-card[data-diet="coastal"] {
     background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
 }
 
-.diet-card[data-diet="millet"] .card-image {
+.diet-card[data-diet="millet"] {
     background: linear-gradient(135deg, #eab308 0%, #f59e0b 100%);
 }
 
-.diet-card[data-diet="chettinad"] .card-image {
+.diet-card[data-diet="chettinad"] {
     background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
 }
 
@@ -929,6 +950,24 @@ body {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid transparent;
     box-shadow: var(--heritage-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.dosha-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--heritage-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dosha-card:hover::before {
+    opacity: 0.05;
 }
 
 .dosha-card:hover {
@@ -965,6 +1004,8 @@ body {
     height: 80px;
     margin: 0 auto 1.5rem;
     color: var(--temple-saffron);
+    position: relative;
+    z-index: 2;
 }
 
 .dosha-card h3 {
@@ -973,12 +1014,16 @@ body {
     font-weight: 600;
     color: var(--deep-maroon);
     margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
 }
 
 .dosha-card p {
     color: var(--text-secondary);
     margin-bottom: 1rem;
     line-height: 1.6;
+    position: relative;
+    z-index: 2;
 }
 
 .dosha-qualities {
@@ -987,6 +1032,8 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 1rem;
+    position: relative;
+    z-index: 2;
 }
 
 .dosha-qualities span {
@@ -1018,6 +1065,24 @@ body {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--heritage-shadow);
     border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.recipe-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--heritage-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.recipe-card:hover::before {
+    opacity: 0.03;
 }
 
 .recipe-card:hover {
@@ -1032,6 +1097,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
 .premium-badge, .free-badge {
@@ -1044,6 +1110,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    z-index: 3;
 }
 
 .premium-badge {
@@ -1066,6 +1133,7 @@ body {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
     color: white;
     padding: 1.5rem;
+    z-index: 2;
 }
 
 .recipe-overlay h3 {
@@ -1082,6 +1150,8 @@ body {
 
 .recipe-details {
     padding: 1.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .chef-info {
@@ -1145,11 +1215,26 @@ body {
     padding: 2rem;
     box-shadow: var(--heritage-shadow);
     border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.nutrition-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--heritage-gradient);
+    opacity: 0.02;
 }
 
 .nutrition-header {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
 }
 
 .nutrition-header h3 {
@@ -1169,6 +1254,8 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
 }
 
 .macro-item {
@@ -1178,6 +1265,12 @@ body {
     padding: 1rem;
     background: var(--background-secondary);
     border-radius: var(--radius-lg);
+    transition: var(--transition-smooth);
+}
+
+.macro-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .macro-icon {
@@ -1220,6 +1313,8 @@ body {
 
 .ayurvedic-benefits {
     margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
 }
 
 .ayurvedic-benefits h4 {
@@ -1243,6 +1338,11 @@ body {
     padding: 0.8rem;
     background: var(--primary-light);
     border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+}
+
+.benefit-item:hover {
+    transform: translateX(4px);
 }
 
 .benefit-icon {
@@ -1316,6 +1416,16 @@ body {
     align-items: flex-start;
     gap: 1rem;
     text-align: left;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+}
+
+.benefit-highlight:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .benefit-icon {
@@ -1405,11 +1515,30 @@ body {
     transition: var(--transition-smooth);
     background: var(--background-card);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--heritage-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.upload-area:hover::before {
+    opacity: 0.05;
 }
 
 .upload-area:hover {
     border-color: var(--primary-color);
     background: var(--primary-light);
+    transform: scale(1.01);
 }
 
 .upload-area.dragover {
@@ -1425,9 +1554,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--primary-color);
+    background: var(--heritage-gradient);
     border-radius: 50%;
     color: white;
+    position: relative;
+    z-index: 2;
 }
 
 .upload-area h3 {
@@ -1435,24 +1566,30 @@ body {
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .upload-area p {
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .file-info {
     font-size: 0.9rem;
     color: var(--text-secondary);
     opacity: 0.8;
+    position: relative;
+    z-index: 2;
 }
 
 .video-preview {
     background: var(--background-main);
     border-radius: var(--radius-xl);
     padding: 2rem;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
     border: 1px solid var(--border-color);
 }
 
@@ -1473,7 +1610,7 @@ body {
 .process-btn {
     width: 100%;
     padding: 1rem;
-    background: var(--accent-gradient);
+    background: var(--heritage-gradient);
     color: white;
     border: none;
     border-radius: var(--radius-lg);
@@ -1489,7 +1626,7 @@ body {
 
 .process-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
 }
 
 .process-btn:disabled {
@@ -1503,7 +1640,7 @@ body {
     border-radius: var(--radius-xl);
     padding: 2rem;
     margin-top: 2rem;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
     border: 1px solid var(--border-color);
 }
 
@@ -1596,7 +1733,7 @@ body {
     border-radius: var(--radius-xl);
     padding: 2rem;
     margin-top: 2rem;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
     border: 1px solid var(--border-color);
 }
 
@@ -1700,6 +1837,11 @@ body {
     padding: 0.8rem;
     background: var(--background-secondary);
     border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+}
+
+.ingredient-item:hover {
+    transform: translateX(4px);
 }
 
 .ingredient-info {
@@ -1730,6 +1872,11 @@ body {
     padding: 1rem;
     background: var(--background-secondary);
     border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+}
+
+.instruction-item:hover {
+    transform: translateX(4px);
 }
 
 .step-number {
@@ -1795,6 +1942,12 @@ body {
     padding: 0.8rem;
     background: var(--background-main);
     border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+}
+
+.confidence-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .confidence-label {
@@ -1873,7 +2026,7 @@ body {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 1rem;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--heritage-shadow);
     z-index: 1000;
     transform: translateX(100%);
     transition: transform 0.3s ease;
@@ -1896,6 +2049,51 @@ body {
 .toast-message {
     color: var(--text-primary);
     font-weight: 500;
+}
+
+/* Theme-specific recipe card styling */
+.recipe-card.veg-theme {
+    background: var(--background-card);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow: var(--card-shadow);
+}
+
+.recipe-card.veg-theme .premium-badge {
+    background: var(--accent-gradient);
+    color: white;
+}
+
+.recipe-card.veg-theme:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.25);
+}
+
+.recipe-card.nonveg-theme {
+    background: var(--background-card);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    box-shadow: var(--card-shadow);
+}
+
+.recipe-card.nonveg-theme .premium-badge {
+    background: var(--accent-gradient);
+    color: white;
+}
+
+.recipe-card.nonveg-theme:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25);
+}
+
+/* Scroll Animation Styles */
+[data-scroll] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-scroll].in-view {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Responsive Design */
@@ -2005,51 +2203,6 @@ body {
     .toast.show {
         transform: translateY(0);
     }
-}
-
-/* Scroll Animation Styles */
-[data-scroll] {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-[data-scroll].in-view {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Theme-specific recipe card styling */
-.recipe-card.veg-theme {
-    background: var(--background-card);
-    border: 1px solid rgba(34, 197, 94, 0.2);
-    box-shadow: var(--card-shadow);
-}
-
-.recipe-card.veg-theme .premium-badge {
-    background: var(--accent-gradient);
-    color: white;
-}
-
-.recipe-card.veg-theme:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.25);
-}
-
-.recipe-card.nonveg-theme {
-    background: var(--background-card);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    box-shadow: var(--card-shadow);
-}
-
-.recipe-card.nonveg-theme .premium-badge {
-    background: var(--accent-gradient);
-    color: white;
-}
-
-.recipe-card.nonveg-theme:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25);
 }
 
 /* Hidden utility class */
