@@ -4,7 +4,6 @@ class TADAMApp {
         this.currentUser = null;
         this.currentTab = 'kala-kitchen';
         this.savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-        this.currentTheme = localStorage.getItem('preferred-theme') || 'veg';
         this.init();
     }
 
@@ -12,8 +11,6 @@ class TADAMApp {
         this.bindEvents();
         this.checkAuthentication();
         this.initializeSampleRecipes();
-        this.initializeThemeToggle();
-        this.applyTheme(this.currentTheme);
     }
 
     bindEvents() {
@@ -49,108 +46,6 @@ class TADAMApp {
         if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
         if (shareBtn) shareBtn.addEventListener('click', () => this.shareRecipe());
         if (printBtn) printBtn.addEventListener('click', () => this.printRecipe());
-        
-        // Initialize theme toggle for both login and dashboard
-        this.initializeThemeToggle();
-    }
-    
-    initializeThemeToggle() {
-        const themeToggles = document.querySelectorAll('.theme-toggle');
-        
-        themeToggles.forEach(themeToggle => {
-            const toggleOptions = themeToggle.querySelectorAll('.toggle-option');
-            const toggleSlider = themeToggle.querySelector('.toggle-slider');
-            
-            toggleOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    const theme = option.getAttribute('data-theme');
-                    this.switchTheme(theme);
-                });
-            });
-        });
-        
-        // Apply saved theme on load
-        this.applyTheme(this.currentTheme);
-    }
-    
-    switchTheme(theme) {
-        this.currentTheme = theme;
-        this.applyTheme(theme);
-        localStorage.setItem('preferred-theme', theme);
-    }
-    
-    applyTheme(theme) {
-        // Apply theme to document
-        document.documentElement.setAttribute('data-theme', theme);
-        
-        // Update all theme toggles
-        const themeToggles = document.querySelectorAll('.theme-toggle');
-        themeToggles.forEach(themeToggle => {
-            const toggleOptions = themeToggle.querySelectorAll('.toggle-option');
-            const toggleSlider = themeToggle.querySelector('.toggle-slider');
-            
-            // Update active state
-            toggleOptions.forEach(opt => opt.classList.remove('active'));
-            const activeOption = themeToggle.querySelector(`[data-theme="${theme}"]`);
-            if (activeOption) {
-                activeOption.classList.add('active');
-            }
-            
-            // Animate slider
-            if (toggleSlider) {
-                const isNonVeg = theme === 'nonveg';
-                toggleSlider.style.transform = isNonVeg ? 'translateX(100%)' : 'translateX(0)';
-            }
-        });
-        
-        // Update theme-specific elements
-        this.updateThemeElements(theme);
-        
-        // Add theme switching animation
-        document.body.classList.add('theme-switching');
-        setTimeout(() => {
-            document.body.classList.remove('theme-switching');
-        }, 600);
-    }
-    
-    updateThemeElements(theme) {
-        // Update recipe card backgrounds based on theme
-        const recipeCards = document.querySelectorAll('.recipe-card');
-        recipeCards.forEach(card => {
-            if (theme === 'veg') {
-                card.classList.add('veg-theme');
-                card.classList.remove('nonveg-theme');
-            } else {
-                card.classList.add('nonveg-theme');
-                card.classList.remove('veg-theme');
-            }
-        });
-        
-        // Update recipe card gradients based on theme
-        const recipeImages = document.querySelectorAll('.recipe-card-image');
-        recipeImages.forEach((image, index) => {
-            if (theme === 'veg') {
-                const vegGradients = [
-                    'linear-gradient(135deg, #22c55e, #16a34a)', // Palak Paneer
-                    'linear-gradient(135deg, #facc15, #eab308)', // Dal
-                    'linear-gradient(135deg, #ffffff, #f8fafc)', // White Rice
-                    'linear-gradient(135deg, #f1f5f9, #ffffff)', // Coconut Chutney
-                    'linear-gradient(135deg, #dcfce7, #22c55e)', // Mint Chutney
-                    'linear-gradient(135deg, #84cc16, #22c55e)'  // Green Vegetables
-                ];
-                image.style.background = vegGradients[index % vegGradients.length];
-            } else {
-                const nonVegGradients = [
-                    'linear-gradient(135deg, #ef4444, #f59e0b)', // Chicken Curry
-                    'linear-gradient(135deg, #ea580c, #dc2626)', // Fish Curry
-                    'linear-gradient(135deg, #f59e0b, #ef4444)', // Mutton Biryani
-                    'linear-gradient(135deg, #dc2626, #991b1b)', // Tandoori
-                    'linear-gradient(135deg, #b91c1c, #ef4444)', // Spicy Gravy
-                    'linear-gradient(135deg, #ef4444, #ea580c)'  // Mixed Non-Veg
-                ];
-                image.style.background = nonVegGradients[index % nonVegGradients.length];
-            }
-        });
     }
 
     checkAuthentication() {
