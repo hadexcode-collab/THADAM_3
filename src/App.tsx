@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, Video, GraduationCap, ChefHat, Utensils, Leaf, Coconut, Wheat, Flame, Star, Clock, Users, Heart, Share, Printer, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Upload, Video, GraduationCap, ChefHat, Utensils, Leaf, Donut as Coconut, Wheat, Flame, Star, Clock, Users, Heart, Share, Printer, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface User {
   email: string;
