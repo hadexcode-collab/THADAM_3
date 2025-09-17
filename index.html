@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TADAM - Traditional Arts & Cultural Learning Platform</title>
     <link rel="stylesheet" href="src/styles/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
     <div id="app">
@@ -21,12 +23,16 @@
                     
                     <div class="user-type-selector">
                         <div class="user-type learner active" data-type="learner">
-                            <span class="user-icon">🎓</span>
+                            <div class="user-icon">
+                                <i data-lucide="graduation-cap"></i>
+                            </div>
                             <h3>Learner</h3>
                             <p>Discover and learn traditional techniques</p>
                         </div>
                         <div class="user-type creator" data-type="creator">
-                            <span class="user-icon">📹</span>
+                            <div class="user-icon">
+                                <i data-lucide="video"></i>
+                            </div>
                             <h3>Creator</h3>
                             <p>Share your knowledge through videos</p>
                         </div>
@@ -65,21 +71,29 @@
             <nav class="platform-nav">
                 <div class="nav-tabs">
                     <div class="nav-tab active" data-tab="kala-kitchen">
-                        <span class="tab-icon">🍳</span>
+                        <div class="tab-icon">
+                            <i data-lucide="chef-hat"></i>
+                        </div>
                         <span class="tab-label">Kala Kitchen</span>
                     </div>
                     <div class="nav-tab coming-soon" data-tab="traditional-medicine">
-                        <span class="tab-icon">💊</span>
+                        <div class="tab-icon">
+                            <i data-lucide="leaf"></i>
+                        </div>
                         <span class="tab-label">Traditional Medicine</span>
                         <span class="coming-soon-badge">Soon</span>
                     </div>
                     <div class="nav-tab coming-soon" data-tab="cultural-stories">
-                        <span class="tab-icon">📚</span>
+                        <div class="tab-icon">
+                            <i data-lucide="book-open"></i>
+                        </div>
                         <span class="tab-label">Cultural Stories</span>
                         <span class="coming-soon-badge">Soon</span>
                     </div>
                     <div class="nav-tab coming-soon" data-tab="aya-kaligal">
-                        <span class="tab-icon">🎭</span>
+                        <div class="tab-icon">
+                            <i data-lucide="drama"></i>
+                        </div>
                         <span class="tab-label">Aya Kaligal</span>
                         <span class="coming-soon-badge">Soon</span>
                     </div>
@@ -90,7 +104,10 @@
                 <!-- Kala Kitchen Tab -->
                 <div id="kala-kitchen" class="tab-content active">
                     <div class="tab-header">
-                        <h2>🍳 Kala Kitchen</h2>
+                        <div class="tab-header-icon">
+                            <i data-lucide="chef-hat"></i>
+                        </div>
+                        <h2>Kala Kitchen</h2>
                         <p>AI-powered recipe extraction from cooking videos</p>
                     </div>
 
@@ -99,7 +116,9 @@
                         <div class="upload-section">
                             <div class="upload-area" id="uploadArea">
                                 <div class="upload-placeholder" id="uploadPlaceholder">
-                                    <div class="upload-icon">📹</div>
+                                    <div class="upload-icon">
+                                        <i data-lucide="video"></i>
+                                    </div>
                                     <h3>Upload Cooking Video</h3>
                                     <p>Drag and drop your video here or click to browse</p>
                                     <p class="file-info">Supported formats: MP4, MOV, AVI (Max 100MB)</p>
@@ -109,17 +128,23 @@
                                     <video controls id="previewVideo"></video>
                                     <div class="video-info" id="videoInfo"></div>
                                     <button class="process-btn" id="processBtn">
-                                        <span>🔍 Extract Recipe with AI</span>
+                                        <i data-lucide="search"></i>
+                                        <span>Extract Recipe with AI</span>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Processing Status -->
                             <div class="processing-panel hidden" id="processingPanel">
-                                <h3>🤖 AI Processing Pipeline</h3>
+                                <div class="processing-header">
+                                    <i data-lucide="cpu"></i>
+                                    <h3>AI Processing Pipeline</h3>
+                                </div>
                                 <div class="processing-steps">
                                     <div class="process-step" data-step="frames">
-                                        <div class="step-icon">🔍</div>
+                                        <div class="step-icon">
+                                            <i data-lucide="search"></i>
+                                        </div>
                                         <div class="step-content">
                                             <h4>Extracting Video Frames</h4>
                                             <p>Analyzing visual content using YOLO-v8</p>
@@ -127,7 +152,9 @@
                                         </div>
                                     </div>
                                     <div class="process-step" data-step="audio">
-                                        <div class="step-icon">🎵</div>
+                                        <div class="step-icon">
+                                            <i data-lucide="mic"></i>
+                                        </div>
                                         <div class="step-content">
                                             <h4>Transcribing Audio</h4>
                                             <p>Converting speech to text using Whisper</p>
@@ -135,7 +162,9 @@
                                         </div>
                                     </div>
                                     <div class="process-step" data-step="ingredients">
-                                        <div class="step-icon">🍅</div>
+                                        <div class="step-icon">
+                                            <i data-lucide="apple"></i>
+                                        </div>
                                         <div class="step-content">
                                             <h4>Identifying Ingredients</h4>
                                             <p>Detecting ingredients with quantity estimation</p>
@@ -143,7 +172,9 @@
                                         </div>
                                     </div>
                                     <div class="process-step" data-step="techniques">
-                                        <div class="step-icon">👩‍🍳</div>
+                                        <div class="step-icon">
+                                            <i data-lucide="utensils"></i>
+                                        </div>
                                         <div class="step-content">
                                             <h4>Recognizing Techniques</h4>
                                             <p>Analyzing cooking methods using ResNet-50</p>
@@ -151,7 +182,9 @@
                                         </div>
                                     </div>
                                     <div class="process-step" data-step="recipe">
-                                        <div class="step-icon">📝</div>
+                                        <div class="step-icon">
+                                            <i data-lucide="file-text"></i>
+                                        </div>
                                         <div class="step-content">
                                             <h4>Generating Recipe</h4>
                                             <p>Creating structured recipe using BERT</p>
@@ -169,13 +202,16 @@
                             <h2 id="recipeName">Generated Recipe</h2>
                             <div class="recipe-actions">
                                 <button class="action-btn save-btn" id="saveRecipe">
-                                    <span>💾</span> Save Recipe
+                                    <i data-lucide="bookmark"></i>
+                                    <span>Save Recipe</span>
                                 </button>
                                 <button class="action-btn share-btn" id="shareRecipe">
-                                    <span>📤</span> Share
+                                    <i data-lucide="share-2"></i>
+                                    <span>Share</span>
                                 </button>
                                 <button class="action-btn print-btn" id="printRecipe">
-                                    <span>🖨️</span> Print
+                                    <i data-lucide="printer"></i>
+                                    <span>Print</span>
                                 </button>
                             </div>
                         </div>
@@ -202,14 +238,20 @@
 
                             <div class="recipe-sections">
                                 <div class="ingredients-section">
-                                    <h3>🧂 Ingredients</h3>
+                                    <div class="section-header">
+                                        <i data-lucide="list"></i>
+                                        <h3>Ingredients</h3>
+                                    </div>
                                     <div class="ingredients-list" id="ingredientsList">
                                         <!-- Ingredients will be populated by JS -->
                                     </div>
                                 </div>
 
                                 <div class="instructions-section">
-                                    <h3>👨‍🍳 Cooking Instructions</h3>
+                                    <div class="section-header">
+                                        <i data-lucide="utensils"></i>
+                                        <h3>Cooking Instructions</h3>
+                                    </div>
                                     <div class="instructions-list" id="instructionsList">
                                         <!-- Instructions will be populated by JS -->
                                     </div>
@@ -218,7 +260,10 @@
                         </div>
 
                         <div class="processing-confidence">
-                            <h4>🎯 AI Confidence Scores</h4>
+                            <div class="confidence-header">
+                                <i data-lucide="target"></i>
+                                <h4>AI Confidence Scores</h4>
+                            </div>
                             <div class="confidence-metrics" id="confidenceMetrics">
                                 <!-- Confidence scores will be populated by JS -->
                             </div>
@@ -228,7 +273,10 @@
                     <!-- Learner View -->
                     <div class="learner-content" id="learnerContent">
                         <div class="recipes-gallery">
-                            <h3>📚 Traditional Recipe Collection</h3>
+                            <div class="gallery-header">
+                                <i data-lucide="book-open"></i>
+                                <h3>Traditional Recipe Collection</h3>
+                            </div>
                             <div class="recipes-grid" id="recipesGrid">
                                 <!-- Sample recipes will be populated by JS -->
                             </div>
@@ -239,7 +287,9 @@
                 <!-- Coming Soon Tabs -->
                 <div id="traditional-medicine" class="tab-content coming-soon-content">
                     <div class="coming-soon-placeholder">
-                        <div class="placeholder-icon">💊</div>
+                        <div class="placeholder-icon">
+                            <i data-lucide="leaf"></i>
+                        </div>
                         <h2>Traditional Medicine</h2>
                         <p>Ancient healing wisdom meets modern AI analysis</p>
                         <p class="coming-soon-text">Coming Soon</p>
@@ -248,7 +298,9 @@
 
                 <div id="cultural-stories" class="tab-content coming-soon-content">
                     <div class="coming-soon-placeholder">
-                        <div class="placeholder-icon">📚</div>
+                        <div class="placeholder-icon">
+                            <i data-lucide="book-open"></i>
+                        </div>
                         <h2>Cultural Stories</h2>
                         <p>Preserving oral traditions through interactive storytelling</p>
                         <p class="coming-soon-text">Coming Soon</p>
@@ -257,7 +309,9 @@
 
                 <div id="aya-kaligal" class="tab-content coming-soon-content">
                     <div class="coming-soon-placeholder">
-                        <div class="placeholder-icon">🎭</div>
+                        <div class="placeholder-icon">
+                            <i data-lucide="drama"></i>
+                        </div>
                         <h2>Aya Kaligal</h2>
                         <p>Traditional performing arts and cultural expressions</p>
                         <p class="coming-soon-text">Coming Soon</p>
@@ -269,7 +323,9 @@
         <!-- Success Toast -->
         <div class="toast hidden" id="successToast">
             <div class="toast-content">
-                <span class="toast-icon">✅</span>
+                <div class="toast-icon">
+                    <i data-lucide="check-circle"></i>
+                </div>
                 <span class="toast-message"></span>
             </div>
         </div>
@@ -279,3 +335,11 @@
     <script src="src/js/auth.js"></script>
     <script src="src/js/recipe-extractor.js"></script>
     <script src="src/js/upload-handler.js"></script>
+    <script>
+        // Initialize Lucide icons after DOM load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>

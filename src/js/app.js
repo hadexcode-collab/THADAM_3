@@ -116,9 +116,14 @@ class TADAMApp {
         
         // Update user badge
         const userBadge = document.getElementById('userBadge');
-        const icon = this.currentUser.type === 'learner' ? '🎓' : '📹';
+        const icon = this.currentUser.type === 'learner' ? 'graduation-cap' : 'video';
         const label = this.currentUser.type === 'learner' ? 'Learner' : 'Creator';
-        userBadge.innerHTML = `${icon} ${label}`;
+        userBadge.innerHTML = `<i data-lucide="${icon}"></i> ${label}`;
+        
+        // Re-initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
 
         // Show appropriate content
         this.updateContentVisibility();
