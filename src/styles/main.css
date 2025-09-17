@@ -1,29 +1,62 @@
-/* Premium South Indian Cultural Design System */
+/* TADAM - BOMBON.RS Style South Indian Cultural Heritage Design */
+
+/* CSS Variables for Theme System */
 :root {
-    /* Traditional South Indian Color Palette */
-    --saffron: #FF9933;
-    --india-green: #138808;
-    --royal-blue: #000080;
-    --warm-gold: #DAA520;
-    --terracotta: #E2725B;
-    --cream-white: #FFF8DC;
-    --deep-maroon: #800020;
-    --temple-bronze: #CD7F32;
-    --sandalwood: #F4A460;
-    --turmeric: #E4D00A;
+    /* VEG Theme Colors */
+    --veg-primary: #0f4c3a;
+    --veg-background: #ffffff;
+    --veg-background-secondary: #fefdf8;
+    --veg-accent: #f59e0b;
+    --veg-text-primary: #111827;
+    --veg-text-secondary: #4b5563;
+    --veg-card-bg: #ecfdf5;
+    --veg-border: #e5e7eb;
+    --veg-success: #22c55e;
     
-    /* Gradient Combinations */
-    --primary-gradient: linear-gradient(135deg, var(--saffron), var(--warm-gold));
-    --secondary-gradient: linear-gradient(135deg, var(--india-green), var(--royal-blue));
-    --warm-gradient: linear-gradient(135deg, var(--terracotta), var(--sandalwood));
-    --cultural-gradient: linear-gradient(135deg, var(--deep-maroon), var(--temple-bronze));
-    
-    /* Typography Scale */
+    /* NON-VEG Theme Colors */
+    --nonveg-primary: #7c2d12;
+    --nonveg-background: #fffbf0;
+    --nonveg-background-secondary: #fef3c7;
+    --nonveg-accent: #d97706;
+    --nonveg-text-primary: #1f2937;
+    --nonveg-text-secondary: #374151;
+    --nonveg-card-bg: #fed7d7;
+    --nonveg-border: #fde68a;
+    --nonveg-success: #ea580c;
+}
+
+/* Theme Application */
+.veg-theme {
+    --primary-color: var(--veg-primary);
+    --background-color: var(--veg-background);
+    --background-secondary: var(--veg-background-secondary);
+    --accent-color: var(--veg-accent);
+    --text-primary: var(--veg-text-primary);
+    --text-secondary: var(--veg-text-secondary);
+    --background-card: var(--veg-card-bg);
+    --border-color: var(--veg-border);
+    --success-color: var(--veg-success);
+}
+
+.nonveg-theme {
+    --primary-color: var(--nonveg-primary);
+    --background-color: var(--nonveg-background);
+    --background-secondary: var(--nonveg-background-secondary);
+    --accent-color: var(--nonveg-accent);
+    --text-primary: var(--nonveg-text-primary);
+    --text-secondary: var(--nonveg-text-secondary);
+    --background-card: var(--nonveg-card-bg);
+    --border-color: var(--nonveg-border);
+    --success-color: var(--nonveg-success);
+}
+
+/* Typography */
+:root {
     --font-primary: 'Playfair Display', serif;
     --font-secondary: 'Inter', sans-serif;
     --font-accent: 'Crimson Text', serif;
     
-    /* Spacing System (24px baseline) */
+    /* Spacing System */
     --space-xs: 6px;
     --space-sm: 12px;
     --space-md: 24px;
@@ -31,19 +64,20 @@
     --space-xl: 72px;
     
     /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(128, 0, 32, 0.1);
-    --shadow-md: 0 8px 24px rgba(128, 0, 32, 0.15);
-    --shadow-lg: 0 16px 48px rgba(128, 0, 32, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.25);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 /* Reset and Base Styles */
@@ -55,33 +89,419 @@
 
 body {
     font-family: var(--font-secondary);
-    background: var(--cultural-gradient);
+    background: var(--background-color);
     min-height: 100vh;
-    color: var(--cream-white);
+    color: var(--text-primary);
     overflow-x: hidden;
     line-height: 1.6;
+    transition: var(--transition-smooth);
 }
 
-/* Traditional Pattern Background */
-body::before {
-    content: '';
+/* Theme Toggle */
+.theme-toggle-wrapper {
     position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-toggle-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
+    padding: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-lg);
+}
+
+.toggle-switch {
+    position: relative;
+    display: flex;
+    width: 160px;
+    height: 44px;
+}
+
+.toggle-switch input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 22px;
+    position: relative;
+    z-index: 2;
+    transition: var(--transition-smooth);
+}
+
+.toggle-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    transition: color 0.3s ease;
+}
+
+.toggle-icon {
+    width: 12px;
+    height: 12px;
+    position: relative;
+}
+
+.veg-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #22c55e;
+    background: white;
+    position: relative;
+}
+
+.veg-dot::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nonveg-square {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #dc2626;
+    background: white;
+    border-radius: 2px;
+    position: relative;
+}
+
+.nonveg-square::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #dc2626;
+    border-radius: 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: calc(50% - 6px);
+    height: calc(100% - 12px);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 19px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
+input#nonveg-theme:checked ~ .toggle-slider {
+    transform: translateX(100%);
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+input#veg-theme:checked + .veg-label .toggle-text,
+input#nonveg-theme:checked + .nonveg-label .toggle-text {
+    color: white;
+    font-weight: 800;
+}
+
+/* Floating Background Elements */
+.floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.floating-spice, .floating-leaf, .floating-vessel {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+    animation: float-and-rotate 20s infinite ease-in-out;
+    animation-delay: var(--delay);
+}
+
+.cardamom {
+    background: radial-gradient(circle, #8fbc8f, #556b2f);
+    border-radius: 60% 40% 60% 40%;
+    top: 10%;
+    left: 10%;
+}
+
+.cinnamon {
+    background: linear-gradient(45deg, #d2691e, #8b4513);
+    border-radius: 50px;
+    width: 8px;
+    height: 60px;
+    top: 20%;
+    right: 15%;
+}
+
+.star-anise {
+    background: radial-gradient(circle, #8b4513, #654321);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    top: 60%;
+    left: 20%;
+}
+
+.cloves {
+    background: linear-gradient(45deg, #8b4513, #654321);
+    border-radius: 50% 50% 20% 20%;
+    width: 12px;
+    height: 35px;
+    top: 30%;
+    left: 80%;
+}
+
+.curry-leaf {
+    background: linear-gradient(45deg, #228b22, #006400);
+    border-radius: 0 100% 0 100%;
+    width: 30px;
+    height: 20px;
+    top: 40%;
+    right: 25%;
+}
+
+.coconut-palm {
+    background: linear-gradient(45deg, #228b22, #006400);
+    border-radius: 50% 0 50% 0;
+    width: 25px;
+    height: 35px;
+    top: 80%;
+    left: 5%;
+}
+
+.brass-pot {
+    background: linear-gradient(135deg, #daa520, #b8860b);
+    border-radius: 50% 50% 40% 40%;
+    width: 35px;
+    height: 30px;
+    top: 70%;
+    left: 70%;
+}
+
+.clay-pot {
+    background: linear-gradient(135deg, #cd853f, #a0522d);
+    border-radius: 45% 45% 35% 35%;
+    width: 32px;
+    height: 28px;
+    top: 15%;
+    right: 5%;
+}
+
+@keyframes float-and-rotate {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.4;
+    }
+    25% {
+        transform: translateY(-30px) rotate(90deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-60px) rotate(180deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateY(-30px) rotate(270deg);
+        opacity: 0.8;
+    }
+}
+
+/* Background Cultural Motifs */
+.background-motifs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -2;
+    opacity: 0.05;
+}
+
+.kolam-pattern, .mandala-pattern, .paisley-pattern {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: var(--primary-color);
+    opacity: 0.3;
+}
+
+.kolam-1 {
+    top: 20%;
+    left: 10%;
+    clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 85% 65%, 50% 100%, 15% 65%, 0% 35%, 20% 10%);
+    animation: rotate-slow 30s linear infinite;
+}
+
+.kolam-2 {
+    bottom: 20%;
+    right: 10%;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    animation: rotate-slow 25s linear infinite reverse;
+}
+
+.mandala-1 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    clip-path: circle(40%);
+    animation: pulse-rotate 20s ease-in-out infinite;
+}
+
+.paisley-1 {
+    top: 10%;
+    right: 30%;
+    width: 150px;
+    height: 150px;
+    clip-path: ellipse(40% 60% at 30% 40%);
+    animation: float-paisley 15s ease-in-out infinite;
+}
+
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-rotate {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+}
+
+@keyframes float-paisley {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* Cultural Hero Section */
+.cultural-hero-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
-        radial-gradient(circle at 25% 25%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255, 153, 51, 0.1) 0%, transparent 50%);
-    background-size: 200px 200px;
-    pointer-events: none;
-    z-index: -1;
+    opacity: 0.1;
+}
+
+.temple-silhouette {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 200px;
+    height: 300px;
+    background: var(--primary-color);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    opacity: 0.3;
+}
+
+.coconut-palms {
+    position: absolute;
+    bottom: 0;
+    right: 15%;
+    width: 150px;
+    height: 250px;
+    background: linear-gradient(to top, var(--primary-color), transparent);
+    clip-path: polygon(45% 0%, 55% 0%, 60% 100%, 40% 100%);
+    opacity: 0.2;
+}
+
+.spice-particles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--accent-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.1;
+    animation: rotate-slow 60s linear infinite;
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 1;
+    max-width: 600px;
+    padding: var(--space-xl);
+}
+
+.hero-title {
+    font-family: var(--font-primary);
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: var(--space-md);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -2px;
+}
+
+.hero-subtitle {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    font-weight: 600;
+}
+
+.hero-description {
+    font-family: var(--font-secondary);
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    font-style: italic;
+}
+
+.hero-tagline {
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    font-weight: 300;
 }
 
 /* Screen Management */
 .screen {
     display: none;
     min-height: 100vh;
+    position: relative;
 }
 
 .screen.active {
@@ -108,17 +528,18 @@ body::before {
     justify-content: center;
     padding: var(--space-md);
     position: relative;
+    z-index: 2;
 }
 
 .login-card {
-    background: rgba(255, 248, 220, 0.1);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(218, 165, 32, 0.3);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     padding: var(--space-xl);
     width: 100%;
     max-width: 520px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-xl);
     animation: slideUp 0.8s ease-out;
     position: relative;
     overflow: hidden;
@@ -131,7 +552,7 @@ body::before {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-color) 0.05, transparent 70%);
     animation: rotate 20s linear infinite;
     pointer-events: none;
 }
@@ -163,7 +584,7 @@ body::before {
     font-family: var(--font-primary);
     font-size: 3.5rem;
     font-weight: 800;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -174,7 +595,7 @@ body::before {
 
 .platform-subtitle {
     font-family: var(--font-accent);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: var(--space-sm);
@@ -183,7 +604,7 @@ body::before {
 
 .platform-tagline {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 1rem;
     font-style: italic;
     font-weight: 300;
@@ -202,8 +623,8 @@ body::before {
     flex: 1;
     padding: var(--space-lg) var(--space-md);
     text-align: center;
-    background: rgba(255, 248, 220, 0.05);
-    border: 2px solid rgba(218, 165, 32, 0.2);
+    background: var(--background-card);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition-smooth);
@@ -218,7 +639,7 @@ body::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-color) 0.1, transparent);
     transition: left 0.6s ease;
 }
 
@@ -228,14 +649,14 @@ body::before {
 
 .user-type:hover {
     transform: translateY(-4px);
-    border-color: rgba(218, 165, 32, 0.4);
+    border-color: var(--accent-color);
     box-shadow: var(--shadow-md);
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
 }
 
 .user-type.active {
-    background: rgba(218, 165, 32, 0.15);
-    border-color: var(--warm-gold);
+    background: var(--background-card);
+    border-color: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -245,7 +666,7 @@ body::before {
     display: flex;
     justify-content: center;
     margin-bottom: var(--space-sm);
-    color: var(--warm-gold);
+    color: var(--primary-color);
 }
 
 .user-icon i {
@@ -255,7 +676,7 @@ body::before {
 
 .user-type h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: var(--space-sm);
@@ -263,7 +684,7 @@ body::before {
 
 .user-type p {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.4;
     font-weight: 300;
@@ -286,17 +707,17 @@ body::before {
 
 .form-group label {
     font-family: var(--font-secondary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-weight: 500;
     font-size: 0.95rem;
 }
 
 .form-group input {
     padding: 18px var(--space-md);
-    background: rgba(255, 248, 220, 0.1);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    border-radius: var(--radius-md);
-    color: var(--cream-white);
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
     font-size: 1rem;
     font-family: var(--font-secondary);
     transition: var(--transition-smooth);
@@ -304,21 +725,22 @@ body::before {
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--warm-gold);
-    background: rgba(255, 248, 220, 0.15);
-    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+    border-color: var(--primary-color);
+    background: var(--background-card);
+    box-shadow: 0 0 0 3px rgba(15, 76, 58, 0.1);
 }
 
 .form-group input::placeholder {
-    color: rgba(255, 248, 220, 0.5);
+    color: var(--text-secondary);
     font-family: var(--font-secondary);
+    opacity: 0.7;
 }
 
 .login-btn {
     padding: 20px;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     color: white;
     font-size: 1.1rem;
     font-weight: 600;
@@ -364,9 +786,9 @@ body::before {
 
 /* Platform Header */
 .platform-header {
-    background: rgba(255, 248, 220, 0.1);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+    border-bottom: 1px solid var(--border-color);
     padding: var(--space-md) 0;
     position: relative;
 }
@@ -378,7 +800,7 @@ body::before {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     opacity: 0.6;
 }
 
@@ -401,7 +823,7 @@ body::before {
     font-family: var(--font-primary);
     font-size: 2.2rem;
     font-weight: 700;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -409,26 +831,26 @@ body::before {
 }
 
 .user-badge {
-    background: rgba(218, 165, 32, 0.2);
+    background: var(--background-card);
     backdrop-filter: blur(10px);
     padding: var(--space-sm) var(--space-md);
     border-radius: 20px;
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 0.9rem;
     font-weight: 500;
     font-family: var(--font-secondary);
-    border: 1px solid rgba(218, 165, 32, 0.3);
+    border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     gap: var(--space-xs);
 }
 
 .logout-btn {
-    background: rgba(255, 248, 220, 0.1);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    color: var(--cream-white);
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 12px var(--space-md);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: var(--transition-smooth);
     font-weight: 500;
@@ -436,16 +858,17 @@ body::before {
 }
 
 .logout-btn:hover {
-    background: rgba(218, 165, 32, 0.2);
+    background: var(--primary-color);
+    color: white;
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
 }
 
 /* Platform Navigation */
 .platform-nav {
-    background: rgba(255, 248, 220, 0.05);
+    background: var(--background-secondary);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+    border-bottom: 1px solid var(--border-color);
     padding: 0 var(--space-md);
     position: relative;
 }
@@ -478,13 +901,13 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(218, 165, 32, 0.1);
+    background: var(--primary-color);
     opacity: 0;
     transition: var(--transition-smooth);
 }
 
 .nav-tab:hover::before {
-    opacity: 1;
+    opacity: 0.1;
 }
 
 .nav-tab:hover {
@@ -492,8 +915,8 @@ body::before {
 }
 
 .nav-tab.active {
-    background: rgba(218, 165, 32, 0.1);
-    border-bottom-color: var(--warm-gold);
+    background: var(--background-card);
+    border-bottom-color: var(--primary-color);
 }
 
 .nav-tab.active::after {
@@ -504,7 +927,7 @@ body::before {
     transform: translateX(-50%);
     width: 6px;
     height: 6px;
-    background: var(--warm-gold);
+    background: var(--primary-color);
     border-radius: 50%;
 }
 
@@ -515,7 +938,7 @@ body::before {
 
 .tab-icon {
     font-size: 1.2rem;
-    color: var(--warm-gold);
+    color: var(--primary-color);
     display: flex;
     align-items: center;
 }
@@ -526,19 +949,19 @@ body::before {
 }
 
 .tab-label {
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-weight: 500;
     font-size: 0.95rem;
 }
 
 .coming-soon-badge {
-    background: rgba(228, 208, 10, 0.2);
-    color: var(--turmeric);
+    background: var(--accent-color);
+    color: white;
     padding: 2px var(--space-sm);
     border-radius: 10px;
     font-size: 0.7rem;
     font-weight: 600;
-    border: 1px solid rgba(228, 208, 10, 0.3);
+    border: 1px solid var(--accent-color);
     font-family: var(--font-secondary);
 }
 
@@ -569,7 +992,7 @@ body::before {
     display: flex;
     justify-content: center;
     margin-bottom: var(--space-md);
-    color: var(--warm-gold);
+    color: var(--primary-color);
     font-size: 3rem;
 }
 
@@ -582,14 +1005,14 @@ body::before {
     font-family: var(--font-primary);
     font-size: 2.8rem;
     font-weight: 700;
-    color: var(--cream-white);
+    color: var(--text-primary);
     margin-bottom: var(--space-sm);
     letter-spacing: -1px;
 }
 
 .tab-header p {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 1.2rem;
     line-height: 1.6;
     font-weight: 300;
@@ -601,9 +1024,9 @@ body::before {
 }
 
 .upload-area {
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
-    border: 2px dashed rgba(218, 165, 32, 0.4);
+    border: 2px dashed var(--border-color);
     border-radius: var(--radius-xl);
     padding: var(--space-xl) var(--space-lg);
     text-align: center;
@@ -620,7 +1043,7 @@ body::before {
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     border-radius: var(--radius-xl);
     opacity: 0;
     transition: var(--transition-smooth);
@@ -628,7 +1051,7 @@ body::before {
 }
 
 .upload-area:hover {
-    border-color: var(--warm-gold);
+    border-color: var(--primary-color);
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
@@ -638,15 +1061,15 @@ body::before {
 }
 
 .upload-area.dragover {
-    border-color: var(--saffron);
-    background: rgba(255, 153, 51, 0.1);
+    border-color: var(--accent-color);
+    background: var(--background-card);
     transform: scale(1.02);
 }
 
 .upload-icon {
     font-size: 4rem;
     margin-bottom: var(--space-md);
-    color: var(--warm-gold);
+    color: var(--primary-color);
     display: flex;
     justify-content: center;
     animation: float 3s ease-in-out infinite;
@@ -664,7 +1087,7 @@ body::before {
 
 .upload-placeholder h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.6rem;
     font-weight: 600;
     margin-bottom: var(--space-sm);
@@ -672,7 +1095,7 @@ body::before {
 
 .upload-placeholder p {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: var(--space-sm);
@@ -696,22 +1119,22 @@ body::before {
     border-radius: var(--radius-md);
     margin-bottom: var(--space-md);
     box-shadow: var(--shadow-md);
-    border: 2px solid rgba(218, 165, 32, 0.2);
+    border: 2px solid var(--border-color);
 }
 
 .video-info {
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     padding: var(--space-md);
     border-radius: var(--radius-md);
     margin-bottom: var(--space-md);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 0.9rem;
     font-family: var(--font-secondary);
-    border: 1px solid rgba(218, 165, 32, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .process-btn {
-    background: var(--secondary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     border: none;
     color: white;
     padding: var(--space-md) var(--space-lg);
@@ -740,12 +1163,12 @@ body::before {
 
 /* Processing Panel */
 .processing-panel {
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-xl);
     padding: var(--space-lg);
     margin-top: var(--space-lg);
-    border: 1px solid rgba(218, 165, 32, 0.2);
+    border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
 }
 
@@ -760,12 +1183,12 @@ body::before {
 .processing-header i {
     width: 32px;
     height: 32px;
-    color: var(--warm-gold);
+    color: var(--primary-color);
 }
 
 .processing-panel h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.6rem;
     font-weight: 600;
     text-align: center;
@@ -782,29 +1205,29 @@ body::before {
     gap: var(--space-md);
     align-items: center;
     padding: var(--space-md);
-    background: rgba(255, 248, 220, 0.05);
+    background: var(--background-secondary);
     border-radius: var(--radius-md);
     border-left: 4px solid transparent;
     transition: var(--transition-smooth);
-    border: 1px solid rgba(218, 165, 32, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .process-step.processing {
-    border-left-color: var(--turmeric);
-    background: rgba(228, 208, 10, 0.1);
+    border-left-color: var(--accent-color);
+    background: var(--background-card);
     box-shadow: var(--shadow-sm);
 }
 
 .process-step.completed {
-    border-left-color: var(--india-green);
-    background: rgba(19, 136, 8, 0.1);
+    border-left-color: var(--success-color);
+    background: var(--background-card);
     box-shadow: var(--shadow-sm);
 }
 
 .step-icon {
     font-size: 2rem;
     flex-shrink: 0;
-    color: var(--warm-gold);
+    color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -821,7 +1244,7 @@ body::before {
 
 .step-content h4 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: var(--space-xs);
@@ -829,7 +1252,7 @@ body::before {
 
 .step-content p {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin-bottom: var(--space-sm);
     font-weight: 300;
@@ -837,14 +1260,14 @@ body::before {
 
 .progress-bar {
     height: 6px;
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--border-color);
     border-radius: 3px;
     overflow: hidden;
 }
 
 .progress {
     height: 100%;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     border-radius: 3px;
     transition: width 0.5s ease;
     width: 0%;
@@ -852,12 +1275,12 @@ body::before {
 
 /* Recipe Display */
 .recipe-display {
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-xl);
     padding: var(--space-lg);
     margin-top: var(--space-lg);
-    border: 1px solid rgba(218, 165, 32, 0.2);
+    border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
 }
 
@@ -869,12 +1292,12 @@ body::before {
     flex-wrap: wrap;
     gap: var(--space-md);
     padding-bottom: var(--space-md);
-    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .recipe-header h2 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 2.2rem;
     font-weight: 700;
     letter-spacing: -0.5px;
@@ -887,11 +1310,11 @@ body::before {
 }
 
 .action-btn {
-    background: rgba(255, 248, 220, 0.1);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    color: var(--cream-white);
+    background: var(--background-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 12px var(--space-md);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: var(--transition-smooth);
     font-size: 0.9rem;
@@ -903,7 +1326,8 @@ body::before {
 }
 
 .action-btn:hover {
-    background: rgba(218, 165, 32, 0.2);
+    background: var(--primary-color);
+    color: white;
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
 }
@@ -913,21 +1337,6 @@ body::before {
     height: 16px;
 }
 
-.save-btn:hover {
-    background: rgba(19, 136, 8, 0.2);
-    border-color: var(--india-green);
-}
-
-.share-btn:hover {
-    background: rgba(0, 0, 128, 0.2);
-    border-color: var(--royal-blue);
-}
-
-.print-btn:hover {
-    background: rgba(205, 127, 50, 0.2);
-    border-color: var(--temple-bronze);
-}
-
 /* Recipe Content */
 .recipe-meta {
     display: grid;
@@ -935,9 +1344,9 @@ body::before {
     gap: var(--space-md);
     margin-bottom: var(--space-lg);
     padding: var(--space-md);
-    background: rgba(255, 248, 220, 0.05);
+    background: var(--background-secondary);
     border-radius: var(--radius-md);
-    border: 1px solid rgba(218, 165, 32, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .meta-item {
@@ -949,7 +1358,7 @@ body::before {
 
 .meta-label {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.7);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -958,7 +1367,7 @@ body::before {
 
 .meta-item span:last-child {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-weight: 600;
     font-size: 1.1rem;
 }
@@ -971,10 +1380,10 @@ body::before {
 
 .ingredients-section,
 .instructions-section {
-    background: rgba(255, 248, 220, 0.05);
+    background: var(--background-secondary);
     padding: var(--space-md);
     border-radius: var(--radius-md);
-    border: 1px solid rgba(218, 165, 32, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .section-header {
@@ -983,18 +1392,18 @@ body::before {
     gap: var(--space-sm);
     margin-bottom: var(--space-md);
     padding-bottom: var(--space-sm);
-    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .section-header i {
     width: 24px;
     height: 24px;
-    color: var(--warm-gold);
+    color: var(--primary-color);
 }
 
 .section-header h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.4rem;
     font-weight: 600;
 }
@@ -1005,7 +1414,7 @@ body::before {
     justify-content: space-between;
     align-items: center;
     padding: var(--space-sm) 0;
-    border-bottom: 1px solid rgba(255, 248, 220, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .ingredient-item:last-child {
@@ -1020,20 +1429,20 @@ body::before {
 
 .ingredient-name {
     font-family: var(--font-secondary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-weight: 500;
 }
 
 .ingredient-amount {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.7);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 400;
 }
 
 .confidence-score {
-    background: rgba(19, 136, 8, 0.2);
-    color: var(--india-green);
+    background: var(--success-color);
+    color: white;
     padding: 2px var(--space-xs);
     border-radius: 10px;
     font-size: 0.75rem;
@@ -1046,7 +1455,7 @@ body::before {
     display: flex;
     gap: var(--space-md);
     padding: var(--space-md) 0;
-    border-bottom: 1px solid rgba(255, 248, 220, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .instruction-item:last-child {
@@ -1054,7 +1463,7 @@ body::before {
 }
 
 .step-number {
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
     width: 36px;
     height: 36px;
@@ -1075,7 +1484,7 @@ body::before {
 
 .instruction-text {
     font-family: var(--font-secondary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     line-height: 1.6;
     margin-bottom: var(--space-sm);
     font-weight: 400;
@@ -1085,7 +1494,7 @@ body::before {
     display: flex;
     gap: var(--space-md);
     font-size: 0.8rem;
-    color: rgba(255, 248, 220, 0.6);
+    color: var(--text-secondary);
     font-family: var(--font-secondary);
     font-weight: 300;
 }
@@ -1094,7 +1503,7 @@ body::before {
 .processing-confidence {
     margin-top: var(--space-lg);
     padding-top: var(--space-md);
-    border-top: 1px solid rgba(218, 165, 32, 0.2);
+    border-top: 1px solid var(--border-color);
 }
 
 .confidence-header {
@@ -1107,12 +1516,12 @@ body::before {
 .confidence-header i {
     width: 24px;
     height: 24px;
-    color: var(--warm-gold);
+    color: var(--primary-color);
 }
 
 .processing-confidence h4 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -1124,11 +1533,11 @@ body::before {
 }
 
 .confidence-item {
-    background: rgba(255, 248, 220, 0.05);
+    background: var(--background-secondary);
     padding: var(--space-md);
     border-radius: var(--radius-md);
     text-align: center;
-    border: 1px solid rgba(218, 165, 32, 0.1);
+    border: 1px solid var(--border-color);
     transition: var(--transition-smooth);
 }
 
@@ -1139,7 +1548,7 @@ body::before {
 
 .confidence-label {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.7);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin-bottom: var(--space-xs);
     font-weight: 500;
@@ -1147,21 +1556,21 @@ body::before {
 
 .confidence-value {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.8rem;
     font-weight: 700;
 }
 
 .confidence-value.high {
-    color: var(--india-green);
+    color: var(--success-color);
 }
 
 .confidence-value.medium {
-    color: var(--turmeric);
+    color: var(--accent-color);
 }
 
 .confidence-value.low {
-    color: var(--terracotta);
+    color: #ef4444;
 }
 
 /* Learner Content */
@@ -1176,12 +1585,12 @@ body::before {
 .gallery-header i {
     width: 32px;
     height: 32px;
-    color: var(--warm-gold);
+    color: var(--primary-color);
 }
 
 .recipes-gallery h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.6rem;
     font-weight: 600;
     text-align: center;
@@ -1191,29 +1600,52 @@ body::before {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: var(--space-md);
+    margin-bottom: var(--space-xl);
 }
 
+/* Enhanced Recipe Cards with BOMBON.RS Style */
 .recipe-card {
-    background: rgba(255, 248, 220, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(218, 165, 32, 0.2);
+    background: var(--background-card);
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: var(--transition-smooth);
     cursor: pointer;
-    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.recipe-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.recipe-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, var(--primary-color) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .recipe-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(218, 165, 32, 0.4);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+.recipe-card:hover::before {
+    opacity: 0.1;
 }
 
 .recipe-card-image {
     width: 100%;
     height: 200px;
-    background: var(--warm-gradient);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1249,7 +1681,7 @@ body::before {
 
 .recipe-card-title {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: var(--space-xs);
@@ -1263,14 +1695,14 @@ body::before {
     flex-wrap: wrap;
     margin-bottom: var(--space-sm);
     font-size: 0.85rem;
-    color: rgba(255, 248, 220, 0.7);
+    color: var(--text-secondary);
     font-family: var(--font-secondary);
     font-weight: 400;
 }
 
 .recipe-card-description {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.5;
     margin-bottom: var(--space-md);
@@ -1284,14 +1716,85 @@ body::before {
 }
 
 .recipe-tag {
-    background: rgba(19, 136, 8, 0.2);
-    color: var(--india-green);
+    background: var(--success-color);
+    color: white;
     padding: 4px var(--space-sm);
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 500;
     font-family: var(--font-secondary);
-    border: 1px solid rgba(19, 136, 8, 0.3);
+    border: 1px solid var(--success-color);
+}
+
+/* Premium CTA Section */
+.premium-cta {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    text-align: center;
+    margin-top: var(--space-xl);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition-smooth);
+}
+
+.premium-cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.premium-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+.premium-cta h3 {
+    font-family: var(--font-primary);
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+}
+
+.premium-cta p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin-bottom: var(--space-lg);
+    font-weight: 300;
+}
+
+.premium-btn {
+    background: white;
+    color: var(--primary-color);
+    padding: var(--space-md) var(--space-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: var(--font-secondary);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    box-shadow: var(--shadow-md);
+}
+
+.premium-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Coming Soon Content */
@@ -1304,9 +1807,9 @@ body::before {
 
 .coming-soon-placeholder {
     text-align: center;
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(218, 165, 32, 0.2);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     padding: var(--space-xl) var(--space-lg);
     max-width: 500px;
@@ -1317,7 +1820,7 @@ body::before {
 .placeholder-icon {
     font-size: 5rem;
     margin-bottom: var(--space-md);
-    color: var(--warm-gold);
+    color: var(--primary-color);
     display: flex;
     justify-content: center;
 }
@@ -1329,7 +1832,7 @@ body::before {
 
 .coming-soon-placeholder h2 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: var(--space-md);
@@ -1337,7 +1840,7 @@ body::before {
 
 .coming-soon-placeholder p {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 1.1rem;
     line-height: 1.5;
     margin-bottom: var(--space-sm);
@@ -1345,7 +1848,7 @@ body::before {
 }
 
 .coming-soon-text {
-    color: var(--turmeric) !important;
+    color: var(--accent-color) !important;
     font-weight: 600 !important;
     font-size: 1.3rem !important;
     margin-top: var(--space-md) !important;
@@ -1357,7 +1860,7 @@ body::before {
     position: fixed;
     top: var(--space-md);
     right: var(--space-md);
-    background: rgba(19, 136, 8, 0.9);
+    background: var(--success-color);
     backdrop-filter: blur(10px);
     color: white;
     padding: var(--space-md) var(--space-lg);
@@ -1365,7 +1868,7 @@ body::before {
     box-shadow: var(--shadow-md);
     z-index: 1000;
     animation: slideInRight 0.3s ease-out;
-    border: 1px solid rgba(255, 248, 220, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     font-family: var(--font-secondary);
 }
 
@@ -1381,7 +1884,7 @@ body::before {
 
 .toast-icon {
     font-size: 1.2rem;
-    color: var(--cream-white);
+    color: white;
 }
 
 .toast-icon i {
@@ -1391,6 +1894,10 @@ body::before {
 
 .toast-message {
     font-weight: 500;
+}
+
+.error-toast {
+    background: #ef4444 !important;
 }
 
 @keyframes slideInRight {
@@ -1404,6 +1911,14 @@ body::before {
     }
 }
 
+/* Scroll Animations */
+.recipe-card:nth-child(1) { transition-delay: 0.1s; }
+.recipe-card:nth-child(2) { transition-delay: 0.2s; }
+.recipe-card:nth-child(3) { transition-delay: 0.3s; }
+.recipe-card:nth-child(4) { transition-delay: 0.4s; }
+.recipe-card:nth-child(5) { transition-delay: 0.5s; }
+.recipe-card:nth-child(6) { transition-delay: 0.6s; }
+
 /* Responsive Design */
 @media (max-width: 768px) {
     :root {
@@ -1412,6 +1927,20 @@ body::before {
         --space-md: 16px;
         --space-lg: 32px;
         --space-xl: 48px;
+    }
+    
+    .theme-toggle-wrapper {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .toggle-switch {
+        width: 140px;
+        height: 40px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
     }
     
     .login-card {
@@ -1495,6 +2024,11 @@ body::before {
     .confidence-metrics {
         grid-template-columns: repeat(2, 1fr);
     }
+    
+    .floating-spice, .floating-leaf, .floating-vessel {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1506,6 +2040,10 @@ body::before {
     .platform-title {
         font-size: 2.4rem;
         letter-spacing: -1px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
     }
     
     .user-type {
@@ -1547,6 +2085,15 @@ body::before {
     .confidence-metrics {
         grid-template-columns: 1fr;
     }
+    
+    .toggle-switch {
+        width: 120px;
+        height: 36px;
+    }
+    
+    .toggle-text {
+        font-size: 10px;
+    }
 }
 
 /* Print Styles */
@@ -1554,7 +2101,10 @@ body::before {
     .platform-header,
     .platform-nav,
     .recipe-actions,
-    .processing-confidence {
+    .processing-confidence,
+    .theme-toggle-wrapper,
+    .floating-elements,
+    .background-motifs {
         display: none;
     }
     
@@ -1584,6 +2134,11 @@ body::before {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+    
+    .floating-elements,
+    .background-motifs {
+        display: none;
+    }
 }
 
 /* Focus States */
@@ -1591,16 +2146,17 @@ body::before {
 .action-btn:focus,
 .login-btn:focus,
 .process-btn:focus,
-.user-type:focus {
-    outline: 2px solid var(--warm-gold);
+.user-type:focus,
+.premium-btn:focus {
+    outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
 
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
     :root {
-        --cream-white: #ffffff;
-        --saffron: #ff6600;
-        --india-green: #00cc00;
+        --text-primary: #000000;
+        --text-secondary: #333333;
+        --border-color: #666666;
     }
 }
