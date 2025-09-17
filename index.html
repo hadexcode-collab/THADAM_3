@@ -271,13 +271,196 @@
 
                     <!-- Learner View -->
                     <div class="learner-content" id="learnerContent">
-                        <div class="recipes-gallery">
-                            <div class="gallery-header">
-                                <i data-lucide="book-open"></i>
-                                <h3>Traditional Recipe Collection</h3>
+                        <!-- Premium South Indian Learner Dashboard -->
+                        <div class="premium-learner-dashboard">
+                            <!-- Diet Preferences Section -->
+                            <div class="diet-preferences-section">
+                                <h2>Choose Your South Indian Diet Style</h2>
+                                <div class="diet-cards">
+                                    <div class="diet-card" data-diet="vegetarian">
+                                        <div class="diet-icon">
+                                            <i data-lucide="leaf"></i>
+                                        </div>
+                                        <h3>Traditional Vegetarian</h3>
+                                        <p>Authentic South Indian vegetarian cuisine</p>
+                                        <div class="recipe-count">234 recipes</div>
+                                    </div>
+                                    <div class="diet-card" data-diet="coconut">
+                                        <div class="diet-icon">
+                                            <i data-lucide="circle"></i>
+                                        </div>
+                                        <h3>Coconut-Based</h3>
+                                        <p>Kerala and coastal cuisine specialties</p>
+                                        <div class="recipe-count">156 recipes</div>
+                                    </div>
+                                    <div class="diet-card" data-diet="millet">
+                                        <div class="diet-icon">
+                                            <i data-lucide="wheat"></i>
+                                        </div>
+                                        <h3>Millet & Grain</h3>
+                                        <p>Traditional grains for modern health</p>
+                                        <div class="recipe-count">189 recipes</div>
+                                    </div>
+                                    <div class="diet-card" data-diet="spicy">
+                                        <div class="diet-icon">
+                                            <i data-lucide="flame"></i>
+                                        </div>
+                                        <h3>Spice-Rich</h3>
+                                        <p>Chettinad and Andhra style dishes</p>
+                                        <div class="recipe-count">167 recipes</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="recipes-grid" id="recipesGrid">
-                                <!-- Sample recipes will be populated by JS -->
+
+                            <!-- Ayurveda Section -->
+                            <div class="ayurveda-section">
+                                <h2>Recipes for Your Constitution</h2>
+                                <div class="dosha-selector">
+                                    <div class="dosha-card vata">
+                                        <div class="dosha-icon">
+                                            <i data-lucide="wind"></i>
+                                        </div>
+                                        <h3>Vata Balancing</h3>
+                                        <p>Warm, nourishing, grounding foods</p>
+                                        <div class="recipe-count">127 recipes</div>
+                                    </div>
+                                    <div class="dosha-card pitta">
+                                        <div class="dosha-icon">
+                                            <i data-lucide="sun"></i>
+                                        </div>
+                                        <h3>Pitta Cooling</h3>
+                                        <p>Cooling, mild, refreshing dishes</p>
+                                        <div class="recipe-count">89 recipes</div>
+                                    </div>
+                                    <div class="dosha-card kapha">
+                                        <div class="dosha-icon">
+                                            <i data-lucide="mountain"></i>
+                                        </div>
+                                        <h3>Kapha Energizing</h3>
+                                        <p>Light, spicy, warming foods</p>
+                                        <div class="recipe-count">156 recipes</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Premium Recipe Grid -->
+                            <div class="premium-recipe-section">
+                                <div class="section-header">
+                                    <h2>Master Chef Collections</h2>
+                                    <p>Authentic recipes from traditional South Indian kitchens</p>
+                                </div>
+                                
+                                <div class="recipe-grid premium-grid" id="premiumRecipesGrid">
+                                    <!-- Premium recipes will be populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Nutrition Card -->
+                            <div class="nutrition-card">
+                                <h3>Traditional Nutritional Benefits</h3>
+                                <div class="macro-display">
+                                    <div class="macro calories">
+                                        <span class="value">145</span>
+                                        <span class="unit">calories</span>
+                                        <div class="bar" style="width: 65%;"></div>
+                                    </div>
+                                    <div class="macro protein">
+                                        <span class="value">12g</span>
+                                        <span class="unit">protein</span>
+                                        <div class="bar" style="width: 80%;"></div>
+                                    </div>
+                                    <div class="macro carbs">
+                                        <span class="value">18g</span>
+                                        <span class="unit">carbs</span>
+                                        <div class="bar" style="width: 45%;"></div>
+                                    </div>
+                                    <div class="macro fiber">
+                                        <span class="value">8g</span>
+                                        <span class="unit">fiber</span>
+                                        <div class="bar" style="width: 90%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ayurvedic-benefits">
+                                    <h4>Ayurvedic Properties</h4>
+                                    <ul>
+                                        <li>Balances Vata and Pitta doshas</li>
+                                        <li>Aids digestion with traditional spices</li>
+                                        <li>Rich in South Indian minerals</li>
+                                        <li>Cooling properties for hot climate</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="local-benefits">
+                                    <h4>Regional Health Benefits</h4>
+                                    <p>Adapted for South Indian climate and lifestyle. Rich in coconut-derived MCTs for sustained energy in tropical weather.</p>
+                                </div>
+                            </div>
+
+                            <!-- Premium Promotion Section -->
+                            <div class="premium-promotion-section">
+                                <div class="premium-hero">
+                                    <h2>Master the Art of Ancestral Cooking</h2>
+                                    <p>Join 15,000+ home cooks preserving South Indian culinary heritage</p>
+                                </div>
+                                
+                                <div class="premium-benefits">
+                                    <div class="benefit-card">
+                                        <div class="benefit-icon">
+                                            <i data-lucide="book-heart"></i>
+                                        </div>
+                                        <h3>Grandmother's Secret Recipes</h3>
+                                        <p>Access to family recipes passed down through 5+ generations</p>
+                                        <div class="chef-testimonial">
+                                            <div class="chef-photo"></div>
+                                            <blockquote>"These are the recipes that made our ancestors strong and healthy"</blockquote>
+                                            <cite>- Chef Lakshmi Menon, Kerala Traditional Cook</cite>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="benefit-card">
+                                        <div class="benefit-icon">
+                                            <i data-lucide="chef-hat"></i>
+                                        </div>
+                                        <h3>Master Traditional Techniques</h3>
+                                        <p>Learn the art of perfect tempering, spice grinding, and fermentation</p>
+                                        <div class="technique-preview">
+                                            <span>Perfect dosa batter fermentation</span>
+                                            <span>Traditional spice roasting methods</span>
+                                            <span>Authentic coconut grinding techniques</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Premium CTA Banners -->
+                            <div class="premium-cta-banners">
+                                <div class="cta-banner">
+                                    <div class="cta-icon">
+                                        <i data-lucide="crown"></i>
+                                    </div>
+                                    <h3>Turn Your Kitchen Into Your Grandmother's</h3>
+                                    <p>Unlock recipes that have fed generations of South Indian families</p>
+                                    <button class="premium-btn">Start Your Culinary Journey - ₹299/month</button>
+                                </div>
+                                
+                                <div class="cta-banner">
+                                    <div class="cta-icon">
+                                        <i data-lucide="zap"></i>
+                                    </div>
+                                    <h3>From Novice to Traditional Master in 30 Days</h3>
+                                    <p>Join thousands who've transformed their cooking with ancestral wisdom</p>
+                                    <button class="premium-btn">Master Traditional Cooking - Save 40% Yearly</button>
+                                </div>
+                                
+                                <div class="cta-banner">
+                                    <div class="cta-icon">
+                                        <i data-lucide="trophy"></i>
+                                    </div>
+                                    <h3>Cook Like the Legends of South Indian Cuisine</h3>
+                                    <p>Access exclusive recipes from master chefs and traditional cooks</p>
+                                    <button class="premium-btn">Unlock Premium Secrets - Free 7-Day Trial</button>
+                                </div>
                             </div>
                         </div>
                     </div>

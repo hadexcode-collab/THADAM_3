@@ -201,8 +201,15 @@ class TADAMApp {
 
     initializeSampleRecipes() {
         const recipesGrid = document.getElementById('recipesGrid');
+        const premiumRecipesGrid = document.getElementById('premiumRecipesGrid');
         if (!recipesGrid) return;
 
+        // Initialize premium recipes for learner interface
+        if (premiumRecipesGrid) {
+            this.initializePremiumRecipes();
+        }
+
+        // Keep original recipes for creator interface
         const sampleRecipes = [
             {
                 name: 'Paatti\'s Sambar',
@@ -314,6 +321,118 @@ class TADAMApp {
                     <div class="recipe-card-tags">
                         ${recipe.tags.map(tag => `<span class="recipe-tag">${tag}</span>`).join('')}
                     </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    initializePremiumRecipes() {
+        const premiumRecipesGrid = document.getElementById('premiumRecipesGrid');
+        if (!premiumRecipesGrid) return;
+
+        const premiumRecipes = [
+            {
+                name: 'Authentic Chettinad Sambar',
+                chef: 'Chef Meenakshi',
+                expertise: 'Chettinad cuisine expert',
+                rating: '4.9',
+                reviews: '234',
+                time: '45 mins',
+                servings: '6',
+                type: 'premium',
+                gradient: 'linear-gradient(135deg, #8B4513, #CD853F)',
+                description: 'Traditional family recipe passed down through generations'
+            },
+            {
+                name: 'Kerala Fish Curry',
+                chef: 'Chef Lakshmi',
+                expertise: 'Kerala traditional cook',
+                rating: '4.8',
+                reviews: '189',
+                time: '35 mins',
+                servings: '4',
+                type: 'premium',
+                gradient: 'linear-gradient(135deg, #FF6347, #FF4500)',
+                description: 'Coconut-rich curry with authentic Kerala spices'
+            },
+            {
+                name: 'Simple Tomato Rasam',
+                calories: '120',
+                protein: '8g',
+                fiber: '15g',
+                time: '25 mins',
+                servings: '4',
+                type: 'free',
+                gradient: 'linear-gradient(135deg, #FF6347, #FF4500)',
+                description: 'Traditional comfort food for daily meals'
+            },
+            {
+                name: 'Andhra Chicken Curry',
+                chef: 'Chef Radhika',
+                expertise: 'Andhra cuisine specialist',
+                rating: '4.7',
+                reviews: '156',
+                time: '50 mins',
+                servings: '5',
+                type: 'premium',
+                gradient: 'linear-gradient(135deg, #DC143C, #B22222)',
+                description: 'Spicy and flavorful Andhra-style chicken preparation'
+            },
+            {
+                name: 'Coconut Rice',
+                calories: '180',
+                protein: '4g',
+                fiber: '3g',
+                time: '20 mins',
+                servings: '3',
+                type: 'free',
+                gradient: 'linear-gradient(135deg, #F5F5DC, #DEB887)',
+                description: 'Fragrant coconut rice with traditional tempering'
+            },
+            {
+                name: 'Traditional Payasam',
+                chef: 'Chef Sushila',
+                expertise: 'Traditional sweets expert',
+                rating: '4.9',
+                reviews: '298',
+                time: '40 mins',
+                servings: '8',
+                type: 'premium',
+                gradient: 'linear-gradient(135deg, #DDA0DD, #DA70D6)',
+                description: 'Creamy rice pudding with jaggery and cardamom'
+            }
+        ];
+
+        premiumRecipesGrid.innerHTML = premiumRecipes.map(recipe => `
+            <div class="recipe-card ${recipe.type}">
+                <div class="recipe-card-image" style="background: ${recipe.gradient};">
+                    <div class="${recipe.type}-badge">${recipe.type.toUpperCase()}</div>
+                    <div class="recipe-overlay">
+                        <h3>${recipe.name}</h3>
+                        <p>${recipe.description}</p>
+                    </div>
+                </div>
+                <div class="recipe-details">
+                    ${recipe.type === 'premium' ? `
+                        <div class="chef-info">
+                            <div class="chef-avatar"></div>
+                            <div>
+                                <h4>${recipe.chef}</h4>
+                                <p>${recipe.expertise}</p>
+                            </div>
+                        </div>
+                        <div class="recipe-stats">
+                            <span>★ ${recipe.rating} (${recipe.reviews} reviews)</span>
+                            <span>⏱ ${recipe.time}</span>
+                            <span>🍽 ${recipe.servings} servings</span>
+                        </div>
+                    ` : `
+                        <div class="nutrition-preview">
+                            <span>${recipe.calories} cal</span>
+                            <span>${recipe.protein} protein</span>
+                            <span>${recipe.fiber} fiber</span>
+                        </div>
+                    `}
                 </div>
             </div>
         `).join('');
