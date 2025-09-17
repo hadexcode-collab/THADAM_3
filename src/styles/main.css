@@ -1054,6 +1054,9 @@ body {
 .recipes-masonry {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
 
 .recipe-card {
     background: var(--background-main);
@@ -1078,7 +1081,7 @@ body {
     z-index: 1;
 }
 
-.upload-content {
+.recipe-card:hover::before {
     opacity: 0.03;
 }
 
