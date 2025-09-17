@@ -845,12 +845,47 @@ input#nonveg-theme:checked + .nonveg-label .toggle-text {
     gap: var(--space-xs);
 }
 
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.switch-role-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.switch-role-btn:hover {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.switch-role-btn i {
+    width: 16px;
+    height: 16px;
+}
+
 .logout-btn {
-    background: var(--background-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 12px var(--space-md);
-    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
     transition: var(--transition-smooth);
     font-weight: 500;
@@ -858,10 +893,14 @@ input#nonveg-theme:checked + .nonveg-label .toggle-text {
 }
 
 .logout-btn:hover {
-    background: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.logout-btn i {
+    width: 16px;
+    height: 16px;
 }
 
 /* Platform Navigation */
