@@ -111,6 +111,14 @@ class TADAMApp {
         document.getElementById('login-screen').classList.add('active');
     }
 
+    updateUserBadge() {
+        const userBadge = document.getElementById('userBadge');
+        if (userBadge && this.currentUser) {
+            const badgeText = this.currentUser.type === 'creator' ? '🎬 Creator' : '🎓 Learner';
+            userBadge.textContent = badgeText;
+        }
+    }
+
     showMainPlatform() {
         document.getElementById('login-screen').classList.remove('active');
         document.getElementById('main-platform').classList.add('active');
