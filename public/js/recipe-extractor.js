@@ -256,86 +256,43 @@ class RecipeExtractorAI {
     }
 
     async analyzeAudio(videoFile) {
-        // Enhanced multilingual audio transcription simulation
-        const multilingualTranscripts = {
-            tamil: [
-                "முதலில் கடாயில் நல்லெண்ணெய் விட்டு சூடாக்கவும்... First heat sesame oil in the kadai...",
-                "கடுகு போட்டு தாளித்ததும் சீரகம் சேர்க்கவும்... Add mustard seeds, when they splutter add cumin seeds...",
-                "கறிவேப்பிலை சேர்த்து நறுமணம் வரும் வரை வதக்கவும்... Add curry leaves and sauté until fragrant...",
-                "சின்ன வெங்காயம் சேர்த்து பொன்னிறமாக வதக்கவும்... Add small onions and sauté until golden brown...",
-                "இஞ்சி பூண்டு விழுது சேர்த்து கச்சா வாசனை போகும் வரை வதக்கவும்... Add ginger-garlic paste and sauté until raw smell disappears...",
-                "தக்காளி சேர்த்து நன்றாக மசித்து எண்ணெய் பிரியும் வரை வதக்கவும்... Add tomatoes, mash well and cook until oil separates...",
-                "மஞ்சள் தூள், மிளகாய் தூள், சாம்பார் பொடி சேர்க்கவும்... Add turmeric powder, red chili powder, and sambar powder...",
-                "புளி கரைத்த நீர் சேர்த்து கொதிக்க விடுங்கள்... Add tamarind water and bring to boil...",
-                "வேக வைத்த துவரம் பருப்பு சேர்த்து கலக்கவும்... Add cooked toor dal and mix well...",
-                "உப்பு சேர்த்து ருசி பார்த்து 10 நிமிடம் கொதிக்க விடுங்கள்... Add salt to taste and simmer for 10 minutes..."
-            ],
-            telugu: [
-                "మొదట కడాయిలో నూనె వేసి వేడిచేయండి... First heat oil in the kadai...",
-                "ఆవాలు వేసి తాళించిన తర్వాత జీలకర్ర చేర్చండి... Add mustard seeds, after tempering add cumin seeds...",
-                "కరివేపాకు చేర్చి వాసన వచ్చే వరకు వేయించండి... Add curry leaves and fry until fragrant...",
-                "చిన్న ఉల్లిపాయలు చేర్చి బంగారు రంగు వచ్చే వరకు వేయించండి... Add small onions and fry until golden...",
-                "అల్లం వెల్లుల్లి పేస్ట్ చేర్చి పచ్చి వాసన పోయే వరకు వేయించండి... Add ginger-garlic paste and fry until raw smell goes...",
-                "టమాటోలు చేర్చి బాగా మెత్తగా చేసి నూనె వేరు అయ్యే వరకు వండండి... Add tomatoes, mash well and cook until oil separates...",
-                "పసుపు పొడి, మిరపకాయ పొడి, సాంబార్ పొడి చేర్చండి... Add turmeric powder, red chili powder, and sambar powder...",
-                "చింతపండు రసం చేర్చి మరిగించండి... Add tamarind extract and bring to boil...",
-                "వేడిన కందిపప్పు చేర్చి కలపండి... Add cooked toor dal and mix...",
-                "ఉప్పు చేర్చి రుచి చూసి 10 నిమిషాలు ఉడికించండి... Add salt to taste and simmer for 10 minutes..."
-            ],
-            malayalam: [
-                "ആദ്യം കടായിൽ എണ്ണ ചേർത്ത് ചൂടാക്കുക... First heat oil in the kadai...",
-                "കടുക് ചേർത്ത് പൊട്ടിച്ച ശേഷം ജീരകം ചേർക്കുക... Add mustard seeds, after spluttering add cumin...",
-                "കറിവേപ്പില ചേർത്ത് മണം വരുന്നത് വരെ വറുക്കുക... Add curry leaves and fry until fragrant...",
-                "ചെറിയ ഉള്ളി ചേർത്ത് സ്വർണ്ണ നിറം വരുന്നത് വരെ വറുക്കുക... Add small onions and fry until golden...",
-                "ഇഞ്ചി വെളുത്തുള്ളി പേസ്റ്റ് ചേർത്ത് അസംസ്കൃത മണം പോകുന്നത് വരെ വറുക്കുക... Add ginger-garlic paste and fry until raw smell goes...",
-                "തക്കാളി ചേർത്ത് നന്നായി ചതച്ച് എണ്ണ വേർപെടുന്നത് വരെ വേവിക്കുക... Add tomatoes, mash well and cook until oil separates...",
-                "മഞ്ഞൾ പൊടി, മുളക് പൊടി, സാമ്പാർ പൊടി ചേർക്കുക... Add turmeric powder, chili powder, and sambar powder...",
-                "പുളി വെള്ളം ചേർത്ത് തിളപ്പിക്കുക... Add tamarind water and bring to boil...",
-                "വേവിച്ച തുവര പരിപ്പ് ചേർത്ത് കലക്കുക... Add cooked toor dal and mix...",
-                "ഉപ്പ് ചേർത്ത് രുചി നോക്കി 10 മിനിറ്റ് തിളപ്പിക്കുക... Add salt to taste and simmer for 10 minutes..."
-            ]
+        // Simulate audio transcription
+        const sampleTranscripts = [
+            "முதலில் கடாயில் எண்ணெய் விட்டு கடுகு போடுங்கள்... First heat oil in kadai and add mustard seeds...",
+            "கடுகு தாளித்ததும் கறிவேப்பிலை சேர்க்கவும்... After mustard seeds splutter, add curry leaves...",
+            "சின்ன வெங்காயம் சேர்த்து வதக்கவும்... Add small onions and sauté well...",
+            "இஞ்சி பூண்டு விழுது சேர்த்து நன்றாக வதக்கவும்... Add ginger-garlic paste and sauté well...",
+            "மஞ்சள் தூள், மிளகாய் தூள் சேர்க்கவும்... Add turmeric powder and red chili powder...",
+            "தக்காளி சேர்த்து நன்றாக மசித்து விடுங்கள்... Add tomatoes and mash them well...",
+            "புளி கரைத்த நீர் சேர்த்து கொதிக்க விடுங்கள்... Add tamarind water and let it boil...",
+            "சாம்பார் பொடி சேர்த்து நன்றாக கலக்கவும்... Add sambar powder and mix well...",
+            "துவரம் பருப்பு வேக வைத்து சேர்க்கவும்... Add cooked toor dal...",
+            "உப்பு சேர்த்து ருசி பார்த்து கொள்ளுங்கள்... Add salt and taste..."
         ];
         
-        // Randomly select language and generate realistic transcript
-        const languages = ['tamil', 'telugu', 'malayalam'];
-        const selectedLanguage = languages[Math.floor(Math.random() * languages.length)];
-        const transcripts = multilingualTranscripts[selectedLanguage];
-        const selectedTranscripts = transcripts.slice(0, Math.floor(Math.random() * 4) + 4);
-        const transcript = selectedTranscripts.join(' ');
+        const transcript = sampleTranscripts.slice(0, Math.floor(Math.random() * 4) + 3).join(' ');
         
         return {
             success: true,
             data: {
                 transcript: transcript,
                 duration: videoFile.duration || 180,
-                language: 'Multilingual (Tamil/Telugu/Malayalam/English)',
-                detectedLanguage: selectedLanguage.charAt(0).toUpperCase() + selectedLanguage.slice(1),
-                model: this.models.whisper,
-                confidence: Math.floor(Math.random() * 8) + 92 // 92-99% confidence
+                language: 'Tamil/Telugu/Malayalam/English',
+                detectedLanguage: ['Tamil', 'Telugu', 'Malayalam'][Math.floor(Math.random() * 3)],
+                model: this.models.whisper
             }
         };
     }
 
     async detectIngredients(videoFile) {
-        // Enhanced South Indian ingredient detection
+        // Select random ingredients from database
         const selectedIngredients = [];
         const categories = Object.keys(this.ingredientDatabase);
         
-        // Ensure we have authentic South Indian ingredient combinations
+        // Ensure we have a good mix of ingredients
         categories.forEach(category => {
             const items = this.ingredientDatabase[category];
-            let count;
-            
-            // Prioritize essential South Indian ingredients
-            if (category === 'spices') {
-                count = Math.floor(Math.random() * 4) + 3; // 3-6 spices
-            } else if (category === 'vegetables') {
-                count = Math.floor(Math.random() * 3) + 2; // 2-4 vegetables
-            } else if (category === 'proteins') {
-                count = Math.floor(Math.random() * 2) + 1; // 1-2 proteins
-            } else {
-                count = Math.floor(Math.random() * 2) + 1; // 1-2 others
-            }
+            const count = Math.floor(Math.random() * 3) + 1;
             
             for (let i = 0; i < count && i < items.length; i++) {
                 const item = items[Math.floor(Math.random() * items.length)];
@@ -347,82 +304,29 @@ class RecipeExtractorAI {
                     selectedIngredients.push({
                         name: item.name,
                         category: category,
-                        quantity: item.quantity || this.generateQuantity(item.name),
+                        quantity: this.generateQuantity(item.name),
                         confidence: confidence,
-                        detected: true,
-                        tamil: item.tamil || '',
-                        telugu: item.telugu || '',
-                        malayalam: item.malayalam || ''
+                        detected: true
                     });
                 }
             }
         });
 
-        // Ensure we have essential South Indian base ingredients
-        const essentialIngredients = [
-            { name: 'Mustard Seeds', category: 'spices', quantity: '1 tsp', confidence: 95 },
-            { name: 'Curry Leaves', category: 'spices', quantity: '8-10 leaves', confidence: 96 },
-            { name: 'Turmeric Powder', category: 'spices', quantity: '1/2 tsp', confidence: 94 }
-        ];
-
-        essentialIngredients.forEach(essential => {
-            if (!selectedIngredients.find(ing => ing.name === essential.name)) {
-                selectedIngredients.push({
-                    ...essential,
-                    detected: true,
-                    tamil: this.getTranslation(essential.name, 'tamil'),
-                    telugu: this.getTranslation(essential.name, 'telugu'),
-                    malayalam: this.getTranslation(essential.name, 'malayalam')
-                });
-            }
-        });
-
-        const finalIngredients = selectedIngredients.slice(0, 14); // Limit to 14 ingredients
-
         return {
             success: true,
             data: {
-                ingredients: finalIngredients,
-                totalDetected: finalIngredients.length,
-                model: this.models.yolo,
-                processingTime: Math.floor(Math.random() * 3) + 2 // 2-4 seconds
+                ingredients: selectedIngredients.slice(0, 12), // Limit to 12 ingredients
+                totalDetected: selectedIngredients.length,
+                model: this.models.yolo
             }
         };
     }
 
     async recognizeTechniques(videoFile) {
-        // Enhanced South Indian cooking technique recognition
-        const techniqueCount = Math.floor(Math.random() * 3) + 3; // 3-5 techniques
+        // Select random cooking techniques
+        const techniqueCount = Math.floor(Math.random() * 4) + 2;
         const selectedTechniques = [];
         
-        // Prioritize essential South Indian techniques
-        const essentialTechniques = [
-            'Thalippu (Tempering)',
-            'Pressure Cooking',
-            'Steam Cooking'
-        ];
-        
-        // Add essential techniques first
-        essentialTechniques.forEach(essentialName => {
-            const technique = this.cookingTechniques.find(t => t.name === essentialName);
-            if (technique && selectedTechniques.length < techniqueCount) {
-                const confidence = Math.floor(
-                    Math.random() * (technique.confidence[1] - technique.confidence[0]) + technique.confidence[0]
-                );
-                
-                selectedTechniques.push({
-                    name: technique.name,
-                    confidence: confidence,
-                    timestamp: Math.floor(Math.random() * 150) + 30, // 30-180 seconds
-                    description: technique.description,
-                    tamil: technique.tamil || '',
-                    telugu: technique.telugu || '',
-                    malayalam: technique.malayalam || ''
-                });
-            }
-        });
-        
-        // Add additional techniques
         for (let i = 0; i < techniqueCount; i++) {
             const technique = this.cookingTechniques[
                 Math.floor(Math.random() * this.cookingTechniques.length)
@@ -436,11 +340,7 @@ class RecipeExtractorAI {
                 selectedTechniques.push({
                     name: technique.name,
                     confidence: confidence,
-                    timestamp: Math.floor(Math.random() * 150) + 30,
-                    description: technique.description,
-                    tamil: technique.tamil || '',
-                    telugu: technique.telugu || '',
-                    malayalam: technique.malayalam || ''
+                    timestamp: Math.floor(Math.random() * 180) + 30
                 });
             }
         }
@@ -448,9 +348,8 @@ class RecipeExtractorAI {
         return {
             success: true,
             data: {
-                techniques: selectedTechniques.slice(0, techniqueCount),
-                model: this.models.resnet,
-                processingAccuracy: Math.floor(Math.random() * 8) + 92 // 92-99% accuracy
+                techniques: selectedTechniques,
+                model: this.models.resnet
             }
         };
     }
@@ -536,104 +435,49 @@ class RecipeExtractorAI {
         return recipeNames[Math.floor(Math.random() * recipeNames.length)];
     }
 
-    generateDetailedCookingSteps(ingredients, techniques, detectedLanguage) {
+    generateCookingSteps(ingredients, techniques) {
         const baseSteps = [
             {
                 step: 1,
-                instruction: "Heat sesame oil (nallennai) or coconut oil in a heavy-bottomed kadai over medium heat. The oil should be hot but not smoking.",
+                instruction: "Heat sesame oil (nallennai) or coconut oil in a heavy-bottomed kadai over medium heat.",
                 time: "2-3 minutes",
                 technique: "Oil Heating",
-                temperature: "Medium heat",
-                tips: "Use traditional sesame oil for authentic flavor"
+                temperature: "Medium heat"
             },
             {
                 step: 2,
-                instruction: "Add mustard seeds and let them splutter completely. Then add cumin seeds, fenugreek seeds, and fresh curry leaves. Listen for the sizzling sound.",
-                time: "1-2 minutes",
+                instruction: "Add mustard seeds and let them splutter. Then add cumin seeds and curry leaves.",
+                time: "1 minute",
                 technique: "Thalippu (Tempering)",
-                temperature: "Medium heat",
-                tips: "Curry leaves should be fresh for best aroma"
+                temperature: "Medium heat"
             },
             {
                 step: 3,
-                instruction: "Add small onions (sambar onions) and sauté until they turn golden brown and slightly caramelized. This adds sweetness to the dish.",
+                instruction: "Add small onions (sambar onions) and sauté until they turn golden brown.",
                 time: "5-7 minutes",
                 technique: "Sautéing",
-                temperature: "Medium heat",
-                tips: "Small onions are preferred over big onions in South Indian cooking"
+                temperature: "Medium heat"
             },
             {
                 step: 4,
-                instruction: "Add freshly ground ginger-garlic paste and slit green chilies. Sauté until the raw smell disappears and the mixture becomes aromatic.",
-                time: "2-3 minutes",
+                instruction: "Add ginger-garlic paste and green chilies. Sauté until the raw smell disappears.",
+                time: "2 minutes",
                 technique: "Sautéing",
-                temperature: "Medium heat",
-                tips: "Fresh ginger-garlic paste gives better flavor than store-bought"
+                temperature: "Medium heat"
             }
         ];
 
-        // Add ingredient-specific steps based on detected ingredients
+        // Add ingredient-specific steps
         if (ingredients.some(ing => ing.name.includes('Tomato'))) {
             baseSteps.push({
                 step: baseSteps.length + 1,
-                instruction: "Add chopped tomatoes and cook until they become completely mushy and oil separates from the mixture. This is crucial for the base flavor.",
+                instruction: "Add chopped tomatoes and cook until they become mushy and oil separates.",
                 time: "8-10 minutes",
                 technique: "Tomato Cooking",
-                temperature: "Medium-low heat",
-                tips: "Fully ripe tomatoes work best for this step"
+                temperature: "Medium-low heat"
             });
         }
-
-        if (ingredients.some(ing => ing.name.includes('Dal'))) {
-            baseSteps.push({
-                step: baseSteps.length + 1,
-                instruction: "Add the pressure-cooked dal (lentils) along with the cooking water. Mix gently to combine without mashing the dal completely.",
-                time: "2-3 minutes",
-                technique: "Dal Integration",
-                temperature: "Medium heat",
-                tips: "Save the dal cooking water as it contains nutrients and flavor"
-            });
-        }
-
-        if (ingredients.some(ing => ing.name.includes('Tamarind'))) {
-            baseSteps.push({
-                step: baseSteps.length + 1,
-                instruction: "Add tamarind extract (soaked and strained) gradually while stirring. Bring the mixture to a rolling boil.",
-                time: "5-7 minutes",
-                technique: "Tamarind Addition",
-                temperature: "Medium-high heat",
-                tips: "Soak tamarind in warm water for 15 minutes before extracting"
-            });
-        }
-
-        if (ingredients.some(ing => ing.name.includes('Coconut'))) {
-            baseSteps.push({
-                step: baseSteps.length + 1,
-                instruction: "Add freshly grated coconut and mix well. Cook for 2-3 minutes until the coconut is well incorporated.",
-                time: "2-3 minutes",
-                technique: "Coconut Integration",
-                temperature: "Low heat",
-                tips: "Fresh coconut gives the best texture and flavor"
-            });
-        }
-
-        // Add final seasoning and garnish steps
-        baseSteps.push({
-            step: baseSteps.length + 1,
-            instruction: "Add salt to taste and simmer the dish for 10-15 minutes until all flavors meld together. Adjust consistency with water if needed.",
-            time: "10-15 minutes",
-            technique: "Final Simmering",
-            temperature: "Low heat",
-            tips: "Taste and adjust salt, tanginess, and spice levels"
-        });
-
-        baseSteps.push({
-            step: baseSteps.length + 1,
-            instruction: "Garnish with fresh coriander leaves and serve hot with steamed rice or traditional South Indian bread.",
-            time: "1 minute",
-            technique: "Garnishing",
-            temperature: "Off heat",
-            tips: "Serve immediately for best taste and aroma"
-        });
 
         // Add tamarind step for
+    }
+}
