@@ -33,6 +33,15 @@ class UploadHandler {
         if (processBtn) {
             processBtn.addEventListener('click', () => this.processVideo());
         }
+
+        // Recipe action buttons
+        const saveBtn = document.getElementById('saveRecipe');
+        const shareBtn = document.getElementById('shareRecipe');
+        const printBtn = document.getElementById('printRecipe');
+
+        if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
+        if (shareBtn) shareBtn.addEventListener('click', () => this.shareRecipe());
+        if (printBtn) printBtn.addEventListener('click', () => this.printRecipe());
     }
 
     handleDragOver(e) {
