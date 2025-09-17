@@ -185,6 +185,10 @@
                         <h1>TADAM</h1>
                         <span class="user-badge" id="userBadge">🎓 Learner</span>
                     </div>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i data-lucide="log-out"></i>
+                        <span>Logout</span>
+                    </button>
                     <button class="logout-btn" id="logoutBtn">Logout</button>
                 </div>
             </header>
@@ -391,77 +395,218 @@
                         </div>
                     </div>
 
-                    <!-- Learner View -->
-                    <div class="learner-content" id="learnerContent">
-                        <!-- Learner Header with Logout -->
-                        <header class="learner-header mb-8 flex justify-between items-center">
-                            <div>
-                                <h2 class="text-2xl font-bold text-gray-800">Traditional Recipe Collection</h2>
-                                <p class="text-gray-600">Discover authentic South Indian cuisine</p>
-                            </div>
-                            <button id="learnerLogoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-bold transition-colors duration-200">
-                                Logout
-                            </button>
-                        </header>
-
-                        <!-- Diet Preference Selector -->
-                        <div class="diet-preferences-section mb-8">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Choose Your South Indian Diet Style</h3>
-                            <p class="text-gray-600 mb-6">Personalize your recipe recommendations based on traditional dietary practices</p>
+                    <!-- Recipe Detail Modal (Learner Only) -->
+                    <div id="recipeDetailModal" class="recipe-modal">
+                        <div class="modal-overlay" onclick="closeRecipeModal()"></div>
+                        <div class="modal-content">
+                            <button class="modal-close" onclick="closeRecipeModal()">×</button>
                             
-                            <div class="diet-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <div class="diet-option bg-white p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer border-2 border-transparent hover:border-green-500" data-diet="traditional-veg">
-                                    <div class="diet-icon w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full mx-auto mb-3"></div>
-                                    <h4 class="font-semibold text-gray-800 text-center mb-2">Traditional Vegetarian</h4>
-                                    <p class="text-sm text-gray-600 text-center">Authentic South Indian vegetarian cuisine with temple-style preparations</p>
+                            <div class="recipe-detail-layout">
+                                <!-- Left side: Recipe image and basic info -->
+                                <div class="recipe-image-section">
+                                    <div class="recipe-main-image" id="modalRecipeImage">
+                                        <!-- Food image gradient placeholder -->
+                                    </div>
+                                    
+                                    <div class="recipe-badges">
+                                        <span class="badge high-protein">HIGH PROTEIN</span>
+                                        <span class="badge plant-count">8 PLANTS</span>
+                                        <span class="badge low-sat-fat">LOW SAT FAT</span>
+                                    </div>
+                                    
+                                    <div class="recipe-nutrition-callout">
+                                        This recipe contains 8 different traditional South Indian ingredients
+                                    </div>
+                                    
+                                    <div class="nutrition-panel">
+                                        <h4>Nutritional Information</h4>
+                                        
+                                        <div class="macro-breakdown">
+                                            <div class="macro-circle">
+                                                <div class="macro-chart">
+                                                    <div class="macro-center">
+                                                        <span class="calories">245</span>
+                                                        <span class="unit">kcal</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="macro-details">
+                                                <div class="macro-item">
+                                                    <div class="macro-color carbs"></div>
+                                                    <span class="macro-label">Carbs</span>
+                                                    <span class="macro-value">32g</span>
+                                                    <span class="macro-percent">52%</span>
+                                                </div>
+                                                <div class="macro-item">
+                                                    <div class="macro-color protein"></div>
+                                                    <span class="macro-label">Protein</span>
+                                                    <span class="macro-value">12g</span>
+                                                    <span class="macro-percent">20%</span>
+                                                </div>
+                                                <div class="macro-item">
+                                                    <div class="macro-color fat"></div>
+                                                    <span class="macro-label">Fat</span>
+                                                    <span class="macro-value">8g</span>
+                                                    <span class="macro-percent">28%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="ayurvedic-info">
+                                            <h5>Traditional Benefits</h5>
+                                            <ul>
+                                                <li>Balances Pitta dosha with cooling ingredients</li>
+                                                <li>Rich in traditional South Indian minerals</li>
+                                                <li>Supports digestive fire (Agni)</li>
+                                                <li>Seasonal ingredients for optimal health</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="diet-option bg-white p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer border-2 border-transparent hover:border-yellow-500" data-diet="coconut-based">
-                                    <div class="diet-icon w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full mx-auto mb-3"></div>
-                                    <h4 class="font-semibold text-gray-800 text-center mb-2">Coconut-Based</h4>
-                                    <p class="text-sm text-gray-600 text-center">Kerala and coastal specialties rich in coconut and seafood</p>
-                                </div>
-                                
-                                <div class="diet-option bg-white p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer border-2 border-transparent hover:border-purple-500" data-diet="ancient-grains">
-                                    <div class="diet-icon w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto mb-3"></div>
-                                    <h4 class="font-semibold text-gray-800 text-center mb-2">Ancient Grains</h4>
-                                    <p class="text-sm text-gray-600 text-center">Traditional millets and grains for modern healthy living</p>
-                                </div>
-                                
-                                <div class="diet-option bg-white p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer border-2 border-transparent hover:border-red-500" data-diet="spice-rich">
-                                    <div class="diet-icon w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full mx-auto mb-3"></div>
-                                    <h4 class="font-semibold text-gray-800 text-center mb-2">Spice-Rich</h4>
-                                    <p class="text-sm text-gray-600 text-center">Chettinad and Andhra style dishes with bold, warming spices</p>
-                                </div>
-                                
-                                <div class="diet-option bg-white p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer border-2 border-transparent hover:border-blue-500" data-diet="ayurvedic">
-                                    <div class="diet-icon w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto mb-3"></div>
-                                    <h4 class="font-semibold text-gray-800 text-center mb-2">Ayurvedic Balance</h4>
-                                    <p class="text-sm text-gray-600 text-center">Dosha-specific recipes for constitutional harmony</p>
-                                </div>
-                                
-                                <div class="diet-option bg-white p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer border-2 border-transparent hover:border-pink-500" data-diet="festival">
-                                    <div class="diet-icon w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full mx-auto mb-3"></div>
-                                    <h4 class="font-semibold text-gray-800 text-center mb-2">Festival Specials</h4>
-                                    <p class="text-sm text-gray-600 text-center">Traditional recipes for religious celebrations and occasions</p>
+                                <!-- Right side: Details and ingredients -->
+                                <div class="recipe-details-section">
+                                    <div class="recipe-header">
+                                        <h2 id="modalRecipeTitle">Traditional South Indian Recipe</h2>
+                                        
+                                        <div class="recipe-meta">
+                                            <div class="meta-item">
+                                                <span class="label">Prep Time</span>
+                                                <span class="value" id="modalPrepTime">20 MIN</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <span class="label">Total Time</span>
+                                                <span class="value" id="modalTotalTime">40 MIN</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <span class="label">Price</span>
+                                                <span class="value" id="modalPrice">₹150 (₹25 pp)</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <button class="add-recipe-btn">ADD TO MEAL PLAN</button>
+                                    </div>
+                                    
+                                    <div class="ingredients-section">
+                                        <div class="section-header">
+                                            <h3>INGREDIENTS</h3>
+                                            <button class="minimize-btn">−</button>
+                                        </div>
+                                        
+                                        <div class="ingredients-list" id="modalIngredientsList">
+                                            <div class="ingredient-item">
+                                                <span class="quantity">1 cup</span>
+                                                <span class="name">Basmati rice</span>
+                                            </div>
+                                            <div class="ingredient-item">
+                                                <span class="quantity">2 tbsp</span>
+                                                <span class="name">Coconut oil</span>
+                                            </div>
+                                            <div class="ingredient-item">
+                                                <span class="quantity">1 tsp</span>
+                                                <span class="name">Mustard seeds</span>
+                                            </div>
+                                            <div class="ingredient-item">
+                                                <span class="quantity">8-10</span>
+                                                <span class="name">Curry leaves</span>
+                                            </div>
+                                            <div class="ingredient-item special">
+                                                <span class="quantity">4 tsp</span>
+                                                <span class="name">Ginger & garlic paste</span>
+                                                <span class="note">(Fresh ground spices)</span>
+                                            </div>
+                                            <div class="ingredient-item">
+                                                <span class="quantity">1/2 cup</span>
+                                                <span class="name">Fresh coconut</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="cooking-instructions">
+                                        <div class="section-header">
+                                            <h3>COOKING STEPS</h3>
+                                        </div>
+                                        <div class="instruction-steps" id="modalInstructionsList">
+                                            <div class="instruction-step">
+                                                <span class="step-number">1</span>
+                                                <span class="step-text">Heat coconut oil in a heavy-bottomed pan</span>
+                                            </div>
+                                            <div class="instruction-step">
+                                                <span class="step-number">2</span>
+                                                <span class="step-text">Add mustard seeds and let them splutter</span>
+                                            </div>
+                                            <div class="instruction-step">
+                                                <span class="step-number">3</span>
+                                                <span class="step-text">Add curry leaves and ginger-garlic paste</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Meal Planning Section -->
-                        <div class="meal-planning-section bg-gray-50 p-6 rounded-lg shadow-md mb-8">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Plan Your Traditional Meals</h3>
+                    <!-- Learner View -->
+                    <div class="learner-content" id="learnerContent">
+                        <!-- Diet Preferences Section -->
+                        <div class="diet-preferences-section">
+                            <h2>Choose Your South Indian Diet Style</h2>
+                            <p>Personalize your recipe recommendations based on traditional dietary practices</p>
                             
-                            <div class="flex flex-wrap items-center gap-4 mb-6">
-                                <div class="flex items-center gap-2">
-                                    <label class="text-gray-700">I want to eat</label>
-                                    <input type="number" value="1800" min="1200" max="3000" id="calorieTarget" class="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-                                    <span class="text-gray-700">calories</span>
+                            <div class="diet-grid">
+                                <div class="diet-option" data-diet="traditional-veg">
+                                    <div class="diet-icon traditional-veg"></div>
+                                    <h3>Traditional Vegetarian</h3>
+                                    <p>Authentic South Indian vegetarian cuisine with temple-style preparations</p>
                                 </div>
                                 
-                                <div class="flex items-center gap-2">
-                                    <label class="text-gray-700">in</label>
-                                    <select id="mealsPerDay" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <div class="diet-option" data-diet="coconut-based">
+                                    <div class="diet-icon coconut"></div>
+                                    <h3>Coconut-Based</h3>
+                                    <p>Kerala and coastal specialties rich in coconut and seafood</p>
+                                </div>
+                                
+                                <div class="diet-option" data-diet="millet-grain">
+                                    <div class="diet-icon millet"></div>
+                                    <h3>Ancient Grains</h3>
+                                    <p>Traditional millets and grains for modern healthy living</p>
+                                </div>
+                                
+                                <div class="diet-option" data-diet="spice-rich">
+                                    <div class="diet-icon spices"></div>
+                                    <h3>Spice-Rich</h3>
+                                    <p>Chettinad and Andhra style dishes with bold, warming spices</p>
+                                </div>
+                                
+                                <div class="diet-option" data-diet="ayurvedic">
+                                    <div class="diet-icon ayurveda"></div>
+                                    <h3>Ayurvedic Balance</h3>
+                                    <p>Dosha-specific recipes for constitutional harmony</p>
+                                </div>
+                                
+                                <div class="diet-option" data-diet="festival">
+                                    <div class="diet-icon festival"></div>
+                                    <h3>Festival Specials</h3>
+                                    <p>Traditional recipes for religious celebrations and occasions</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Meal Planning Section -->
+                        <div class="meal-planning-section">
+                            <h3>Plan Your Traditional Meals</h3>
+                            
+                            <div class="meal-planning-controls">
+                                <div class="calorie-input">
+                                    <label>I want to eat</label>
+                                    <input type="number" value="1800" min="1200" max="3000" id="calorieTarget">
+                                    <span>calories</span>
+                                </div>
+                                
+                                <div class="meals-per-day">
+                                    <label>in</label>
+                                    <select id="mealsPerDay">
                                         <option value="3">3 meals</option>
                                         <option value="4">4 meals</option>
                                         <option value="5">5 meals</option>
@@ -469,101 +614,24 @@
                                 </div>
                             </div>
                             
-                            <div class="macro-targets mb-6">
-                                <div class="flex flex-wrap gap-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
-                                        <span class="text-sm text-gray-700">At least 90g Carbs</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                                        <span class="text-sm text-gray-700">At least 60g Protein</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                                        <span class="text-sm text-gray-700">At least 40g Healthy Fats</span>
-                                    </div>
+                            <div class="macro-targets">
+                                <div class="macro-target">
+                                    <span class="dot carbs-dot"></span>
+                                    <span>At least 90g Carbs</span>
+                                </div>
+                                <div class="macro-target">
+                                    <span class="dot protein-dot"></span>
+                                    <span>At least 60g Protein</span>
+                                </div>
+                                <div class="macro-target">
+                                    <span class="dot fat-dot"></span>
+                                    <span>At least 40g Healthy Fats</span>
                                 </div>
                             </div>
                             
-                            <button id="generatePlanBtn" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
-                                Generate Traditional Meal Plan
-                            </button>
+                            <button class="generate-plan-btn" onclick="generateMealPlan()">Generate Traditional Meal Plan</button>
                         </div>
 
-                        <!-- Nutrition Panel -->
-                        <div class="nutrition-panel bg-white p-6 rounded-lg shadow-md mb-8">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Nutritional Information</h3>
-                            
-                            <div class="flex flex-col lg:flex-row gap-6">
-                                <div class="macro-breakdown flex-1">
-                                    <div class="flex items-center justify-center mb-4">
-                                        <div class="relative">
-                                            <canvas id="macroChart" width="120" height="120" class="max-w-full"></canvas>
-                                            <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                                <span class="text-2xl font-bold text-gray-800">245</span>
-                                                <span class="text-sm text-gray-600">kcal</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="macro-details space-y-2">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                                <span class="text-sm text-gray-700">Carbs</span>
-                                            </div>
-                                            <div class="flex gap-2">
-                                                <span class="text-sm font-semibold">32g</span>
-                                                <span class="text-sm text-gray-500">52%</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                <span class="text-sm text-gray-700">Protein</span>
-                                            </div>
-                                            <div class="flex gap-2">
-                                                <span class="text-sm font-semibold">12g</span>
-                                                <span class="text-sm text-gray-500">20%</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                                <span class="text-sm text-gray-700">Fat</span>
-                                            </div>
-                                            <div class="flex gap-2">
-                                                <span class="text-sm font-semibold">8g</span>
-                                                <span class="text-sm text-gray-500">28%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="ayurvedic-info flex-1">
-                                    <h4 class="font-semibold text-gray-800 mb-3">Traditional Benefits</h4>
-                                    <ul class="space-y-2 text-sm text-gray-600">
-                                        <li class="flex items-start gap-2">
-                                            <span class="text-green-500 mt-1">•</span>
-                                            <span>Balances Pitta dosha with cooling ingredients</span>
-                                        </li>
-                                        <li class="flex items-start gap-2">
-                                            <span class="text-green-500 mt-1">•</span>
-                                            <span>Rich in traditional South Indian minerals</span>
-                                        </li>
-                                        <li class="flex items-start gap-2">
-                                            <span class="text-green-500 mt-1">•</span>
-                                            <span>Supports digestive fire (Agni)</span>
-                                        </li>
-                                        <li class="flex items-start gap-2">
-                                            <span class="text-green-500 mt-1">•</span>
-                                            <span>Seasonal ingredients for optimal health</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                         <div class="recipes-gallery">
                             <div class="gallery-header">
                                 <i data-lucide="book-open"></i>
@@ -590,11 +658,6 @@
                                     <button class="premium-btn">Explore Premium</button>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Recipe Detail Modal (Empty - will be filled by JS) -->
-                        <div id="recipeDetailModal" class="recipe-modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-                            <!-- Modal content will be dynamically inserted here -->
                         </div>
                     </div>
                 </div>
