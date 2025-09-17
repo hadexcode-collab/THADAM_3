@@ -16,6 +16,7 @@ class UploadHandler {
         if (uploadArea) {
             // Click to upload
             uploadArea.addEventListener('click', (e) => {
+                if (e.target.closest('.process-btn')) return;
                 videoInput.click();
             });
 
@@ -106,15 +107,14 @@ class UploadHandler {
     }
 
     showVideoPreview(file) {
-        const uploadArea = document.getElementById('uploadArea');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
         const videoPreview = document.getElementById('videoPreview');
         const previewVideo = document.getElementById('previewVideo');
-        const videoFileName = document.getElementById('videoFileName');
-        const videoDetails = document.getElementById('videoDetails');
+        const videoInfo = document.getElementById('videoInfo');
 
         // Hide placeholder, show preview
-        uploadArea.style.display = 'none';
-        videoPreview.style.display = 'block';
+        uploadPlaceholder.classList.add('hidden');
+        videoPreview.classList.remove('hidden');
 
         // Set video source
         const videoURL = URL.createObjectURL(file);
@@ -122,12 +122,28 @@ class UploadHandler {
         previewVideo.load();
 
         // Show video info
-        if (videoFileName) {
-            videoFileName.textContent = file.name;
-        }
-        if (videoDetails) {
-            videoDetails.textContent = `${this.formatFileSize(file.size)} • ${file.type.split('/')[1].toUpperCase()} • Ready to process`;
-        }
+        videoInfo.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: white; font-size: 1.1rem;">${file.name}</strong>
+                <button class="remove-video-btn" style="background: rgba(255,0,0,0.2); border: 1px solid rgba(255,0,0,0.3); color: #ff6b6b; padding: 4px 12px; border-radius: 6px; cursor: pointer;" onclick="uploadHandler.removeVideo()">
+                    ✕ Remove
+                </button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 0.9rem;">
+                <div>
+                    <span style="color: rgba(255,255,255,0.7);">Size:</span>
+                    <br><span style="color: rgba(255,255,255,0.9);">${this.formatFileSize(file.size)}</span>
+                </div>
+                <div>
+                    <span style="color: rgba(255,255,255,0.7);">Format:</span>
+                    <br><span style="color: rgba(255,255,255,0.9);">${file.type.split('/')[1].toUpperCase()}</span>
+                </div>
+                <div>
+                    <span style="color: rgba(255,255,255,0.7);">Status:</span>
+                    <br><span style="color: #4ecdc4;">✓ Ready to Process</span>
+                </div>
+            </div>
+        `;
 
         // Clean up old URL
         previewVideo.addEventListener('loadedmetadata', () => {
@@ -136,14 +152,14 @@ class UploadHandler {
     }
 
     removeVideo() {
-        const uploadArea = document.getElementById('uploadArea');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
         const videoPreview = document.getElementById('videoPreview');
         const previewVideo = document.getElementById('previewVideo');
         const videoInput = document.getElementById('videoInput');
 
         // Reset UI
-        videoPreview.style.display = 'none';
-        uploadArea.style.display = 'block';
+        videoPreview.classList.add('hidden');
+        uploadPlaceholder.classList.remove('hidden');
         
         // Clear video
         previewVideo.src = '';
@@ -161,23 +177,19 @@ class UploadHandler {
         }
 
         // Show processing panel
-        const processingSection = document.getElementById('processingSection');
-        const recipeResults = document.getElementById('recipeResults');
+        const processingPanel = document.getElementById('processingPanel');
+        const recipeDisplay = document.getElementById('recipeDisplay');
         
-        processingSection.style.display = 'block';
-        recipeResults.style.display = 'none';
+        processingPanel.classList.remove('hidden');
+        recipeDisplay.classList.add('hidden');
 
         // Reset processing steps UI
         this.resetProcessingUI();
 
         // Disable process button
         const processBtn = document.getElementById('processBtn');
-        const btnText = processBtn.querySelector('.btn-text');
-        const btnLoader = processBtn.querySelector('.btn-loader');
-        
         processBtn.disabled = true;
-        btnText.style.display = 'none';
-        btnLoader.classList.remove('hidden');
+        processBtn.innerHTML = '<span>🔄 Processing...</span>';
 
         try {
             // Process video with AI
@@ -195,47 +207,29 @@ class UploadHandler {
         } finally {
             // Re-enable process button
             processBtn.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoader.classList.add('hidden');
+            processBtn.innerHTML = '<span>🔍 Extract Recipe with AI</span>';
         }
     }
 
     resetProcessingUI() {
-        const processSteps = document.querySelectorAll('.step');
+        const processSteps = document.querySelectorAll('.process-step');
         processSteps.forEach(step => {
             step.classList.remove('processing', 'completed');
             const progressBar = step.querySelector('.progress');
             if (progressBar) {
                 progressBar.style.width = '0%';
             }
-            
-            // Reset step icon
-            const stepIcon = step.querySelector('.step-icon i');
-            if (stepIcon) {
-                const stepType = step.getAttribute('data-step');
-                const iconMap = {
-                    'frames': 'video',
-                    'audio': 'mic',
-                    'ingredients': 'leaf',
-                    'techniques': 'chef-hat',
-                    'recipe': 'book-open'
-                };
-                stepIcon.setAttribute('data-lucide', iconMap[stepType] || 'circle');
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
         });
     }
 
     displayRecipeResults(results) {
-        const processingSection = document.getElementById('processingSection');
-        const recipeResults = document.getElementById('recipeResults');
+        const processingPanel = document.getElementById('processingPanel');
+        const recipeDisplay = document.getElementById('recipeDisplay');
 
         // Hide processing panel and show results
         setTimeout(() => {
-            processingSection.style.display = 'none';
-            recipeResults.style.display = 'block';
+            processingPanel.classList.add('hidden');
+            recipeDisplay.classList.remove('hidden');
             this.populateRecipeData(results.recipe, results.confidence || {});
         }, 1000);
     }
@@ -243,28 +237,6 @@ class UploadHandler {
     populateRecipeData(recipe, confidence) {
         if (!recipe) {
             console.error('No recipe data provided');
-            // Create a fallback recipe
-            recipe = {
-                name: 'Traditional South Indian Recipe',
-                cuisine: 'Tamil Nadu',
-                difficulty: 'Medium',
-                cookingTime: 45,
-                servings: 4,
-                ingredients: [
-                    { name: 'Toor Dal', quantity: '1 cup', confidence: 95 },
-                    { name: 'Tamarind', quantity: '1 lemon-sized ball', confidence: 92 },
-                    { name: 'Sambar Powder', quantity: '2 tsp', confidence: 89 },
-                    { name: 'Turmeric Powder', quantity: '1/2 tsp', confidence: 94 },
-                    { name: 'Mustard Seeds', quantity: '1 tsp', confidence: 96 },
-                    { name: 'Curry Leaves', quantity: '8-10 leaves', confidence: 98 }
-                ],
-                steps: [
-                    { step: 1, instruction: 'Heat oil in a kadai and add mustard seeds', time: '2 mins', temperature: 'Medium heat', technique: 'Tempering' },
-                    { step: 2, instruction: 'Add curry leaves and let them splutter', time: '1 min', temperature: 'Medium heat', technique: 'Tempering' },
-                    { step: 3, instruction: 'Add cooked dal and tamarind water', time: '5 mins', temperature: 'Medium heat', technique: 'Mixing' },
-                    { step: 4, instruction: 'Add sambar powder and turmeric, simmer', time: '10 mins', temperature: 'Low heat', technique: 'Simmering' }
-                ]
-            };
             return;
         }
 
@@ -300,7 +272,10 @@ class UploadHandler {
         if (ingredientsList && recipe.ingredients) {
             ingredientsList.innerHTML = recipe.ingredients.map(ingredient => `
                 <div class="ingredient-item">
-                    <span class="ingredient-name">${ingredient.name}</span>
+                    <div class="ingredient-info">
+                        <span class="ingredient-name">${ingredient.name}</span>
+                        <span class="confidence-score">${ingredient.confidence || 95}%</span>
+                    </div>
                     <span class="ingredient-amount">${ingredient.quantity || '1 cup'}</span>
                 </div>
             `).join('');
@@ -334,7 +309,7 @@ class UploadHandler {
                 recipe: 87
             };
             
-            confidenceMetrics.innerHTML = Object.entries(confidenceData).slice(0, 4).map(([key, value]) => `
+            confidenceMetrics.innerHTML = Object.entries(confidenceData).map(([key, value]) => `
                 <div class="confidence-item">
                     <div class="confidence-label">${this.formatConfidenceLabel(key)}</div>
                     <div class="confidence-value ${this.getConfidenceClass(value)}">${value}%</div>
@@ -348,9 +323,10 @@ class UploadHandler {
             overall: 'Overall Analysis',
             ingredients: 'Ingredient Detection',
             techniques: 'Cooking Techniques',
-            recipe: 'Recipe Generation'
+            audioTranscription: 'Audio Processing',
+            recipeGeneration: 'Recipe Generation'
         };
-        return labels[key] || key.charAt(0).toUpperCase() + key.slice(1);
+        return labels[key] || key;
     }
 
     getConfidenceClass(value) {
@@ -360,11 +336,11 @@ class UploadHandler {
     }
 
     hideProcessingResults() {
-        const processingSection = document.getElementById('processingSection');
-        const recipeResults = document.getElementById('recipeResults');
+        const processingPanel = document.getElementById('processingPanel');
+        const recipeDisplay = document.getElementById('recipeDisplay');
         
-        processingSection.style.display = 'none';
-        recipeResults.style.display = 'none';
+        processingPanel.classList.add('hidden');
+        recipeDisplay.classList.add('hidden');
     }
 
     formatFileSize(bytes) {
@@ -386,15 +362,9 @@ class UploadHandler {
             </div>
         `;
         errorToast.style.background = 'rgba(255, 107, 107, 0.9)';
-        errorToast.style.position = 'fixed';
-        errorToast.style.top = '20px';
-        errorToast.style.right = '20px';
-        errorToast.style.zIndex = '10000';
-        errorToast.style.padding = '1rem';
-        errorToast.style.borderRadius = '8px';
-        errorToast.style.color = 'white';
 
         document.body.appendChild(errorToast);
+        errorToast.classList.add('show');
         
         // Initialize Lucide icons for the error toast
         if (typeof lucide !== 'undefined') {
@@ -402,31 +372,25 @@ class UploadHandler {
         }
 
         setTimeout(() => {
-            if (document.body.contains(errorToast)) {
-                document.body.removeChild(errorToast);
-            }
+            errorToast.classList.remove('show');
+            setTimeout(() => document.body.removeChild(errorToast), 300);
         }, 4000);
     }
 
     showSuccess(message) {
         const toast = document.getElementById('successToast');
-        if (toast) {
-            const messageSpan = toast.querySelector('.toast-message');
-            if (messageSpan) {
-                messageSpan.textContent = message;
-            }
-            toast.classList.remove('hidden');
-            toast.classList.add('show');
+        const messageSpan = toast.querySelector('.toast-message');
+        
+        messageSpan.textContent = message;
+        toast.classList.remove('hidden');
+        toast.classList.add('show');
 
-            setTimeout(() => {
-                toast.classList.remove('show');
-                toast.classList.add('hidden');
-            }, 3000);
-        } else {
-            // Fallback success message
-            console.log('Success:', message);
-        }
+        setTimeout(() => {
+            toast.classList.remove('show');
+            toast.classList.add('hidden');
+        }, 3000);
     }
+}
 
     saveRecipe() {
         const recipeName = document.getElementById('recipeName')?.textContent || 'Generated Recipe';
@@ -461,7 +425,6 @@ class UploadHandler {
     printRecipe() {
         window.print();
     }
-}
 
 // Initialize upload handler when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
