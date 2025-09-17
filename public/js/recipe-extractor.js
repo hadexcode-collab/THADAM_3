@@ -590,22 +590,11 @@ class RecipeExtractorAI {
             });
         }
 
-        // Add dal cooking step if dal is present
-        if (ingredients.some(ing => ing.name.includes('Dal'))) {
-            baseSteps.push({
-                step: baseSteps.length + 1,
-                instruction: "Add the cooked dal and mix well. Adjust consistency with water if needed.",
-                time: "3-5 minutes",
-                technique: "Dal Integration",
-                temperature: "Medium heat"
-            });
-        }
-
-        // Final seasoning step
+        // Add final seasoning step
         baseSteps.push({
             step: baseSteps.length + 1,
-            instruction: "Add salt to taste and simmer for 10-15 minutes until flavors blend well. Garnish with fresh coriander leaves.",
-            time: "10-15 minutes",
+            instruction: "Add salt to taste and garnish with fresh coriander leaves. Serve hot with rice.",
+            time: "1 minute",
             technique: "Final Seasoning",
             temperature: "Low heat"
         });
@@ -631,67 +620,61 @@ class RecipeExtractorAI {
         let protein = 0;
         let carbs = 0;
         let fat = 0;
-        let fiber = 0;
 
-        ingredients.forEach(ingredient => {
-            // Basic nutrition values per 100g (simplified)
-            if (ingredient.category === 'proteins') {
-                calories += 350;
-                protein += 25;
-                carbs += 60;
-                fiber += 15;
-            } else if (ingredient.category === 'grains') {
-                calories += 350;
-                protein += 8;
-                carbs += 75;
-                fiber += 3;
-            } else if (ingredient.category === 'vegetables') {
+        ingredients.forEach(ing => {
+            if (ing.category === 'proteins') {
+                calories += 150;
+                protein += 12;
+                carbs += 20;
+                fat += 2;
+            } else if (ing.category === 'grains') {
+                calories += 200;
+                protein += 4;
+                carbs += 45;
+                fat += 1;
+            } else if (ing.category === 'vegetables') {
                 calories += 25;
-                protein += 2;
+                protein += 1;
                 carbs += 5;
-                fiber += 3;
-            } else if (ingredient.category === 'oils_and_fats') {
-                calories += 900;
-                fat += 100;
+                fat += 0.2;
+            } else if (ing.category === 'oils_and_fats') {
+                calories += 120;
+                fat += 14;
             }
         });
 
-        // Adjust for serving size (divide by estimated servings)
-        const servings = 4;
         return {
-            calories: Math.round(calories / servings),
-            protein: Math.round(protein / servings),
-            carbohydrates: Math.round(carbs / servings),
-            fat: Math.round(fat / servings),
-            fiber: Math.round(fiber / servings),
-            sodium: Math.round(Math.random() * 500 + 200), // mg
-            servingSize: "1 cup (approximately 250ml)"
+            calories: Math.round(calories),
+            protein: Math.round(protein),
+            carbohydrates: Math.round(carbs),
+            fat: Math.round(fat),
+            fiber: Math.round(carbs * 0.1),
+            sodium: Math.round(calories * 0.5)
         };
     }
 
     generateCookingTips(techniques) {
         const tips = [
-            "Use a heavy-bottomed kadai or pan for even heat distribution",
-            "Always heat oil before adding mustard seeds for proper tempering",
-            "Fresh curry leaves make a significant difference in flavor",
-            "Adjust spice levels according to your preference",
-            "Let the dish rest for 5 minutes before serving for better flavor integration"
+            "Always heat oil properly before adding mustard seeds for better tempering.",
+            "Use fresh curry leaves for authentic South Indian flavor.",
+            "Soak tamarind in warm water for easier extraction.",
+            "Cook tomatoes until oil separates for rich flavor.",
+            "Adjust spice levels according to your preference.",
+            "Use traditional clay pots for enhanced taste when possible.",
+            "Fresh coconut gives better flavor than dried coconut.",
+            "Don't skip the tempering step - it's essential for South Indian dishes."
         ];
 
-        // Add technique-specific tips
-        if (techniques.some(tech => tech.name.includes('Pressure Cooking'))) {
-            tips.push("When pressure cooking dal, use 3:1 water to dal ratio for perfect consistency");
+        // Select 3-4 random tips
+        const selectedTips = [];
+        for (let i = 0; i < 4; i++) {
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            if (!selectedTips.includes(randomTip)) {
+                selectedTips.push(randomTip);
+            }
         }
 
-        if (techniques.some(tech => tech.name.includes('Thalippu'))) {
-            tips.push("For perfect thalippu, ensure oil is hot but not smoking before adding spices");
-        }
-
-        if (techniques.some(tech => tech.name.includes('Grinding'))) {
-            tips.push("Add a little water while grinding to get smooth paste consistency");
-        }
-
-        return tips.slice(0, 5); // Return top 5 tips
+        return selectedTips;
     }
 
     calculateConfidenceScores(results) {
@@ -706,7 +689,7 @@ class RecipeExtractorAI {
         const avgIngredientConfidence = ingredientConfidences.length > 0 
             ? ingredientConfidences.reduce((a, b) => a + b, 0) / ingredientConfidences.length 
             : 0;
-
+        
         const avgTechniqueConfidence = techniqueConfidences.length > 0 
             ? techniqueConfidences.reduce((a, b) => a + b, 0) / techniqueConfidences.length 
             : 0;
@@ -731,28 +714,23 @@ class RecipeExtractorAI {
     }
 
     generateQuantity(ingredientName) {
-        // Generate realistic quantities based on ingredient type
-        const quantities = [
-            '1 cup', '1/2 cup', '1/4 cup', '2 tbsp', '1 tbsp', '1 tsp', '1/2 tsp',
-            '200g', '150g', '100g', '2-3 pieces', '4-5 pieces', 'to taste', 'pinch'
-        ];
+        const quantities = ['1 cup', '1/2 cup', '1 tsp', '1 tbsp', '2 pieces', '100g', '200g', 'to taste'];
         return quantities[Math.floor(Math.random() * quantities.length)];
     }
 
     getVideoInfo(videoFile) {
         return {
             name: videoFile.name || 'Traditional South Indian Cooking Video',
-            size: videoFile.size || Math.floor(Math.random() * 50000000) + 10000000, // 10-60MB
-            duration: videoFile.duration || Math.floor(Math.random() * 300) + 120, // 2-7 minutes
+            size: videoFile.size || Math.floor(Math.random() * 50) + 10 + ' MB',
+            duration: videoFile.duration || Math.floor(Math.random() * 300) + 120 + ' seconds',
             format: 'MP4',
-            resolution: '1920x1080',
-            fps: 30
+            resolution: '1080p'
         };
     }
 
     updateProcessingUI(step, result) {
         // This would update the UI in a real implementation
-        console.log(`Step ${step.id} completed:`, result.success ? 'Success' : 'Failed');
+        console.log(`Step ${step.name} completed:`, result);
     }
 
     delay(ms) {
