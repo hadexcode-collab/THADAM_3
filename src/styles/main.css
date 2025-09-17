@@ -1,5 +1,23 @@
 /* Premium South Indian Cultural Design System */
 :root {
+    /* Default VEG Theme Variables */
+    --primary-color: #22c55e;
+    --primary-dark: #16a34a;
+    --primary-light: #dcfce7;
+    --secondary-color: #facc15;
+    --background-main: #ffffff;
+    --background-secondary: #fefce8;
+    --background-card: #f0fdf4;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --accent-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    --hero-gradient: linear-gradient(135deg, #dcfce7 0%, #ffffff 100%);
+    --card-shadow: 0 4px 20px rgba(34, 197, 94, 0.15);
+    --border-color: #e5e7eb;
+    --hover-color: #15803d;
+    --theme-bg-pattern: radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.1) 0%, transparent 50%);
+    
     /* Traditional South Indian Color Palette */
     --saffron: #FF9933;
     --india-green: #138808;
@@ -46,36 +64,137 @@
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* VEG Theme Variables */
+:root[data-theme="veg"] {
+    --primary-color: #22c55e;
+    --primary-dark: #16a34a;
+    --primary-light: #dcfce7;
+    --secondary-color: #facc15;
+    --background-main: #ffffff;
+    --background-secondary: #fefce8;
+    --background-card: #f0fdf4;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --accent-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    --hero-gradient: linear-gradient(135deg, #dcfce7 0%, #ffffff 100%);
+    --card-shadow: 0 4px 20px rgba(34, 197, 94, 0.15);
+    --border-color: #e5e7eb;
+    --hover-color: #15803d;
+    --theme-bg-pattern: radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.1) 0%, transparent 50%);
+}
+
+/* NON-VEG Theme Variables */
+:root[data-theme="nonveg"] {
+    --primary-color: #ef4444;
+    --primary-dark: #dc2626;
+    --primary-light: #fecaca;
+    --secondary-color: #f59e0b;
+    --background-main: #fffbf0;
+    --background-secondary: #fef3c7;
+    --background-card: #fef2f2;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --accent-gradient: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
+    --hero-gradient: linear-gradient(135deg, #fecaca 0%, #fef3c7 100%);
+    --card-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+    --border-color: #fed7d7;
+    --hover-color: #b91c1c;
+    --theme-bg-pattern: radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.4s ease, 
+                border-color 0.4s ease, 
+                color 0.4s ease,
+                box-shadow 0.4s ease !important;
 }
 
 body {
     font-family: var(--font-secondary);
-    background: var(--cultural-gradient);
+    background: var(--background-main);
+    background-image: var(--theme-bg-pattern);
     min-height: 100vh;
-    color: var(--cream-white);
+    color: var(--text-primary);
     overflow-x: hidden;
     line-height: 1.6;
 }
 
-/* Traditional Pattern Background */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 25% 25%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255, 153, 51, 0.1) 0%, transparent 50%);
-    background-size: 200px 200px;
-    pointer-events: none;
-    z-index: -1;
+/* Theme Toggle Styling */
+.theme-toggle-container {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.login-theme-toggle {
+    margin: var(--space-md) 0;
+    display: flex;
+    justify-content: center;
+}
+
+.theme-toggle {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 4px;
+    position: relative;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-sm);
+}
+
+.toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+}
+
+.toggle-option svg {
+    width: 16px;
+    height: 16px;
+}
+
+.toggle-option.active {
+    color: white;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: var(--accent-gradient);
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    z-index: 1;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Theme switching animation */
+.theme-switching {
+    animation: themeSwitch 0.6s ease-in-out;
+}
+
+@keyframes themeSwitch {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
 }
 
 /* Screen Management */
@@ -111,14 +230,14 @@ body::before {
 }
 
 .login-card {
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(218, 165, 32, 0.3);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     padding: var(--space-xl);
     width: 100%;
     max-width: 520px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--card-shadow);
     animation: slideUp 0.8s ease-out;
     position: relative;
     overflow: hidden;
@@ -131,7 +250,8 @@ body::before {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+    opacity: 0.05;
     animation: rotate 20s linear infinite;
     pointer-events: none;
 }
@@ -163,7 +283,7 @@ body::before {
     font-family: var(--font-primary);
     font-size: 3.5rem;
     font-weight: 800;
-    background: var(--primary-gradient);
+    background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -174,7 +294,7 @@ body::before {
 
 .platform-subtitle {
     font-family: var(--font-accent);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: var(--space-sm);
@@ -183,7 +303,7 @@ body::before {
 
 .platform-tagline {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 1rem;
     font-style: italic;
     font-weight: 300;
@@ -202,8 +322,8 @@ body::before {
     flex: 1;
     padding: var(--space-lg) var(--space-md);
     text-align: center;
-    background: rgba(255, 248, 220, 0.05);
-    border: 2px solid rgba(218, 165, 32, 0.2);
+    background: var(--background-card);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition-smooth);
@@ -218,7 +338,8 @@ body::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.1;
     transition: left 0.6s ease;
 }
 
@@ -228,16 +349,16 @@ body::before {
 
 .user-type:hover {
     transform: translateY(-4px);
-    border-color: rgba(218, 165, 32, 0.4);
-    box-shadow: var(--shadow-md);
-    background: rgba(255, 248, 220, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: var(--card-shadow);
+    background: var(--background-secondary);
 }
 
 .user-type.active {
-    background: rgba(218, 165, 32, 0.15);
-    border-color: var(--warm-gold);
+    background: var(--primary-light);
+    border-color: var(--primary-color);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--card-shadow);
 }
 
 .user-icon {
@@ -245,7 +366,7 @@ body::before {
     display: flex;
     justify-content: center;
     margin-bottom: var(--space-sm);
-    color: var(--warm-gold);
+    color: var(--primary-color);
 }
 
 .user-icon i {
@@ -255,7 +376,7 @@ body::before {
 
 .user-type h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: var(--space-sm);
@@ -263,7 +384,7 @@ body::before {
 
 .user-type p {
     font-family: var(--font-secondary);
-    color: rgba(255, 248, 220, 0.8);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.4;
     font-weight: 300;
@@ -293,10 +414,10 @@ body::before {
 
 .form-group input {
     padding: 18px var(--space-md);
-    background: rgba(255, 248, 220, 0.1);
-    border: 1px solid rgba(218, 165, 32, 0.3);
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1rem;
     font-family: var(--font-secondary);
     transition: var(--transition-smooth);
@@ -304,19 +425,20 @@ body::before {
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--warm-gold);
-    background: rgba(255, 248, 220, 0.15);
-    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+    border-color: var(--primary-color);
+    background: var(--background-secondary);
+    box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .form-group input::placeholder {
-    color: rgba(255, 248, 220, 0.5);
+    color: var(--text-secondary);
+    opacity: 0.7;
     font-family: var(--font-secondary);
 }
 
 .login-btn {
     padding: 20px;
-    background: var(--primary-gradient);
+    background: var(--accent-gradient);
     border: none;
     border-radius: var(--radius-md);
     color: white;
@@ -332,12 +454,13 @@ body::before {
     justify-content: center;
     gap: var(--space-sm);
     margin-top: var(--space-sm);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--card-shadow);
 }
 
 .login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--card-shadow);
+    filter: brightness(1.1);
 }
 
 .login-btn:active {
@@ -364,9 +487,9 @@ body::before {
 
 /* Platform Header */
 .platform-header {
-    background: rgba(255, 248, 220, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+    border-bottom: 1px solid var(--border-color);
     padding: var(--space-md) 0;
     position: relative;
 }
@@ -378,7 +501,7 @@ body::before {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--primary-gradient);
+    background: var(--accent-gradient);
     opacity: 0.6;
 }
 
@@ -401,7 +524,7 @@ body::before {
     font-family: var(--font-primary);
     font-size: 2.2rem;
     font-weight: 700;
-    background: var(--primary-gradient);
+    background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -409,24 +532,24 @@ body::before {
 }
 
 .user-badge {
-    background: rgba(218, 165, 32, 0.2);
+    background: var(--primary-light);
     backdrop-filter: blur(10px);
     padding: var(--space-sm) var(--space-md);
     border-radius: 20px;
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 0.9rem;
     font-weight: 500;
     font-family: var(--font-secondary);
-    border: 1px solid rgba(218, 165, 32, 0.3);
+    border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     gap: var(--space-xs);
 }
 
 .logout-btn {
-    background: rgba(255, 248, 220, 0.1);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    color: var(--cream-white);
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 12px var(--space-md);
     border-radius: var(--radius-md);
     cursor: pointer;
@@ -436,9 +559,9 @@ body::before {
 }
 
 .logout-btn:hover {
-    background: rgba(218, 165, 32, 0.2);
+    background: var(--primary-light);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--card-shadow);
 }
 
 /* Platform Navigation */
@@ -1200,9 +1323,9 @@ body::before {
 }
 
 .diet-card {
-    background: rgba(255, 248, 231, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 119, 34, 0.2);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     text-align: center;
@@ -1219,7 +1342,8 @@ body::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 119, 34, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.1;
     transition: left 0.6s ease;
 }
 
@@ -1229,20 +1353,20 @@ body::before {
 
 .diet-card:hover {
     transform: translateY(-8px);
-    border-color: #FF7722;
-    box-shadow: 0 16px 48px rgba(255, 119, 34, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: var(--card-shadow);
 }
 
 .diet-card.active {
-    background: rgba(255, 119, 34, 0.15);
-    border-color: #DAA520;
+    background: var(--primary-light);
+    border-color: var(--secondary-color);
     transform: translateY(-4px);
 }
 
 .diet-icon {
     font-size: 3rem;
     margin-bottom: var(--space-md);
-    color: #FF7722;
+    color: var(--primary-color);
     display: flex;
     justify-content: center;
 }
@@ -1254,22 +1378,22 @@ body::before {
 
 .diet-card h3 {
     font-family: var(--font-primary);
-    color: var(--cream-white);
+    color: var(--text-primary);
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: var(--space-sm);
 }
 
 .diet-card p {
-    color: rgba(255, 248, 231, 0.8);
+    color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.5;
     margin-bottom: var(--space-sm);
 }
 
 .recipe-count {
-    background: rgba(218, 165, 32, 0.2);
-    color: #DAA520;
+    background: var(--primary-light);
+    color: var(--secondary-color);
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -1404,38 +1528,39 @@ body::before {
 }
 
 .recipe-card {
-    background: rgba(255, 248, 231, 0.1);
+    background: var(--background-card);
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 119, 34, 0.2);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: var(--transition-smooth);
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-shadow);
 }
 
 .recipe-card:hover {
     transform: translateY(-12px);
-    box-shadow: 0 20px 60px rgba(255, 119, 34, 0.2);
-    border-color: #FF7722;
+    box-shadow: var(--card-shadow);
+    border-color: var(--primary-color);
+    filter: brightness(1.05);
 }
 
 .recipe-card.premium {
-    border-color: rgba(218, 165, 32, 0.4);
+    border-color: var(--secondary-color);
 }
 
 .recipe-card.premium:hover {
-    border-color: #DAA520;
-    box-shadow: 0 20px 60px rgba(218, 165, 32, 0.3);
+    border-color: var(--secondary-color);
+    box-shadow: var(--card-shadow);
 }
 
 .recipe-card.free {
-    border-color: rgba(13, 95, 31, 0.3);
+    border-color: var(--primary-color);
 }
 
 .recipe-card.free:hover {
-    border-color: #0D5F1F;
-    box-shadow: 0 20px 60px rgba(13, 95, 31, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: var(--card-shadow);
 }
 
 .recipe-card-image {
@@ -1446,7 +1571,7 @@ body::before {
     justify-content: center;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #8B4513, #CD853F);
+    background: var(--accent-gradient);
 }
 
 .premium-badge, .free-badge {
@@ -1462,15 +1587,15 @@ body::before {
 }
 
 .premium-badge {
-    background: linear-gradient(135deg, #DAA520, #FFD700);
-    color: #722F37;
-    box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: var(--card-shadow);
 }
 
 .free-badge {
-    background: linear-gradient(135deg, #0D5F1F, #228B22);
+    background: var(--accent-gradient);
     color: white;
-    box-shadow: 0 4px 12px rgba(13, 95, 31, 0.3);
+    box-shadow: var(--card-shadow);
 }
 
 .recipe-overlay {
