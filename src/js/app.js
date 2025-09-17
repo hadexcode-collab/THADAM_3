@@ -200,40 +200,58 @@ class TADAMApp {
 
         const sampleRecipes = [
             {
-                name: 'Traditional Dal Tadka',
+                name: 'Authentic Tamil Dal Rasam',
                 time: '30 mins',
                 difficulty: 'Easy',
-                cuisine: 'Indian',
-                description: 'A classic lentil dish with aromatic spices and traditional tempering technique.',
-                tags: ['Vegetarian', 'Protein-rich', 'Comfort food'],
+                cuisine: 'Tamil Nadu',
+                description: 'Traditional South Indian lentil soup with tamarind, curry leaves, and aromatic spices passed down through generations.',
+                tags: ['Vegetarian', 'Traditional', 'Comfort food'],
                 icon: '🍛'
             },
             {
-                name: 'Grandma\'s Pickle Recipe',
-                time: '2 hours',
+                name: 'Heritage Mango Pickle (Maanga Oorugai)',
+                time: '3 hours',
                 difficulty: 'Medium',
-                cuisine: 'Traditional',
-                description: 'Ancient preservation technique passed down through generations.',
-                tags: ['Fermented', 'Preserves', 'Spicy'],
+                cuisine: 'Tamil Nadu',
+                description: 'Ancient Tamil preservation technique using raw mangoes, traditional spices, and sesame oil from grandmother\'s recipe.',
+                tags: ['Fermented', 'Traditional', 'Spicy'],
                 icon: '🥒'
             },
             {
-                name: 'Heritage Biryani',
-                time: '90 mins',
+                name: 'Chettinad Chicken Biryani',
+                time: '120 mins',
                 difficulty: 'Hard',
-                cuisine: 'Mughlai',
-                description: 'Royal biryani recipe with authentic dum cooking method.',
-                tags: ['Rice dish', 'Festive', 'Aromatic'],
+                cuisine: 'Chettinad',
+                description: 'Royal Chettinad biryani with authentic dum cooking method, saffron, and traditional Tamil spice blend.',
+                tags: ['Non-Veg', 'Festive', 'Royal'],
                 icon: '🍚'
             },
             {
-                name: 'Ancient Kheer',
+                name: 'Traditional Paal Payasam',
                 time: '45 mins',
                 difficulty: 'Medium',
-                cuisine: 'Traditional',
-                description: 'Traditional milk pudding with cardamom and saffron.',
-                tags: ['Dessert', 'Creamy', 'Sweet'],
+                cuisine: 'Tamil Nadu',
+                description: 'Sacred temple-style milk pudding with cardamom, jaggery, and ghee, prepared for festivals and celebrations.',
+                tags: ['Dessert', 'Festival', 'Sacred'],
                 icon: '🍮'
+            },
+            {
+                name: 'Authentic Sambar',
+                time: '40 mins',
+                difficulty: 'Medium',
+                cuisine: 'Tamil Nadu',
+                description: 'Traditional Tamil sambar with drumsticks, tamarind, and homemade sambar powder following ancient recipes.',
+                tags: ['Vegetarian', 'Traditional', 'Daily'],
+                icon: '🥣'
+            },
+            {
+                name: 'Heritage Idli & Chutney',
+                time: '8 hours',
+                difficulty: 'Easy',
+                cuisine: 'Tamil Nadu',
+                description: 'Soft, fluffy idlis with traditional coconut chutney and authentic tempering techniques from Tamil households.',
+                tags: ['Breakfast', 'Fermented', 'Healthy'],
+                icon: '🥟'
             }
         ];
 
@@ -247,6 +265,7 @@ class TADAMApp {
                     <div class="recipe-card-meta">
                         <span>⏱️ ${recipe.time}</span>
                         <span>📊 ${recipe.difficulty}</span>
+                        <span>🏛️ ${recipe.cuisine}</span>
                     </div>
                     <p class="recipe-card-description">${recipe.description}</p>
                     <div class="recipe-card-tags">

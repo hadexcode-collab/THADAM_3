@@ -19,90 +19,95 @@ class RecipeExtractorAI {
 
         this.ingredientDatabase = {
             vegetables: [
-                { name: 'Onion', common: true, confidence: [85, 95] },
+                { name: 'Small Onions (Sambar Onion)', common: true, confidence: [85, 95] },
                 { name: 'Tomato', common: true, confidence: [88, 96] },
                 { name: 'Ginger', common: true, confidence: [82, 92] },
                 { name: 'Garlic', common: true, confidence: [85, 94] },
                 { name: 'Green Chili', common: true, confidence: [78, 88] },
-                { name: 'Potato', common: true, confidence: [90, 98] },
-                { name: 'Carrot', common: true, confidence: [87, 95] },
-                { name: 'Bell Pepper', common: false, confidence: [80, 90] },
-                { name: 'Eggplant', common: false, confidence: [75, 85] },
-                { name: 'Okra', common: false, confidence: [70, 82] }
+                { name: 'Drumstick (Murungakkai)', common: true, confidence: [90, 98] },
+                { name: 'Brinjal (Kathirikai)', common: true, confidence: [87, 95] },
+                { name: 'Okra (Vendakkai)', common: true, confidence: [80, 90] },
+                { name: 'Bottle Gourd (Sorakkai)', common: false, confidence: [75, 85] },
+                { name: 'Curry Leaves', common: true, confidence: [90, 98] }
             ],
             spices: [
                 { name: 'Turmeric Powder', common: true, confidence: [75, 88] },
-                { name: 'Cumin Seeds', common: true, confidence: [80, 90] },
+                { name: 'Cumin Seeds (Jeeragam)', common: true, confidence: [80, 90] },
                 { name: 'Mustard Seeds', common: true, confidence: [78, 86] },
-                { name: 'Coriander Powder', common: true, confidence: [82, 91] },
+                { name: 'Coriander Seeds (Dhania)', common: true, confidence: [82, 91] },
                 { name: 'Red Chili Powder', common: true, confidence: [85, 93] },
-                { name: 'Garam Masala', common: true, confidence: [70, 82] },
-                { name: 'Cardamom', common: false, confidence: [68, 78] },
-                { name: 'Cinnamon', common: false, confidence: [72, 84] },
-                { name: 'Bay Leaves', common: false, confidence: [65, 75] }
+                { name: 'Sambar Powder', common: true, confidence: [85, 95] },
+                { name: 'Rasam Powder', common: true, confidence: [80, 90] },
+                { name: 'Cardamom (Elakkai)', common: false, confidence: [68, 78] },
+                { name: 'Cinnamon (Pattai)', common: false, confidence: [72, 84] },
+                { name: 'Fenugreek Seeds (Vendhayam)', common: true, confidence: [75, 85] },
+                { name: 'Asafoetida (Hing)', common: true, confidence: [70, 80] }
             ],
             proteins: [
-                { name: 'Lentils (Dal)', common: true, confidence: [88, 96] },
-                { name: 'Chickpeas', common: true, confidence: [85, 93] },
-                { name: 'Paneer', common: false, confidence: [82, 90] },
+                { name: 'Toor Dal (Thuvaram Paruppu)', common: true, confidence: [88, 96] },
+                { name: 'Moong Dal', common: true, confidence: [85, 93] },
+                { name: 'Urad Dal', common: true, confidence: [82, 90] },
+                { name: 'Chana Dal', common: true, confidence: [80, 88] },
                 { name: 'Chicken', common: false, confidence: [90, 97] },
-                { name: 'Mutton', common: false, confidence: [85, 92] }
+                { name: 'Mutton (Goat)', common: false, confidence: [85, 92] }
             ],
             grains: [
                 { name: 'Basmati Rice', common: true, confidence: [92, 98] },
-                { name: 'Wheat Flour', common: true, confidence: [88, 95] },
-                { name: 'Rice Flour', common: false, confidence: [80, 88] }
+                { name: 'Idli Rice', common: true, confidence: [90, 96] },
+                { name: 'Rice Flour', common: true, confidence: [80, 88] },
+                { name: 'Wheat Flour', common: false, confidence: [75, 85] }
             ],
             dairy: [
                 { name: 'Milk', common: true, confidence: [95, 99] },
-                { name: 'Yogurt', common: true, confidence: [90, 96] },
+                { name: 'Yogurt (Thayir)', common: true, confidence: [90, 96] },
                 { name: 'Ghee', common: true, confidence: [85, 93] },
-                { name: 'Butter', common: false, confidence: [88, 94] }
+                { name: 'Buttermilk (Mor)', common: true, confidence: [88, 94] }
             ],
             others: [
-                { name: 'Oil', common: true, confidence: [92, 98] },
+                { name: 'Sesame Oil (Nallennai)', common: true, confidence: [92, 98] },
+                { name: 'Coconut Oil', common: true, confidence: [88, 94] },
                 { name: 'Salt', common: true, confidence: [95, 99] },
-                { name: 'Sugar', common: true, confidence: [90, 96] },
-                { name: 'Coconut', common: false, confidence: [75, 85] },
-                { name: 'Tamarind', common: false, confidence: [68, 78] }
+                { name: 'Jaggery (Vellam)', common: true, confidence: [85, 93] },
+                { name: 'Fresh Coconut', common: true, confidence: [88, 96] },
+                { name: 'Tamarind (Puli)', common: true, confidence: [85, 93] }
             ]
         };
 
         this.cookingTechniques = [
-            { name: 'Tadka/Tempering', confidence: [80, 92] },
+            { name: 'Tadka/Tempering (Thalippu)', confidence: [85, 95] },
             { name: 'Dum Cooking', confidence: [70, 85] },
-            { name: 'Slow Cooking', confidence: [85, 94] },
-            { name: 'Deep Frying', confidence: [88, 96] },
+            { name: 'Slow Cooking (Kozhambhu)', confidence: [85, 94] },
+            { name: 'Deep Frying (Poriyal)', confidence: [88, 96] },
             { name: 'Steaming', confidence: [82, 90] },
-            { name: 'Roasting', confidence: [85, 93] },
-            { name: 'Grinding', confidence: [78, 88] },
-            { name: 'Marinating', confidence: [75, 87] }
+            { name: 'Dry Roasting (Podi)', confidence: [85, 93] },
+            { name: 'Wet Grinding (Araithal)', confidence: [88, 96] },
+            { name: 'Fermentation', confidence: [80, 90] }
         ];
 
         this.recipeTemplates = {
             dal: {
-                name: 'Traditional Dal',
-                baseIngredients: ['Lentils (Dal)', 'Turmeric Powder', 'Salt', 'Water'],
-                techniques: ['Slow Cooking', 'Tadka/Tempering'],
+                name: 'Traditional Tamil Dal',
+                baseIngredients: ['Toor Dal (Thuvaram Paruppu)', 'Turmeric Powder', 'Salt', 'Tamarind (Puli)'],
+                techniques: ['Slow Cooking (Kozhambhu)', 'Tadka/Tempering (Thalippu)'],
                 time: 35,
                 difficulty: 'Easy',
-                cuisine: 'Traditional Indian'
+                cuisine: 'Tamil Nadu Traditional'
             },
             rice: {
-                name: 'Aromatic Rice Dish',
+                name: 'Traditional Tamil Rice Dish',
                 baseIngredients: ['Basmati Rice', 'Ghee', 'Salt'],
-                techniques: ['Dum Cooking', 'Tempering'],
+                techniques: ['Dum Cooking', 'Tadka/Tempering (Thalippu)'],
                 time: 45,
                 difficulty: 'Medium',
-                cuisine: 'Traditional Indian'
+                cuisine: 'Tamil Nadu Traditional'
             },
             curry: {
-                name: 'Traditional Curry',
-                baseIngredients: ['Onion', 'Tomato', 'Ginger', 'Garlic'],
-                techniques: ['Slow Cooking', 'Tempering'],
+                name: 'Traditional Tamil Curry',
+                baseIngredients: ['Small Onions (Sambar Onion)', 'Tomato', 'Ginger', 'Curry Leaves'],
+                techniques: ['Slow Cooking (Kozhambhu)', 'Tadka/Tempering (Thalippu)'],
                 time: 40,
                 difficulty: 'Medium',
-                cuisine: 'Traditional Indian'
+                cuisine: 'Tamil Nadu Traditional'
             }
         };
     }
@@ -333,18 +338,18 @@ class RecipeExtractorAI {
         );
         
         const hasTraditionalTechnique = techniques.some(tech => 
-            tech.name.includes('Tadka') || tech.name.includes('Dum')
+            tech.name.includes('Thalippu') || tech.name.includes('Dum') || tech.name.includes('Kozhambhu')
         );
 
         const baseName = primaryIngredient ? primaryIngredient.name : 'Traditional';
-        const prefix = hasTraditionalTechnique ? 'Traditional' : 'Homestyle';
+        const prefix = hasTraditionalTechnique ? 'Heritage Tamil' : 'Traditional Tamil';
         
         const recipeNames = [
-            `${prefix} ${baseName} Curry`,
-            `Grandma's ${baseName} Recipe`,
-            `Heritage ${baseName} Dish`,
-            `Classic ${baseName} Preparation`,
-            `Authentic ${baseName} Style`
+            `${prefix} ${baseName} Kozhambhu`,
+            `Paatti's ${baseName} Recipe`,
+            `Heritage ${baseName} Sambar`,
+            `Traditional ${baseName} Rasam`,
+            `Authentic Chettinad ${baseName}`
         ];
 
         return recipeNames[Math.floor(Math.random() * recipeNames.length)];
@@ -354,28 +359,28 @@ class RecipeExtractorAI {
         const baseSteps = [
             {
                 step: 1,
-                instruction: "Heat oil in a heavy-bottomed pan over medium heat.",
+                instruction: "Heat sesame oil in a heavy-bottomed brass vessel (uruli) over medium heat.",
                 time: "2-3 minutes",
                 technique: "Basic Heating",
                 temperature: "Medium heat"
             },
             {
                 step: 2,
-                instruction: "Add cumin seeds and mustard seeds. Let them splutter.",
+                instruction: "Add mustard seeds, cumin seeds, and curry leaves. Let them splutter and release aroma.",
                 time: "30 seconds",
-                technique: "Tadka/Tempering",
+                technique: "Tadka/Tempering (Thalippu)",
                 temperature: "Medium heat"
             },
             {
                 step: 3,
-                instruction: "Add chopped onions and cook until golden brown.",
+                instruction: "Add small onions (sambar onions) and cook until golden brown and translucent.",
                 time: "5-7 minutes",
                 technique: "Sautéing",
                 temperature: "Medium heat"
             },
             {
                 step: 4,
-                instruction: "Add ginger-garlic paste and green chilies. Cook until aromatic.",
+                instruction: "Add ginger-garlic paste, green chilies, and a pinch of asafoetida. Cook until aromatic.",
                 time: "2 minutes",
                 technique: "Sautéing",
                 temperature: "Medium heat"
@@ -386,9 +391,9 @@ class RecipeExtractorAI {
         if (ingredients.some(ing => ing.name.includes('Tomato'))) {
             baseSteps.push({
                 step: baseSteps.length + 1,
-                instruction: "Add chopped tomatoes and cook until they break down completely.",
+                instruction: "Add chopped tomatoes and cook until they break down completely and form a thick base.",
                 time: "8-10 minutes",
-                technique: "Slow Cooking",
+                technique: "Slow Cooking (Kozhambhu)",
                 temperature: "Medium-low heat"
             });
         }
@@ -396,9 +401,9 @@ class RecipeExtractorAI {
         // Add spice step
         baseSteps.push({
             step: baseSteps.length + 1,
-            instruction: "Add all the spices - turmeric, coriander powder, and red chili powder. Mix well.",
+            instruction: "Add turmeric powder, sambar powder, and red chili powder. Mix well to avoid burning.",
             time: "1-2 minutes",
-            technique: "Spice Tempering",
+            technique: "Spice Tempering (Masala)",
             temperature: "Low heat"
         });
 
@@ -410,7 +415,7 @@ class RecipeExtractorAI {
         if (mainIngredient) {
             baseSteps.push({
                 step: baseSteps.length + 1,
-                instruction: `Add ${mainIngredient.name.toLowerCase()} and mix gently with the spice mixture.`,
+                instruction: `Add ${mainIngredient.name.toLowerCase()} and mix gently with the spice mixture using a wooden ladle.`,
                 time: "3-5 minutes",
                 technique: "Mixing",
                 temperature: "Medium heat"
@@ -420,16 +425,16 @@ class RecipeExtractorAI {
         // Add liquid and cooking step
         baseSteps.push({
             step: baseSteps.length + 1,
-            instruction: "Add water as needed and bring to a boil. Then reduce heat and simmer.",
+            instruction: "Add tamarind water and required amount of water. Bring to a boil, then reduce heat and simmer.",
             time: "15-20 minutes",
-            technique: "Slow Cooking",
+            technique: "Slow Cooking (Kozhambhu)",
             temperature: "Low heat"
         });
 
         // Final seasoning
         baseSteps.push({
             step: baseSteps.length + 1,
-            instruction: "Adjust salt and spices to taste. Garnish with fresh coriander leaves.",
+            instruction: "Adjust salt and jaggery to balance taste. Garnish with fresh curry leaves and coriander.",
             time: "2 minutes",
             technique: "Final Seasoning",
             temperature: "Off heat"
@@ -440,17 +445,22 @@ class RecipeExtractorAI {
 
     generateQuantity(ingredientName) {
         const quantityMap = {
-            'Onion': ['2 medium', '1 large', '3 small'],
+            'Small Onions (Sambar Onion)': ['8-10 pieces', '1/2 cup chopped', '6-8 pieces'],
             'Tomato': ['3 medium', '2 large', '4 small'],
             'Ginger': ['1 inch piece', '2 tsp minced', '1 tbsp paste'],
             'Garlic': ['4-5 cloves', '1 tsp minced', '1 tbsp paste'],
             'Green Chili': ['2-3 pieces', '1-2 slit', '1 tsp chopped'],
+            'Curry Leaves': ['1 sprig', '8-10 leaves', '2 sprigs'],
             'Turmeric Powder': ['1/2 tsp', '1 tsp', '1/4 tsp'],
-            'Cumin Seeds': ['1 tsp', '1/2 tsp', '2 tsp'],
-            'Oil': ['2 tbsp', '3 tbsp', '1 tbsp'],
+            'Cumin Seeds (Jeeragam)': ['1 tsp', '1/2 tsp', '2 tsp'],
+            'Sesame Oil (Nallennai)': ['2 tbsp', '3 tbsp', '1 tbsp'],
             'Salt': ['to taste', '1 tsp', '1/2 tsp'],
-            'Lentils (Dal)': ['1 cup', '1/2 cup', '3/4 cup'],
-            'Basmati Rice': ['1 cup', '2 cups', '1.5 cups']
+            'Toor Dal (Thuvaram Paruppu)': ['1 cup', '1/2 cup', '3/4 cup'],
+            'Basmati Rice': ['1 cup', '2 cups', '1.5 cups'],
+            'Tamarind (Puli)': ['lemon size', '1 tbsp paste', '2 tbsp extract'],
+            'Jaggery (Vellam)': ['1 tsp', '1/2 tsp', '2 tsp'],
+            'Sambar Powder': ['2 tsp', '1 tbsp', '1 tsp'],
+            'Asafoetida (Hing)': ['pinch', '1/4 tsp', 'small pinch']
         };
 
         const options = quantityMap[ingredientName] || ['1 cup', '2 tbsp', '1 tsp'];
@@ -458,14 +468,14 @@ class RecipeExtractorAI {
     }
 
     categorizeRecipe(ingredients) {
-        if (ingredients.some(ing => ing.category === 'proteins' && ing.name.includes('Dal'))) {
-            return 'Lentil Dishes';
+        if (ingredients.some(ing => ing.category === 'proteins' && ing.name.includes('Dal') && ing.name.includes('Thuvaram'))) {
+            return 'Tamil Sambar & Rasam';
         } else if (ingredients.some(ing => ing.category === 'grains' && ing.name.includes('Rice'))) {
-            return 'Rice Dishes';
+            return 'Tamil Rice Varieties';
         } else if (ingredients.some(ing => ing.category === 'vegetables')) {
-            return 'Vegetable Curries';
+            return 'Tamil Vegetable Kozhambhu';
         } else {
-            return 'Traditional Curries';
+            return 'Traditional Tamil Cuisine';
         }
     }
 
@@ -481,10 +491,11 @@ class RecipeExtractorAI {
 
     generateCookingTips(techniques) {
         const tipDatabase = {
-            'Tadka/Tempering': 'For perfect tadka, heat oil until it shimmers but doesn\'t smoke. Seeds should splutter immediately when added.',
+            'Tadka/Tempering (Thalippu)': 'For perfect thalippu, heat sesame oil until it shimmers. Curry leaves should splutter immediately when added.',
             'Dum Cooking': 'Cover the pot with aluminum foil before placing the lid for better steam retention during dum cooking.',
-            'Slow Cooking': 'Patience is key - slow cooking develops deeper flavors and better texture.',
-            'Deep Frying': 'Maintain consistent oil temperature for even cooking and less oil absorption.'
+            'Slow Cooking (Kozhambhu)': 'Patience is key in Tamil cooking - slow simmering develops deeper flavors and authentic taste.',
+            'Deep Frying (Poriyal)': 'Use sesame oil for authentic Tamil flavor and maintain consistent temperature.',
+            'Wet Grinding (Araithal)': 'Traditional stone grinding gives the best texture and flavor to chutneys and batters.'
         };
 
         return techniques.map(tech => tipDatabase[tech.name]).filter(Boolean);
