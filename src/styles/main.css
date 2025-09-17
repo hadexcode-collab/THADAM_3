@@ -1,22 +1,23 @@
 /* Premium South Indian Cultural Design System */
 :root {
     /* Traditional South Indian Color Palette */
-    --saffron: #FF9933;
-    --india-green: #138808;
-    --royal-blue: #000080;
-    --warm-gold: #DAA520;
-    --terracotta: #E2725B;
-    --cream-white: #FFF8DC;
-    --deep-maroon: #800020;
-    --temple-bronze: #CD7F32;
-    --sandalwood: #F4A460;
-    --turmeric: #E4D00A;
+    --deep-saffron: #FF7722;
+    --forest-green: #0D5F1F;
+    --royal-gold: #DAA520;
+    --warm-terracotta: #C65D07;
+    --cream-white: #FFF8E7;
+    --deep-maroon: #722F37;
+    --coconut-white: #FFFFFF;
+    --temple-gold: #B8860B;
+    --spice-brown: #8B4513;
+    --curry-green: #228B22;
     
     /* Gradient Combinations */
-    --primary-gradient: linear-gradient(135deg, var(--saffron), var(--warm-gold));
-    --secondary-gradient: linear-gradient(135deg, var(--india-green), var(--royal-blue));
-    --warm-gradient: linear-gradient(135deg, var(--terracotta), var(--sandalwood));
-    --cultural-gradient: linear-gradient(135deg, var(--deep-maroon), var(--temple-bronze));
+    --primary-gradient: linear-gradient(135deg, var(--deep-saffron), var(--royal-gold));
+    --secondary-gradient: linear-gradient(135deg, var(--forest-green), var(--curry-green));
+    --warm-gradient: linear-gradient(135deg, var(--warm-terracotta), var(--temple-gold));
+    --cultural-gradient: linear-gradient(135deg, var(--deep-maroon), var(--spice-brown));
+    --premium-gradient: linear-gradient(135deg, var(--royal-gold), var(--temple-gold));
     
     /* Typography Scale */
     --font-primary: 'Playfair Display', serif;
