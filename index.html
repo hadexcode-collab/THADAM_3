@@ -185,7 +185,7 @@
                         <h1>TADAM</h1>
                         <span class="user-badge" id="userBadge">🎓 Learner</span>
                     </div>
-                    <button class="logout-btn" id="logoutBtn">
+                    <button class="logout-btn" id="logoutBtn" onclick="handleLogout()">
                         <i data-lucide="log-out"></i>
                         <span>Logout</span>
                     </button>
@@ -482,10 +482,24 @@
     <script src="/js/theme-manager.js"></script>
     <script src="/js/scroll-animations.js"></script>
     <script>
+        // Global logout function
+        function handleLogout() {
+            if (window.app) {
+                window.app.handleLogout();
+            } else {
+                // Fallback if app instance not available
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+        
         // Initialize Lucide icons after DOM load
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
+            
+            // Make app instance globally available
+            window.app = new TADAMApp();
         });
     </script>
