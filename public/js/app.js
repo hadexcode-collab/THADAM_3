@@ -46,9 +46,6 @@ class TADAMApp {
         if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
         if (shareBtn) shareBtn.addEventListener('click', () => this.shareRecipe());
         if (printBtn) printBtn.addEventListener('click', () => this.printRecipe());
-
-        // Learner-specific functionality
-        this.initializeLearnerFeatures();
     }
 
     checkAuthentication() {
@@ -164,11 +161,6 @@ class TADAMApp {
         // Update content visibility for current tab
         if (tabId === 'kala-kitchen') {
             this.updateContentVisibility();
-            
-            // Initialize learner features if user is learner
-            if (this.currentUser && this.currentUser.type === 'learner') {
-                this.initializeLearnerFeatures();
-            }
         }
     }
 
@@ -344,131 +336,6 @@ class TADAMApp {
 
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    // Learner-specific features
-    initializeLearnerFeatures() {
-        if (this.currentUser && this.currentUser.type === 'learner') {
-            this.bindLearnerLogout();
-            this.initializeDietPreferences();
-            this.enhanceLearnerRecipeCards();
-            this.bindMealPlanningEvents();
-        }
-    }
-
-    bindLearnerLogout() {
-        const learnerLogoutBtn = document.getElementById('learnerLogoutBtn');
-        if (learnerLogoutBtn) {
-            learnerLogoutBtn.addEventListener('click', () => this.logoutUser());
-        }
-    }
-
-    logoutUser() {
-        localStorage.clear();
-        window.location.href = '/';
-    }
-
-    initializeDietPreferences() {
-        const dietOptions = document.querySelectorAll('.diet-option');
-        
-        dietOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove selected state from all options
-                dietOptions.forEach(opt => opt.classList.remove('border-green-500', 'bg-green-50'));
-                
-                // Add selected state to clicked option
-                this.classList.add('border-green-500', 'bg-green-50');
-                
-                // Store preference
-                const dietType = this.getAttribute('data-diet');
-                localStorage.setItem('selectedDiet', dietType);
-                
-                console.log('Selected diet:', dietType);
-            });
-        });
-    }
-
-    enhanceLearnerRecipeCards() {
-        const recipeCards = document.querySelectorAll('.recipe-card');
-        
-        recipeCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const recipeName = card.querySelector('.recipe-card-title')?.textContent || 'Recipe';
-                this.openRecipeModal(recipeName);
-            });
-        });
-    }
-
-    openRecipeModal(recipeName) {
-        const modal = document.getElementById('recipeDetailModal');
-        
-        // Create modal content
-        modal.innerHTML = `
-            <div class="bg-white rounded-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-2xl font-bold text-gray-800">${recipeName}</h2>
-                        <button onclick="this.closest('.recipe-modal').classList.add('hidden')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="recipe-image bg-gradient-to-br from-orange-400 to-red-500 h-64 rounded-lg flex items-center justify-center text-white text-6xl">
-                            🍛
-                        </div>
-                        
-                        <div class="recipe-details">
-                            <div class="mb-4">
-                                <div class="flex gap-4 text-sm text-gray-600 mb-4">
-                                    <span>⏱️ 20 MIN prep</span>
-                                    <span>🔥 40 MIN total</span>
-                                    <span>💰 ₹150 (₹25 pp)</span>
-                                </div>
-                                
-                                <div class="flex gap-2 mb-4">
-                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">HIGH PROTEIN</span>
-                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">8 PLANTS</span>
-                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">LOW SAT FAT</span>
-                                </div>
-                            </div>
-                            
-                            <div class="ingredients">
-                                <h3 class="font-semibold mb-3">Ingredients</h3>
-                                <div class="space-y-2 text-sm">
-                                    <div class="flex justify-between"><span>1 cup</span><span>Basmati rice</span></div>
-                                    <div class="flex justify-between"><span>2 tbsp</span><span>Coconut oil</span></div>
-                                    <div class="flex justify-between"><span>1 tsp</span><span>Mustard seeds</span></div>
-                                    <div class="flex justify-between"><span>8-10</span><span>Curry leaves</span></div>
-                                    <div class="flex justify-between"><span>2</span><span>Green chilies</span></div>
-                                    <div class="flex justify-between"><span>1/2 cup</span><span>Fresh coconut</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6 pt-6 border-t">
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold">
-                            Add to Meal Plan
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-
-    bindMealPlanningEvents() {
-        const generatePlanBtn = document.getElementById('generatePlanBtn');
-        if (generatePlanBtn) {
-            generatePlanBtn.addEventListener('click', () => {
-                const calories = document.getElementById('calorieTarget')?.value || 1800;
-                const meals = document.getElementById('mealsPerDay')?.value || 3;
-                
-                this.showToast(`Generating meal plan for ${calories} calories in ${meals} meals!`);
-                console.log('Generating meal plan:', { calories, meals });
-            });
-        }
     }
 }
 
