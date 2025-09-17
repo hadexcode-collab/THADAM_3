@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TADAM - Traditional Arts & Cultural Learning Platform</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <h1 class="platform-title">TADAM</h1>
+                        <p class="platform-subtitle">Traditional Arts & Cultural Learning</p>
+                        <p class="platform-tagline">Preserving heritage through modern technology</p>
+                    </div>
+                    
+                    <div class="user-type-selector">
+                        <div class="user-type learner active" data-type="learner">
+                            <span class="user-icon">🎓</span>
+                            <h3>Learner</h3>
+                            <p>Discover and learn traditional techniques</p>
+                        </div>
+                        <div class="user-type creator" data-type="creator">
+                            <span class="user-icon">📹</span>
+                            <h3>Creator</h3>
+                            <p>Share your knowledge through videos</p>
+                        </div>
+                    </div>
+                    
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" required>
+                        </div>
+                        <button type="submit" class="login-btn">
+                            <span>Enter TADAM</span>
+                            <div class="btn-loader hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Platform -->
+        <div id="main-platform" class="screen">
+            <header class="platform-header">
+                <div class="header-content">
+                    <div class="platform-logo">
+                        <h1>TADAM</h1>
+                        <span class="user-badge" id="userBadge">🎓 Learner</span>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+            </header>
+
+            <nav class="platform-nav">
+                <div class="nav-tabs">
+                    <div class="nav-tab active" data-tab="kala-kitchen">
+                        <span class="tab-icon">🍳</span>
+                        <span class="tab-label">Kala Kitchen</span>
+                    </div>
+                    <div class="nav-tab coming-soon" data-tab="traditional-medicine">
+                        <span class="tab-icon">💊</span>
+                        <span class="tab-label">Traditional Medicine</span>
+                        <span class="coming-soon-badge">Soon</span>
+                    </div>
+                    <div class="nav-tab coming-soon" data-tab="cultural-stories">
+                        <span class="tab-icon">📚</span>
+                        <span class="tab-label">Cultural Stories</span>
+                        <span class="coming-soon-badge">Soon</span>
+                    </div>
+                    <div class="nav-tab coming-soon" data-tab="aya-kaligal">
+                        <span class="tab-icon">🎭</span>
+                        <span class="tab-label">Aya Kaligal</span>
+                        <span class="coming-soon-badge">Soon</span>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="platform-content">
+                <!-- Kala Kitchen Tab -->
+                <div id="kala-kitchen" class="tab-content active">
+                    <div class="tab-header">
+                        <h2>🍳 Kala Kitchen</h2>
+                        <p>AI-powered recipe extraction from cooking videos</p>
+                    </div>
+
+                    <!-- Creator View -->
+                    <div class="creator-content" id="creatorContent">
+                        <div class="upload-section">
+                            <div class="upload-area" id="uploadArea">
+                                <div class="upload-placeholder" id="uploadPlaceholder">
+                                    <div class="upload-icon">📹</div>
+                                    <h3>Upload Cooking Video</h3>
+                                    <p>Drag and drop your video here or click to browse</p>
+                                    <p class="file-info">Supported formats: MP4, MOV, AVI (Max 100MB)</p>
+                                    <input type="file" id="videoInput" accept="video/*" hidden>
+                                </div>
+                                <div class="video-preview hidden" id="videoPreview">
+                                    <video controls id="previewVideo"></video>
+                                    <div class="video-info" id="videoInfo"></div>
+                                    <button class="process-btn" id="processBtn">
+                                        <span>🔍 Extract Recipe with AI</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Processing Status -->
+                            <div class="processing-panel hidden" id="processingPanel">
+                                <h3>🤖 AI Processing Pipeline</h3>
+                                <div class="processing-steps">
+                                    <div class="process-step" data-step="frames">
+                                        <div class="step-icon">🔍</div>
+                                        <div class="step-content">
+                                            <h4>Extracting Video Frames</h4>
+                                            <p>Analyzing visual content using YOLO-v8</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="audio">
+                                        <div class="step-icon">🎵</div>
+                                        <div class="step-content">
+                                            <h4>Transcribing Audio</h4>
+                                            <p>Converting speech to text using Whisper</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="ingredients">
+                                        <div class="step-icon">🍅</div>
+                                        <div class="step-content">
+                                            <h4>Identifying Ingredients</h4>
+                                            <p>Detecting ingredients with quantity estimation</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="techniques">
+                                        <div class="step-icon">👩‍🍳</div>
+                                        <div class="step-content">
+                                            <h4>Recognizing Techniques</h4>
+                                            <p>Analyzing cooking methods using ResNet-50</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="recipe">
+                                        <div class="step-icon">📝</div>
+                                        <div class="step-content">
+                                            <h4>Generating Recipe</h4>
+                                            <p>Creating structured recipe using BERT</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recipe Display -->
+                    <div class="recipe-display hidden" id="recipeDisplay">
+                        <div class="recipe-header">
+                            <h2 id="recipeName">Generated Recipe</h2>
+                            <div class="recipe-actions">
+                                <button class="action-btn save-btn" id="saveRecipe">
+                                    <span>💾</span> Save Recipe
+                                </button>
+                                <button class="action-btn share-btn" id="shareRecipe">
+                                    <span>📤</span> Share
+                                </button>
+                                <button class="action-btn print-btn" id="printRecipe">
+                                    <span>🖨️</span> Print
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="recipe-content">
+                            <div class="recipe-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Cuisine Type:</span>
+                                    <span id="cuisineType">Traditional Indian</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Difficulty:</span>
+                                    <span id="difficulty">Medium</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Cooking Time:</span>
+                                    <span id="cookingTime">45 minutes</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Serves:</span>
+                                    <span id="servingSize">4 people</span>
+                                </div>
+                            </div>
+
+                            <div class="recipe-sections">
+                                <div class="ingredients-section">
+                                    <h3>🧂 Ingredients</h3>
+                                    <div class="ingredients-list" id="ingredientsList">
+                                        <!-- Ingredients will be populated by JS -->
+                                    </div>
+                                </div>
+
+                                <div class="instructions-section">
+                                    <h3>👨‍🍳 Cooking Instructions</h3>
+                                    <div class="instructions-list" id="instructionsList">
+                                        <!-- Instructions will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="processing-confidence">
+                            <h4>🎯 AI Confidence Scores</h4>
+                            <div class="confidence-metrics" id="confidenceMetrics">
+                                <!-- Confidence scores will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Learner View -->
+                    <div class="learner-content" id="learnerContent">
+                        <div class="recipes-gallery">
+                            <h3>📚 Traditional Recipe Collection</h3>
+                            <div class="recipes-grid" id="recipesGrid">
+                                <!-- Sample recipes will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coming Soon Tabs -->
+                <div id="traditional-medicine" class="tab-content coming-soon-content">
+                    <div class="coming-soon-placeholder">
+                        <div class="placeholder-icon">💊</div>
+                        <h2>Traditional Medicine</h2>
+                        <p>Ancient healing wisdom meets modern AI analysis</p>
+                        <p class="coming-soon-text">Coming Soon</p>
+                    </div>
+                </div>
+
+                <div id="cultural-stories" class="tab-content coming-soon-content">
+                    <div class="coming-soon-placeholder">
+                        <div class="placeholder-icon">📚</div>
+                        <h2>Cultural Stories</h2>
+                        <p>Preserving oral traditions through interactive storytelling</p>
+                        <p class="coming-soon-text">Coming Soon</p>
+                    </div>
+                </div>
+
+                <div id="aya-kaligal" class="tab-content coming-soon-content">
+                    <div class="coming-soon-placeholder">
+                        <div class="placeholder-icon">🎭</div>
+                        <h2>Aya Kaligal</h2>
+                        <p>Traditional performing arts and cultural expressions</p>
+                        <p class="coming-soon-text">Coming Soon</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Success Toast -->
+        <div class="toast hidden" id="successToast">
+            <div class="toast-content">
+                <span class="toast-icon">✅</span>
+                <span class="toast-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/js/app.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/recipe-extractor.js"></script>
+    <script src="src/js/upload-handler.js"></script>
