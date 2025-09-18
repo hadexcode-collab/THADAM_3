@@ -8,138 +8,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
-<body class="veg-theme">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle-wrapper">
-        <div class="theme-toggle-container">
-            <div class="toggle-switch" id="themeToggle">
-                <input type="radio" id="veg-theme" name="theme" value="veg" checked>
-                <label for="veg-theme" class="toggle-label veg-label">
-                    <div class="toggle-icon">
-                        <div class="veg-dot"></div>
-                    </div>
-                    <span class="toggle-text">VEG</span>
-                </label>
-                
-                <input type="radio" id="nonveg-theme" name="theme" value="nonveg">
-                <label for="nonveg-theme" class="toggle-label nonveg-label">
-                    <div class="toggle-icon">
-                        <div class="nonveg-square"></div>
-                    </div>
-                    <span class="toggle-text">NON-VEG</span>
-                </label>
-                
-                <div class="toggle-slider"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Background Elements -->
-    <div class="floating-elements">
-        <div class="floating-spice cardamom" style="--delay: 0s;"></div>
-        <div class="floating-spice cinnamon" style="--delay: 2s;"></div>
-        <div class="floating-spice star-anise" style="--delay: 4s;"></div>
-        <div class="floating-spice cloves" style="--delay: 6s;"></div>
-        <div class="floating-leaf curry-leaf" style="--delay: 1s;"></div>
-        <div class="floating-leaf coconut-palm" style="--delay: 3s;"></div>
-        <div class="floating-vessel brass-pot" style="--delay: 5s;"></div>
-        <div class="floating-vessel clay-pot" style="--delay: 7s;"></div>
-    </div>
-
-    <!-- Background Cultural Motifs -->
-    <div class="background-motifs">
-        <div class="kolam-pattern kolam-1"></div>
-        <div class="kolam-pattern kolam-2"></div>
-        <div class="mandala-pattern mandala-1"></div>
-        <div class="paisley-pattern paisley-1"></div>
-    </div>
-
-    <!-- Theme Toggle -->
-    <div class="theme-toggle-wrapper">
-        <div class="theme-toggle-container">
-            <div class="toggle-switch" id="themeToggle">
-                <input type="radio" id="veg-theme" name="theme" value="veg" checked>
-                <label for="veg-theme" class="toggle-label veg-label">
-                    <div class="toggle-icon">
-                        <div class="veg-dot"></div>
-                    </div>
-                    <span class="toggle-text">VEG</span>
-                </label>
-                
-                <input type="radio" id="nonveg-theme" name="theme" value="nonveg">
-                <label for="nonveg-theme" class="toggle-label nonveg-label">
-                    <div class="toggle-icon">
-                        <div class="nonveg-square"></div>
-                    </div>
-                    <span class="toggle-text">NON-VEG</span>
-                </label>
-                
-                <div class="toggle-slider"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Background Elements -->
-    <div class="floating-elements">
-        <div class="floating-spice cardamom" style="--delay: 0s;"></div>
-        <div class="floating-spice cinnamon" style="--delay: 2s;"></div>
-        <div class="floating-spice star-anise" style="--delay: 4s;"></div>
-        <div class="floating-spice cloves" style="--delay: 6s;"></div>
-        <div class="floating-leaf curry-leaf" style="--delay: 1s;"></div>
-        <div class="floating-leaf coconut-palm" style="--delay: 3s;"></div>
-        <div class="floating-vessel brass-pot" style="--delay: 5s;"></div>
-        <div class="floating-vessel clay-pot" style="--delay: 7s;"></div>
-    </div>
-
-    <!-- Background Cultural Motifs -->
-    <div class="background-motifs">
-        <div class="kolam-pattern kolam-1"></div>
-        <div class="kolam-pattern kolam-2"></div>
-        <div class="mandala-pattern mandala-1"></div>
-        <div class="paisley-pattern paisley-1"></div>
-    </div>
-
+<body>
     <div id="app">
         <!-- Login Screen -->
         <div id="login-screen" class="screen active">
-            <!-- Cultural Hero Section -->
-            <div class="cultural-hero-section">
-                <div class="hero-background">
-                    <div class="temple-silhouette"></div>
-                    <div class="coconut-palms"></div>
-                    <div class="spice-particles"></div>
-                </div>
-                
-                <div class="hero-content">
-                    <h1 class="hero-title">TADAM Royal</h1>
-                    <p class="hero-subtitle">Traditional South Indian Cuisine</p>
-                    <p class="hero-description">In the land of TADAM, heritage holds the crown.</p>
-                    <p class="hero-tagline">Experience the elegance of South India in its most authentic form.</p>
-                </div>
-            </div>
-            
-            <!-- Cultural Hero Section -->
-            <div class="cultural-hero-section">
-                <div class="hero-background">
-                    <div class="temple-silhouette"></div>
-                    <div class="coconut-palms"></div>
-                    <div class="spice-particles"></div>
-                </div>
-                
-                <div class="hero-content">
-                    <h1 class="hero-title">TADAM Royal</h1>
-                    <p class="hero-subtitle">Traditional South Indian Cuisine</p>
-                    <p class="hero-description">In the land of TADAM, heritage holds the crown.</p>
-                    <p class="hero-tagline">Experience the elegance of South India in its most authentic form.</p>
-                </div>
-            </div>
-            
             <div class="login-container">
                 <div class="login-card">
                     <div class="login-header">
                         <h1 class="platform-title">TADAM</h1>
                         <p class="platform-subtitle">Traditional Arts & Cultural Learning</p>
                         <p class="platform-tagline">Preserving heritage through modern technology</p>
+                        <div class="theme-toggle-container login-theme-toggle">
+                            <div class="theme-toggle" id="loginThemeToggle">
+                                <div class="toggle-option veg-option active" data-theme="veg">
+                                    <svg class="veg-icon" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="8" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                                    </svg>
+                                    <span>VEG</span>
+                                </div>
+                                <div class="toggle-option nonveg-option" data-theme="nonveg">
+                                    <svg class="nonveg-icon" viewBox="0 0 24 24">
+                                        <rect x="4" y="4" width="16" height="16" rx="2" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                                    </svg>
+                                    <span>NON-VEG</span>
+                                </div>
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="user-type-selector">
@@ -184,6 +81,25 @@
                     <div class="platform-logo">
                         <h1>TADAM</h1>
                         <span class="user-badge" id="userBadge">🎓 Learner</span>
+                    </div>
+                    <div class="theme-toggle-container">
+                        <div class="theme-toggle" id="themeToggle">
+                            <div class="toggle-option veg-option active" data-theme="veg">
+                                <svg class="veg-icon" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="8" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                                </svg>
+                                <span>VEG</span>
+                            </div>
+                            <div class="toggle-option nonveg-option" data-theme="nonveg">
+                                <svg class="nonveg-icon" viewBox="0 0 24 24">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                                </svg>
+                                <span>NON-VEG</span>
+                            </div>
+                            <div class="toggle-slider"></div>
+                        </div>
                     </div>
                     <button class="logout-btn" id="logoutBtn">Logout</button>
                 </div>
@@ -255,6 +171,65 @@
                                 </div>
                             </div>
 
+                            <!-- Processing Status -->
+                            <div class="processing-panel hidden" id="processingPanel">
+                                <div class="processing-header">
+                                    <i data-lucide="cpu"></i>
+                                    <h3>AI Processing Pipeline</h3>
+                                </div>
+                                <div class="processing-steps">
+                                    <div class="process-step" data-step="frames">
+                                        <div class="step-icon">
+                                            <i data-lucide="search"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Extracting Video Frames</h4>
+                                            <p>Analyzing visual content using YOLO-v8</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="audio">
+                                        <div class="step-icon">
+                                            <i data-lucide="mic"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Transcribing Audio</h4>
+                                            <p>Converting speech to text using Whisper</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="ingredients">
+                                        <div class="step-icon">
+                                            <i data-lucide="apple"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Identifying Ingredients</h4>
+                                            <p>Detecting ingredients with quantity estimation</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="techniques">
+                                        <div class="step-icon">
+                                            <i data-lucide="utensils"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Recognizing Techniques</h4>
+                                            <p>Analyzing cooking methods using ResNet-50</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="process-step" data-step="recipe">
+                                        <div class="step-icon">
+                                            <i data-lucide="file-text"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <h4>Generating Recipe</h4>
+                                            <p>Creating structured recipe using BERT</p>
+                                            <div class="progress-bar"><div class="progress"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Processing Status -->
                             <div class="processing-panel hidden" id="processingPanel">
                                 <div class="processing-header">
@@ -391,34 +366,403 @@
                         </div>
                     </div>
 
+                    <!-- Recipe Display -->
+                    <div class="recipe-display hidden" id="recipeDisplay">
+                        <div class="recipe-header">
+                            <h2 id="recipeName">Generated Recipe</h2>
+                            <div class="recipe-actions">
+                                <button class="action-btn save-btn" id="saveRecipe">
+                                    <i data-lucide="bookmark"></i>
+                                    <span>Save Recipe</span>
+                                </button>
+                                <button class="action-btn share-btn" id="shareRecipe">
+                                    <i data-lucide="share-2"></i>
+                                    <span>Share</span>
+                                </button>
+                                <button class="action-btn print-btn" id="printRecipe">
+                                    <i data-lucide="printer"></i>
+                                    <span>Print</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="recipe-content">
+                            <div class="recipe-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Cuisine Type:</span>
+                                    <span id="cuisineType">Traditional Indian</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Difficulty:</span>
+                                    <span id="difficulty">Medium</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Cooking Time:</span>
+                                    <span id="cookingTime">45 minutes</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Serves:</span>
+                                    <span id="servingSize">4 people</span>
+                                </div>
+                            </div>
+
+                            <div class="recipe-sections">
+                                <div class="ingredients-section">
+                                    <div class="section-header">
+                                        <i data-lucide="list"></i>
+                                        <h3>Ingredients</h3>
+                                    </div>
+                                    <div class="ingredients-list" id="ingredientsList">
+                                        <!-- Ingredients will be populated by JS -->
+                                    </div>
+                                </div>
+
+                                <div class="instructions-section">
+                                    <div class="section-header">
+                                        <i data-lucide="utensils"></i>
+                                        <h3>Cooking Instructions</h3>
+                                    </div>
+                                    <div class="instructions-list" id="instructionsList">
+                                        <!-- Instructions will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="processing-confidence">
+                            <div class="confidence-header">
+                                <i data-lucide="target"></i>
+                                <h4>AI Confidence Scores</h4>
+                            </div>
+                            <div class="confidence-metrics" id="confidenceMetrics">
+                                <!-- Confidence scores will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Learner View -->
                     <div class="learner-content" id="learnerContent">
-                        <div class="recipes-gallery">
-                            <div class="gallery-header">
-                                <i data-lucide="book-open"></i>
-                                <h3>Traditional Recipe Collection</h3>
-                            </div>
-                            <div class="recipes-grid" id="recipesGrid">
-                                <!-- Sample recipes will be populated by JS -->
-                            </div>
-                            
-                            <!-- Premium CTA Section -->
-                            <div class="premium-cta">
-                                <div class="cta-content">
-                                    <h3>Unlock Premium Heritage Recipes</h3>
-                                    <p>Access exclusive family recipes passed down through generations</p>
-                                    <button class="premium-btn">Explore Premium</button>
+                        <!-- Heritage-Inspired Scroll-Interactive Learner Dashboard -->
+                        <div class="heritage-learner-dashboard">
+                            <!-- Hero Section with Parallax -->
+                            <section class="hero-section" data-scroll-section>
+                                <div class="hero-background">
+                                    <div class="temple-silhouette"></div>
+                                    <div class="brass-vessel-pattern"></div>
+                                    <div class="kolam-overlay"></div>
                                 </div>
-                            </div>
-                            
-                            <!-- Premium CTA Section -->
-                            <div class="premium-cta">
-                                <div class="cta-content">
-                                    <h3>Unlock Premium Heritage Recipes</h3>
-                                    <p>Access exclusive family recipes passed down through generations</p>
-                                    <button class="premium-btn">Explore Premium</button>
+                                <div class="hero-content">
+                                    <h1 class="hero-title" data-scroll data-scroll-speed="0.5">
+                                        <span class="title-main">Kala Kitchen</span>
+                                        <span class="title-sub">Traditional Wisdom, Modern Wellness</span>
+                                    </h1>
+                                    <p class="hero-description" data-scroll data-scroll-speed="0.3">
+                                        Discover the sacred art of South Indian cooking through ancestral recipes and Ayurvedic wisdom
+                                    </p>
                                 </div>
-                            </div>
+                            </section>
+
+                            <!-- Diet Mode Toggle Section -->
+                            <section class="diet-mode-section" data-scroll-section>
+                                <div class="section-container">
+                                    <h2 class="section-title" data-scroll data-scroll-speed="0.2">Choose Your Culinary Path</h2>
+                                    <div class="diet-mode-toggle" data-scroll data-scroll-speed="0.1">
+                                        <div class="toggle-pill">
+                                            <div class="toggle-option active" data-mode="veg">
+                                                <div class="toggle-icon veg-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"/>
+                                                        <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                                                    </svg>
+                                                </div>
+                                                <span>Vegetarian</span>
+                                            </div>
+                                            <div class="toggle-option" data-mode="nonveg">
+                                                <div class="toggle-icon nonveg-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor"/>
+                                                        <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                                                    </svg>
+                                                </div>
+                                                <span>Non-Vegetarian</span>
+                                            </div>
+                                            <div class="toggle-option" data-mode="ayurvedic">
+                                                <div class="toggle-icon ayurvedic-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <span>Ayurvedic</span>
+                                            </div>
+                                            <div class="toggle-slider"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Diet Style Selector -->
+                            <section class="diet-styles-section" data-scroll-section>
+                                <div class="section-container">
+                                    <div class="section-header" data-scroll data-scroll-speed="0.2">
+                                        <h2 class="section-title">Regional Culinary Traditions</h2>
+                                        <p class="section-subtitle">Explore authentic flavors from across South India</p>
+                                    </div>
+                                    <div class="diet-cards-grid">
+                                        <div class="diet-card" data-scroll data-scroll-speed="0.1" data-diet="traditional-veg">
+                                            <div class="card-image">
+                                                <div class="image-overlay"></div>
+                                                <div class="card-content">
+                                                    <h3>Traditional Vegetarian</h3>
+                                                    <p>Temple-style pure vegetarian cuisine</p>
+                                                    <div class="recipe-count">234 recipes</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="diet-card" data-scroll data-scroll-speed="0.15" data-diet="coastal">
+                                            <div class="card-image">
+                                                <div class="image-overlay"></div>
+                                                <div class="card-content">
+                                                    <h3>Coastal Kerala</h3>
+                                                    <p>Coconut-rich coastal specialties</p>
+                                                    <div class="recipe-count">156 recipes</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="diet-card" data-scroll data-scroll-speed="0.2" data-diet="millet">
+                                            <div class="card-image">
+                                                <div class="image-overlay"></div>
+                                                <div class="card-content">
+                                                    <h3>Ancient Grains</h3>
+                                                    <p>Millet and traditional grain dishes</p>
+                                                    <div class="recipe-count">189 recipes</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="diet-card" data-scroll data-scroll-speed="0.25" data-diet="chettinad">
+                                            <div class="card-image">
+                                                <div class="image-overlay"></div>
+                                                <div class="card-content">
+                                                    <h3>Royal Chettinad</h3>
+                                                    <p>Aromatic spice-rich royal cuisine</p>
+                                                    <div class="recipe-count">167 recipes</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Ayurveda Dosha Section -->
+                            <section class="ayurveda-section" data-scroll-section>
+                                <div class="section-container">
+                                    <div class="section-header" data-scroll data-scroll-speed="0.2">
+                                        <h2 class="section-title">Ayurvedic Constitution</h2>
+                                        <p class="section-subtitle">Recipes tailored to your unique body type and wellness needs</p>
+                                    </div>
+                                    <div class="dosha-cards-grid">
+                                        <div class="dosha-card vata" data-scroll data-scroll-speed="0.1">
+                                            <div class="dosha-symbol">
+                                                <svg viewBox="0 0 100 100">
+                                                    <path d="M50 10 Q30 30 50 50 Q70 30 50 10" fill="currentColor" opacity="0.3"/>
+                                                    <path d="M50 50 Q30 70 50 90 Q70 70 50 50" fill="currentColor" opacity="0.6"/>
+                                                </svg>
+                                            </div>
+                                            <h3>Vata Balancing</h3>
+                                            <p>Warm, nourishing, grounding foods for air element balance</p>
+                                            <div class="recipe-count">127 recipes</div>
+                                            <div class="dosha-qualities">
+                                                <span>Warm</span>
+                                                <span>Moist</span>
+                                                <span>Heavy</span>
+                                            </div>
+                                        </div>
+                                        <div class="dosha-card pitta" data-scroll data-scroll-speed="0.15">
+                                            <div class="dosha-symbol">
+                                                <svg viewBox="0 0 100 100">
+                                                    <polygon points="50,20 70,50 50,80 30,50" fill="currentColor" opacity="0.7"/>
+                                                    <circle cx="50" cy="50" r="15" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                                            <h3>Pitta Cooling</h3>
+                                            <p>Cooling, mild, refreshing dishes for fire element balance</p>
+                                            <div class="recipe-count">89 recipes</div>
+                                            <div class="dosha-qualities">
+                                                <span>Cool</span>
+                                                <span>Sweet</span>
+                                                <span>Mild</span>
+                                            </div>
+                                        </div>
+                                        <div class="dosha-card kapha" data-scroll data-scroll-speed="0.2">
+                                            <div class="dosha-symbol">
+                                                <svg viewBox="0 0 100 100">
+                                                    <rect x="25" y="25" width="50" height="50" rx="10" fill="currentColor" opacity="0.5"/>
+                                                    <rect x="35" y="35" width="30" height="30" rx="5" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                                            <h3>Kapha Energizing</h3>
+                                            <p>Light, spicy, warming foods for earth element balance</p>
+                                            <div class="recipe-count">156 recipes</div>
+                                            <div class="dosha-qualities">
+                                                <span>Light</span>
+                                                <span>Spicy</span>
+                                                <span>Warm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Recipe Masonry Grid -->
+                            <section class="recipes-section" data-scroll-section>
+                                <div class="section-container">
+                                    <div class="section-header" data-scroll data-scroll-speed="0.2">
+                                        <h2 class="section-title">Master Chef Collections</h2>
+                                        <p class="section-subtitle">Authentic recipes from traditional South Indian kitchens</p>
+                                    </div>
+                                    <div class="recipes-masonry" id="recipeMasonryGrid">
+                                        <!-- Recipes will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Nutrition Insights -->
+                            <section class="nutrition-section" data-scroll-section>
+                                <div class="section-container">
+                                    <div class="nutrition-card" data-scroll data-scroll-speed="0.1">
+                                        <div class="nutrition-header">
+                                            <h3>Traditional Nutritional Wisdom</h3>
+                                            <p>Ancient knowledge meets modern nutrition science</p>
+                                        </div>
+                                        <div class="macro-display">
+                                            <div class="macro-item calories">
+                                                <div class="macro-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                                                        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="macro-content">
+                                                    <span class="macro-value">145</span>
+                                                    <span class="macro-unit">calories</span>
+                                                    <div class="macro-bar">
+                                                        <div class="bar-fill" style="width: 65%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="macro-item protein">
+                                                <div class="macro-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="macro-content">
+                                                    <span class="macro-value">12g</span>
+                                                    <span class="macro-unit">protein</span>
+                                                    <div class="macro-bar">
+                                                        <div class="bar-fill" style="width: 80%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="macro-item carbs">
+                                                <div class="macro-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="macro-content">
+                                                    <span class="macro-value">18g</span>
+                                                    <span class="macro-unit">carbs</span>
+                                                    <div class="macro-bar">
+                                                        <div class="bar-fill" style="width: 45%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="macro-item fiber">
+                                                <div class="macro-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66C7.84 17.17 9.64 12.65 17 11V8zm-5 4c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="macro-content">
+                                                    <span class="macro-value">8g</span>
+                                                    <span class="macro-unit">fiber</span>
+                                                    <div class="macro-bar">
+                                                        <div class="bar-fill" style="width: 90%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ayurvedic-benefits">
+                                            <h4>Ayurvedic Properties</h4>
+                                            <div class="benefits-grid">
+                                                <div class="benefit-item">
+                                                    <span class="benefit-icon">⚖️</span>
+                                                    <span>Balances Vata and Pitta doshas</span>
+                                                </div>
+                                                <div class="benefit-item">
+                                                    <span class="benefit-icon">🔥</span>
+                                                    <span>Aids digestion with traditional spices</span>
+                                                </div>
+                                                <div class="benefit-item">
+                                                    <span class="benefit-icon">🌿</span>
+                                                    <span>Rich in South Indian minerals</span>
+                                                </div>
+                                                <div class="benefit-item">
+                                                    <span class="benefit-icon">❄️</span>
+                                                    <span>Cooling properties for hot climate</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Premium CTA Section -->
+                            <section class="premium-cta-section" data-scroll-section>
+                                <div class="cta-background">
+                                    <div class="temple-pattern"></div>
+                                    <div class="brass-texture"></div>
+                                </div>
+                                <div class="section-container">
+                                    <div class="cta-content" data-scroll data-scroll-speed="0.1">
+                                        <div class="cta-header">
+                                            <h2>Master the Art of Ancestral Cooking</h2>
+                                            <p>Join 15,000+ home cooks preserving South Indian culinary heritage</p>
+                                        </div>
+                                        <div class="cta-benefits">
+                                            <div class="benefit-highlight">
+                                                <div class="benefit-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="benefit-content">
+                                                    <h3>Grandmother's Secret Recipes</h3>
+                                                    <p>Access to family recipes passed down through 5+ generations</p>
+                                                </div>
+                                            </div>
+                                            <div class="benefit-highlight">
+                                                <div class="benefit-icon">
+                                                    <svg viewBox="0 0 24 24">
+                                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="benefit-content">
+                                                    <h3>Master Traditional Techniques</h3>
+                                                    <p>Learn the art of perfect tempering, spice grinding, and fermentation</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="cta-action">
+                                            <button class="premium-btn golden-shimmer">
+                                                <span>Start Your Culinary Journey</span>
+                                                <span class="price">₹299/month</span>
+                                            </button>
+                                            <p class="cta-note">7-day free trial • Cancel anytime</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -470,14 +814,12 @@
         </div>
     </div>
 
+    <div id="root"></div>
+
     <script src="/js/app.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/recipe-extractor.js"></script>
     <script src="/js/upload-handler.js"></script>
-    <script src="/js/theme-manager.js"></script>
-    <script src="/js/scroll-animations.js"></script>
-    <script src="/js/theme-manager.js"></script>
-    <script src="/js/scroll-animations.js"></script>
     <script>
         // Initialize Lucide icons after DOM load
         document.addEventListener('DOMContentLoaded', function() {
@@ -486,3 +828,5 @@
             }
         });
     </script>
+</body>
+</html>
